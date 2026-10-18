@@ -1,0 +1,17 @@
+{
+  "name": "omniroute-claude-plugin",
+  "description": "Self-hosted marketplace for the OmniRoute Claude Code plugin",
+  "version": "1.0.0",
+  "owner": {
+    "name": "Kiarash Shikh Haydarpur",
+    "url": "https://github.com/shantih3112"
+  },
+  "plugins": [
+    {
+      "name": "omniroute",
+      "source": ".",
+      "description": "Connects Claude Code to a running OmniRoute AI gateway over MCP.",
+      "version": "1.0.0"
+    }
+  ]
+}

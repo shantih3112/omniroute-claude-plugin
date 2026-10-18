@@ -1,0 +1,25 @@
+{
+  "name": "omniroute",
+  "displayName": "OmniRoute",
+  "description": "Connects Claude Code to a running OmniRoute AI gateway over MCP -- routing, providers, combos, cache, compression, and memory tools. Requires OmniRoute running locally (`omniroute` / `omniroute serve`, default port 20128).",
+  "version": "1.0.0",
+  "author": {
+    "name": "Kiarash Shikh Haydarpur",
+    "url": "https://github.com/shantih3112"
+  },
+  "homepage": "https://github.com/diegosouzapw/OmniRoute",
+  "repository": "https://github.com/shantih3112/omniroute-claude-plugin",
+  "license": "MIT",
+  "keywords": [
+    "omniroute",
+    "mcp",
+    "ai-gateway",
+    "llm-routing",
+    "claude-code"
+  ],
+  "mcpServers": {
+    "omniroute": {
+      "url": "http://localhost:20128/api/mcp/stream"
+    }
+  }
+}
