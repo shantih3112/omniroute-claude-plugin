@@ -123,3 +123,16 @@ evidence without anyone acting on them.
   consensus values and release timestamps (not available here).
 * Using measured broker spreads instead of the assumed table (costs are ~0.03 R/trade; they
   are not why the strategies fail — gross expectancy is already ≈ 0).
+
+## Post-research studies (2026-10-20)
+
+* **FTMO pass-rate study** (`scripts/ftmo_and_planning.py`, `research/ftmo_planning.json`):
+  first version let all 11 pairs hold simultaneous positions; corrected to apply the live risk
+  engine's portfolio limits (`backtest/portfolio.py`). Results in docs/FTMO.md.
+* **Holdout disclosure**: the operational replay demo (`fxsignal replay --start 2026-09-14
+  --days 12`, output `research/replay_demo_messages.txt`) ran research-status strategies on
+  12 days of holdout B (4 signals). It tested plumbing, not performance; the outcomes were not
+  used for any decision. Holdout B is therefore "untouched except for 12 days of plumbing replay".
+* **Delay sensitivity** was not studied further: with no strategy passing Gate R there is no
+  candidate whose manual-follow performance matters. The engine supports it
+  (`run(..., source="dukascopy", delay_min=1|5|15|30)`).

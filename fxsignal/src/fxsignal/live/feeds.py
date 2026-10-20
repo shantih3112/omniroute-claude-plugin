@@ -107,6 +107,7 @@ class OandaFeed:
 
     async def poll(self, symbol: str) -> FeedBatch:
         frm = self.last.get(symbol)
+        # resumes from the last processed bar (after a restart this pages forward up to 5000 bars)
         cs = await self.candles(symbol, frm=frm + pd.Timedelta(minutes=1) if frm is not None else None, count=10)
         bars = [b for b in (self.to_bar(c) for c in cs) if b is not None]
         if frm is not None:

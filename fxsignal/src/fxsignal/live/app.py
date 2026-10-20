@@ -103,6 +103,7 @@ async def serve(config_path: str, base_dir: Path) -> None:
 
     async def daily_corr():
         svc.update_correlations()
+        svc.prune(30)
 
     health_port = cfg.get("ops", {}).get("health_port", 8087)
 

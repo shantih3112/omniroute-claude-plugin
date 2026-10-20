@@ -136,3 +136,19 @@ def test_watchdog_flags_degraded_data(tmp_path):
     assert not ok and "EURUSD:stale" in why
     hb.write_text(json.dumps({"symbols": {"EURUSD": {"status": "ok"}}}))
     assert check(hb, 120, None)[0]
+
+
+def test_restart_resumes_feed_from_last_stored_bar(tmp_path):
+    svc, feed, store = make(tmp_path, ("EURUSD",))
+    for _ in range(20):
+        feed.advance(1)
+        asyncio.run(svc.step())
+    last = svc.st["EURUSD"].last_bar_t
+
+    class FakeOanda:
+        last = {}
+        now = staticmethod(lambda: feed.now())
+    svc2 = Service(dict(CFG, symbols=["EURUSD"]), store, FakeOanda(), label="REPLAY", base_dir=tmp_path)
+    info = svc2.restore()
+    assert FakeOanda.last["EURUSD"] == last and svc2.st["EURUSD"].last_bar_t == last
+    assert info["resume_from"]["EURUSD"].startswith(str(last.date()))

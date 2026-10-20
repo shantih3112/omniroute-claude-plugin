@@ -79,8 +79,22 @@ class Service:
         lf = self.store.kv_get("calendar_fetched_at")
         self.calendar_fetched = pd.Timestamp(lf) if lf else None
         act = self.store.active_signals()
-        self.store.incident(iso(now), "restart", f"restored {len(act)} active signals, mode={self.label}")
-        return {"active_signals": len(act), "calendar_events": len(self.calendar)}
+        resumed = {}
+        for sym in self.symbols:
+            row = self.store.conn.execute("SELECT MAX(t) m FROM bars WHERE symbol=? AND tf='M1'", (sym,)).fetchone()
+            if row and row["m"]:
+                last = pd.Timestamp(row["m"])
+                self.st[sym].last_bar_t = last
+                if hasattr(self.feed, "last"):
+                    # catch up from the last bar we processed, so tracking never skips minutes
+                    self.feed.last[sym] = last
+                resumed[sym] = iso(last)
+        self.store.incident(iso(now), "restart", f"restored {len(act)} active signals, mode={self.label}, "
+                                                 f"resume from {resumed}")
+        return {"active_signals": len(act), "calendar_events": len(self.calendar), "resume_from": resumed}
+
+    def prune(self, keep_days: int = 30) -> None:
+        self.store.prune_bars(iso(pd.Timestamp(self.feed.now()) - pd.Timedelta(days=keep_days)))
 
     def set_calendar(self, events: list[cal.CalEvent], fetched_at: pd.Timestamp) -> dict:
         counts = {"new": 0, "revised": 0, "same": 0}
