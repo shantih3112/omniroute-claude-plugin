@@ -79,10 +79,15 @@ def main() -> None:
     deadman = os.environ.get("DEADMAN_PING_URL", "")
     realert = float(os.environ.get("WATCHDOG_REALERT_MIN", "30")) * 60
     interval = float(os.environ.get("WATCHDOG_INTERVAL_S", "30"))
+    grace = float(os.environ.get("WATCHDOG_STARTUP_GRACE_S", "600"))  # history load after (re)start
+    started = time.time()
     bad_since, last_alert, last_drift = None, 0.0, 0.0
     while True:
         ok, why = check(hb, max_age, health)
         now = time.time()
+        if not ok and now - started < grace:
+            time.sleep(interval)
+            continue
         if now - last_drift > 3600:
             d = clock_drift_s()
             last_drift = now
