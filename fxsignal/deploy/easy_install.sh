@@ -28,6 +28,7 @@ main() {
 exec </dev/null
 [ "$(id -u)" -eq 0 ] || { echo "Please run with sudo (or as root)."; exit 1; }
 [ -r /dev/tty ] || { echo "Please run this in an interactive terminal (SSH session)."; exit 1; }
+[ -d /run/systemd/system ] || { echo "This needs a normal Linux server with systemd (e.g. Ubuntu 24.04 VPS)."; exit 1; }
 
 say "1/7  Installing system packages (a minute or two)"
 export DEBIAN_FRONTEND=noninteractive
@@ -113,7 +114,12 @@ chown -R fxsignal:fxsignal "$APP"
 
 say "5/7  Testing the price feed and Telegram"
 set -a; . "$ENVF"; set +a
-if runuser -u fxsignal -- bash -c "set -a; . $ENVF; set +a; exec $APP/.venv/bin/fxsignal feed-selftest"; then ok "price feed works"; else fail "price feed test failed (check the Twelve Data key); continuing"; fi
+# clean environment: only what the service itself will have
+if runuser -u fxsignal -- env -i PATH=/usr/bin:/bin HOME="$APP" bash -c "set -a; . $ENVF; set +a; exec $APP/.venv/bin/fxsignal feed-selftest"; then
+  ok "price feed works"
+else
+  fail "price feed test failed (see the message above; usually a wrong Twelve Data key). Fix with: sudo fxsignal-reconfigure"
+fi
 MSG="fxsignal installed on $(hostname). Research mode: messages are labelled RESEARCH ONLY - do not trade them. Send /status to check, /help for commands."
 if curl -fsS -o /dev/null "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
      --data-urlencode "chat_id=$TELEGRAM_ADMIN_CHAT_ID" --data-urlencode "text=$MSG"; then
