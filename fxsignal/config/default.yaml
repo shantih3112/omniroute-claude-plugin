@@ -1,0 +1,45 @@
+# fxsignal default configuration. No secrets here: tokens come from environment variables
+# (see .env.example). Every value is an explicit, reviewable choice.
+mode: research_paper          # research_paper | paper_forward | (live is not implemented)
+timezone_display: Europe/Oslo
+symbols: [EURUSD, GBPUSD, USDJPY, AUDUSD, USDCAD, USDCHF, EURGBP, EURJPY, GBPJPY, AUDJPY, EURCHF]
+account:                      # illustrative only, used for example sizes in admin messages
+  equity: 10000
+  currency: USD
+risk:
+  risk_per_trade_pct: 0.5
+  hard_max_risk_per_trade_pct: 1.0
+  max_open_risk_pct: 2.0
+  max_currency_exposure_pct: 1.0
+  max_pair_correlation: 0.7
+  daily_loss_stop_pct: 3.0
+  overall_drawdown_stop_pct: 8.0
+  losing_streak_reduce: 4
+  losing_streak_risk_scale: 0.5
+  losing_streak_pause: 6
+  max_spread_multiple: 2.0
+  max_data_age_s: 180
+  min_reward_risk_after_costs: 1.0
+  kill_switch_file: var/KILL_SWITCH
+# Strategies that run. Status comes from docs/SCORECARD.md gates; only "paper_forward" or higher
+# may reach the broadcast channel. Research-status strategies go to the admin chat only.
+strategies:
+  - {family: trend_pullback, params: {trend_ema: 50, rsi_lo: 35, rr: 2.0}, status: research}
+  - {family: tsmom_weekly, params: {lookback_d: 120}, status: research}
+news:
+  blackout_before_min: 30
+  blackout_after_min: 30
+  impact_levels: [High]
+  max_calendar_age_h: 26        # older than this -> calendar treated as unavailable -> fail closed
+  fail_closed: true
+feed:
+  provider: replay              # replay | oanda
+  poll_seconds: 10
+telegram:
+  enabled: false
+  max_messages_per_minute: 20
+storage:
+  db_path: var/fxsignal.sqlite
+ops:
+  heartbeat_file: var/heartbeat.json
+  health_port: 8087
