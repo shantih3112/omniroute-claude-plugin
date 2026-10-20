@@ -94,3 +94,8 @@ def open_hours_between(t0: datetime, t1: datetime, skip_holidays: bool = True) -
         hol = pd.Index(md).isin([(12, 24), (12, 25), (12, 26), (12, 31), (1, 1), (1, 2)])
         open_ = open_ & ~hol
     return float(open_.sum()) / 4.0
+
+
+def iso(ts) -> str:
+    """Canonical storage format: UTC, second precision, ISO 8601 with +00:00."""
+    return pd.Timestamp(ts).tz_convert("UTC").floor("s").isoformat()

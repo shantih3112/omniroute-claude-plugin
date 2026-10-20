@@ -55,10 +55,6 @@ class ExecSeries:
         self.c = df["close"].to_numpy(float)
         self.hour = df.index.hour.to_numpy()
         self.tf_ns = int(tf_minutes * 60e9)
-        # rollover count: 21:00 UTC boundaries crossed (approximation of 17:00 NY)
-        days = (self.t // int(86400e9))
-        self.roll_day = days + (self.hour >= 21)
-        self.dow = df.index.dayofweek.to_numpy()
         # data holes: >= 2h of regular market time missing before bar i (vendor outage, not a
         # weekend/holiday). Trades spanning a hole are not scored: their outcome is unknown.
         hole = np.zeros(len(self.t), bool)
@@ -80,6 +76,19 @@ def _commission_price(inst: Instrument, cs: CostScenario) -> float:
     """Round-trip commission per unit of base currency, in quote price units."""
     per_lot = 2 * inst.commission_usd_per_lot_side * cs.commission_mult
     return per_lot / QUOTE_USD.get(inst.quote, 1.0) / inst.contract_size
+
+
+def rollovers(a: pd.Timestamp, b: pd.Timestamp) -> int:
+    """Financing nights between a and b: 21:00 UTC rollovers crossed, Wednesday counted 3x
+    (approximation of the 17:00 New York rollover and the T+2 weekend roll)."""
+    n = 0
+    d = a.normalize() + pd.Timedelta(hours=21)
+    if d <= a:
+        d += pd.Timedelta(days=1)
+    while d <= b:
+        n += 3 if d.dayofweek == 2 else 1
+        d += pd.Timedelta(days=1)
+    return n
 
 
 TRADE_COLS = ["signal_time", "side", "status", "entry_time", "entry", "stop", "target", "exit_time", "exit",
@@ -177,11 +186,7 @@ def simulate(signals: pd.DataFrame, ex: ExecSeries, inst: Instrument, cs: CostSc
         if ex.hole_cum[ix] != ex.hole_cum[ie]:
             rows.append(dict(base, status="data_gap", entry_time=pd.Timestamp(ex.t[ie], tz="UTC"), entry=entry))
             continue
-        nights = int(ex.roll_day[ix] - ex.roll_day[ie])
-        # triple swap on Wednesday rollovers crossed (approximate: count Wednesdays)
-        if nights > 0:
-            wed = int(((ex.dow[ie:ix + 1] == 2) & (ex.hour[ie:ix + 1] == 21)).any())
-            nights += 2 * wed
+        nights = rollovers(pd.Timestamp(ex.t[ie], tz="UTC"), pd.Timestamp(ex.t[ix], tz="UTC"))
         swap = nights * inst.swap_pips_per_night * cs.swap_mult * pip
         gross = (exit_px - entry) * side
         net = gross - comm - swap
