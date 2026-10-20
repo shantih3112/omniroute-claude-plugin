@@ -63,25 +63,50 @@ class PaperTracker:
             if bar.t > pd.Timestamp(sig["expires_at"]):
                 return dict(state, phase="done"), [Transition(sid, "expired", bar.t, None, None,
                                                              {"why": "no executable price before expiry"})]
-            sp = self._spr(bar)
-            pip = self.inst.pip_size
-            entry = bar.o + sp + self.cs.entry_slip_pips * pip if side == 1 else bar.o - self.cs.entry_slip_pips * pip
-            ref = sig["entry_ref"] + (sp if side == 1 else 0.0)
-            planned = abs(sig["entry_ref"] - sig["stop"]) + (sp if side == 1 else 0.0)
-            dev = (entry - ref) * side / planned
-            if dev > self.max_dev_r or dev < -self.max_fav_r or (entry - sig["stop"]) * side <= 0:
-                return dict(state, phase="done"), [Transition(
-                    sid, "missed", bar.t, entry, None,
-                    {"why": "price outside the entry zone - do not chase", "deviation_r": round(dev, 3)})]
-            state = dict(state, phase="open", entry=entry, entry_t=str(bar.t), planned=planned, mae=0.0)
-            tr = Transition(sid, "triggered", bar.t, entry, None, {"deviation_r": round(dev, 3)})
+            state, trs = self._enter(sig, state, bar.t, bar.o, self._spr(bar))
+            if state.get("phase") != "open":
+                return state, trs
             # the entry bar itself can also hit stop/target after the open
             state2, tr2 = self._exit_check(sig, state, bar, first=True)
-            return state2, [tr] + ([tr2] if tr2 is not None else [])
+            return state2, trs + ([tr2] if tr2 is not None else [])
         if phase == "open":
-            st, tr = self._exit_check(sig, state, bar, first=False)
+            if bar.t < pd.Timestamp(state["entry_t"]):
+                # entered from a quote in the middle of this bar: the part before the entry is
+                # unknown, so only the stop is checked (conservative; a target there is ignored)
+                st, tr = self._exit_check(dict(sig, target=None), state, bar, first=True)
+            else:
+                st, tr = self._exit_check(sig, state, bar, first=False)
             return st, ([tr] if tr is not None else [])
         return state, []
+
+    def enter_at(self, sig: dict, state: dict, t: pd.Timestamp, price: float,
+                 spread: float | None = None) -> tuple[dict, list[Transition]]:
+        """Paper entry from a live quote taken at publication (hourly feeds), same zone rules."""
+        if state.get("phase", "pending") != "pending":
+            return state, []
+        if t > pd.Timestamp(sig["expires_at"]):
+            return dict(state, phase="done"), [Transition(sig["id"], "expired", t, None, None,
+                                                          {"why": "no executable price before expiry"})]
+        sp = spread if spread is not None else _spread(self.inst, t.hour, self.cs)
+        st, trs = self._enter(sig, state, t, price, sp)
+        for tr in trs:
+            tr.detail["source"] = "quote at publication"
+        return st, trs
+
+    def _enter(self, sig: dict, state: dict, t: pd.Timestamp, bid: float, sp: float):
+        side = int(sig["side"])
+        sid = sig["id"]
+        pip = self.inst.pip_size
+        entry = bid + sp + self.cs.entry_slip_pips * pip if side == 1 else bid - self.cs.entry_slip_pips * pip
+        ref = sig["entry_ref"] + (sp if side == 1 else 0.0)
+        planned = abs(sig["entry_ref"] - sig["stop"]) + (sp if side == 1 else 0.0)
+        dev = (entry - ref) * side / planned
+        if dev > self.max_dev_r or dev < -self.max_fav_r or (entry - sig["stop"]) * side <= 0:
+            return dict(state, phase="done"), [Transition(
+                sid, "missed", t, entry, None,
+                {"why": "price outside the entry zone - do not chase", "deviation_r": round(dev, 3)})]
+        state = dict(state, phase="open", entry=entry, entry_t=str(t), planned=planned, mae=0.0)
+        return state, [Transition(sid, "triggered", t, entry, None, {"deviation_r": round(dev, 3)})]
 
     def _exit_check(self, sig, state, bar: Bar, first: bool):
         side = int(sig["side"])

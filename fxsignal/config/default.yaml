@@ -33,7 +33,7 @@ news:
   max_calendar_age_h: 26        # older than this -> calendar treated as unavailable -> fail closed
   fail_closed: true
 feed:
-  provider: replay              # replay | oanda
+  provider: auto                # auto (OANDA if OANDA_API_TOKEN is set, else Twelve Data) | oanda | twelvedata
   poll_seconds: 10
 telegram:
   enabled: false

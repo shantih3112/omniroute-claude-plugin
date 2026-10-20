@@ -3,7 +3,9 @@
 ## 1. What you need to provide
 | Item | How | Notes |
 |---|---|---|
-| OANDA practice API token | Create a free practice account at oanda.com → Manage API Access | Price feed with bid **and ask** (real spreads). Not FTMO's feed; spreads differ by broker. |
+| Price feed — **either** | | |
+| … Twelve Data API key (start here) | Sign up free at twelvedata.com → dashboard → API key → `TWELVEDATA_API_KEY` | Free plan: 8 calls/min, 800/day → **hourly** bars for 11 pairs (~264 calls/day). One price series, no ask (spreads modelled). Paper entries use a live quote at publication; stops/targets are checked on hourly bars (stop-first, conservative). |
+| … OANDA practice API token (later) | Free practice account at oanda.com → Manage API Access → `OANDA_API_TOKEN` | **1-minute** bars with bid and ask. If set, it is used automatically instead of Twelve Data. |
 | Telegram bot | Talk to @BotFather → `/newbot` → token | Keep the token secret; it is only read from the env file |
 | Your Telegram user ID | e.g. send `/start` to @userinfobot | Goes in `TELEGRAM_ADMIN_IDS` |
 | Admin chat ID | Send any message to your bot, then open `https://api.telegram.org/bot<TOKEN>/getUpdates` and read `chat.id` | Private chat = your user ID |
@@ -20,6 +22,7 @@ git clone <your repo> /opt/fxsignal-src && cp -r /opt/fxsignal-src/fxsignal /opt
 nano /etc/fxsignal/fxsignal.env        # fill in tokens (file is chmod 600)
 set -a; . /etc/fxsignal/fxsignal.env; set +a
 sudo -E -u fxsignal /opt/fxsignal/.venv/bin/fxsignal check
+sudo -E -u fxsignal /opt/fxsignal/.venv/bin/fxsignal feed-selftest     # fetches ~30 real hourly bars (2 credits)
 systemctl enable --now fxsignal fxsignal-watchdog fxsignal-backup.timer
 journalctl -u fxsignal -f
 ```

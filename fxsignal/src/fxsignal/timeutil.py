@@ -99,3 +99,15 @@ def open_hours_between(t0: datetime, t1: datetime, skip_holidays: bool = True) -
 def iso(ts) -> str:
     """Canonical storage format: UTC, second precision, ISO 8601 with +00:00."""
     return pd.Timestamp(ts).tz_convert("UTC").floor("s").isoformat()
+
+
+def last_market_open(ts) -> pd.Timestamp:
+    """Most recent Sunday 17:00 New York (weekly FX open) at or before ts, in UTC."""
+    ny = pd.Timestamp(ts).tz_convert(NY)
+    days_back = (ny.dayofweek - 6) % 7
+    cand = (ny - pd.Timedelta(days=days_back)).normalize() + pd.Timedelta(hours=17)
+    cand = cand.tz_localize(None).tz_localize(NY)
+    if cand > ny:
+        cand = cand - pd.Timedelta(days=7)
+        cand = cand.tz_localize(None).tz_localize(NY)
+    return cand.tz_convert("UTC")

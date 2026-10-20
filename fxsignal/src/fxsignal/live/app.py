@@ -27,7 +27,7 @@ from ..signals.store import Store
 from ..telegram.admin import Admin
 from ..telegram.client import Outbox, TelegramClient, redact
 from ..timeutil import iso
-from .feeds import OandaFeed, ReplayFeed
+from .feeds import OandaFeed, ReplayFeed, TwelveDataFeed
 from .service import Service
 
 log = logging.getLogger("fxsignal")
@@ -44,6 +44,18 @@ def telegram_from_env() -> tuple[TelegramClient | None, dict[str, str], set[int]
     admins = {int(x) for x in os.environ.get("TELEGRAM_ADMIN_IDS", "").replace(" ", "").split(",") if x}
     base = os.environ.get("TELEGRAM_API_BASE", "https://api.telegram.org")
     return (TelegramClient(tok, base) if tok else None), chats, admins
+
+
+def make_feed(cfg: dict):
+    """Pick the price feed from config (`feed.provider`), falling back to whatever key exists."""
+    prov = cfg.get("feed", {}).get("provider", "auto")
+    if prov == "auto":
+        prov = "oanda" if os.environ.get("OANDA_API_TOKEN") else "twelvedata"
+    if prov == "oanda":
+        return OandaFeed()
+    if prov == "twelvedata":
+        return TwelveDataFeed()
+    raise ValueError(f"unknown feed provider {prov!r}")
 
 
 async def _guard(name: str, store: Store, coro_fn, every: float, stop: asyncio.Event):
@@ -67,7 +79,7 @@ async def _guard(name: str, store: Store, coro_fn, every: float, stop: asyncio.E
 async def serve(config_path: str, base_dir: Path) -> None:
     cfg = load_config(config_path)
     store = Store(base_dir / cfg["storage"]["db_path"])
-    feed = OandaFeed()
+    feed = make_feed(cfg)
     svc = Service(cfg, store, feed, label="LIVE-PAPER" if cfg.get("mode") != "research_paper" else "RESEARCH-PAPER",
                   base_dir=base_dir)
     for s in svc.symbols:

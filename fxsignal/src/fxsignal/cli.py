@@ -97,10 +97,12 @@ def _cmd_backup(a):
 
 
 def _cmd_check(a):
-    need = {"OANDA_API_TOKEN": "price feed", "TELEGRAM_BOT_TOKEN": "Telegram delivery",
+    feed_ok = bool(os.environ.get("OANDA_API_TOKEN") or os.environ.get("TWELVEDATA_API_KEY"))
+    print(f"{'price feed':24s} {'set' if feed_ok else 'MISSING':8s} OANDA_API_TOKEN (1-minute) or TWELVEDATA_API_KEY (hourly)")
+    need = {"TELEGRAM_BOT_TOKEN": "Telegram delivery",
             "TELEGRAM_ADMIN_CHAT_ID": "admin chat", "TELEGRAM_ADMIN_IDS": "admin authorisation",
             "TELEGRAM_CHANNEL_ID": "broadcast channel (only used for validated strategies)"}
-    ok = True
+    ok = feed_ok
     for k, why in need.items():
         present = bool(os.environ.get(k))
         ok &= present or k == "TELEGRAM_CHANNEL_ID"
@@ -110,6 +112,29 @@ def _cmd_check(a):
         p = FtmoProfile.load(f)
         print(f"FTMO profile {f.name}: {p.challenge_use_allowed()[1]}")
     sys.exit(0 if ok else 1)
+
+
+def _cmd_feed_selftest(a):
+    """Fetch a few real bars from the configured feed and check them. Uses ~2 API credits."""
+    from .live.app import load_config, make_feed
+
+    async def go():
+        feed = make_feed(load_config(a.config))
+        try:
+            h = await feed.history_h1(a.symbol, 30)
+            print(f"feed={feed.name} symbol={a.symbol} bars={len(h)}")
+            if len(h) == 0:
+                print("FAIL: no completed bars returned")
+                return 1
+            print(h.tail(3).to_string())
+            age = (pd.Timestamp.now(tz="UTC") - (h.index[-1] + pd.Timedelta(hours=1))).total_seconds() / 3600
+            sane = bool(((h.high >= h[["open", "close"]].max(axis=1)) & (h.low <= h[["open", "close"]].min(axis=1))).all())
+            print(f"newest completed bar closed {age:.1f} h ago; OHLC consistent: {sane}")
+            print("OK" if sane and (age < 2 or age > 40) else "CHECK: data older than expected (market closed?)")
+            return 0
+        finally:
+            await feed.close()
+    sys.exit(asyncio.run(go()))
 
 
 def main(argv=None):
@@ -149,6 +174,10 @@ def main(argv=None):
     b.add_argument("--db", default=str(ROOT / "var" / "fxsignal.sqlite"))
     b.add_argument("--dest", required=True)
     b.set_defaults(fn=_cmd_backup)
+    f = sub.add_parser("feed-selftest")
+    f.add_argument("--config", default=str(ROOT / "config" / "default.yaml"))
+    f.add_argument("--symbol", default="EURUSD")
+    f.set_defaults(fn=_cmd_feed_selftest)
     c = sub.add_parser("check")
     c.set_defaults(fn=_cmd_check)
     a = ap.parse_args(argv)

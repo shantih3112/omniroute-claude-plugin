@@ -32,7 +32,7 @@ from ..signals.lifecycle import Bar, PaperTracker
 from ..signals.store import SignalRecord, Store
 from ..strategies.library import REGISTRY
 from ..telegram import format as fmt
-from ..timeutil import OSLO, fx_day, is_illiquid_holiday, iso, market_open
+from ..timeutil import OSLO, fx_day, is_illiquid_holiday, iso, last_market_open, market_open
 from .aggregate import Aggregator
 
 ROUTE = {"research": "admin", "paper_forward": "broadcast", "holdout_confirmed": "broadcast"}
@@ -66,10 +66,21 @@ class Service:
         self.calendar: list[cal.CalEvent] = []
         self.calendar_fetched: pd.Timestamp | None = None
         self.corr: dict[tuple[str, str], float] = {}
+        # bar length delivered by the feed: 1 (OANDA, replay) or 60 (Twelve Data free plan)
+        self.bar_minutes = int(getattr(feed, "bar_minutes", 1))
+        # hourly polling is staggered across symbols under a 7-calls/minute budget
+        self.hourly_grace_s = 15 * 60
+        self.max_lag = pd.Timedelta(minutes=5 if self.bar_minutes == 1 else 15)
+        self.need_quote: list[str] = []  # hourly feeds: signals awaiting a quote-based paper entry
 
     # ------------------------------------------------------------------ bootstrap / restore
     def seed_history(self, symbol: str, h1: pd.DataFrame) -> None:
         self.st[symbol].h1.seed(h1.tail(20000))
+        if self.bar_minutes == 60 and len(h1) and self.st[symbol].last_bar_t is None:
+            # hourly feed: the newest history bar IS the latest completed bar of the live series
+            # (in 1-minute mode it is not: setting it would reject the following M1 bars)
+            self.st[symbol].last_bar_t = h1.index[-1]
+            self.st[symbol].closes.extend(h1["close"].tail(240).tolist())
 
     def restore(self) -> dict:
         """After a restart: reload calendar/state from the DB; active signals keep tracking."""
@@ -136,7 +147,7 @@ class Service:
             for bar in batch.bars:
                 # per-bar staleness is not checked here: catch-up bars after an outage are valid
                 # history; freshness of the feed as a whole is judged in _update_data_status
-                v = check_live_bar(bar.t, ss.last_bar_t, now, bar.o, bar.h, bar.l, bar.c, 1,
+                v = check_live_bar(bar.t, ss.last_bar_t, now, bar.o, bar.h, bar.l, bar.c, self.bar_minutes,
                                    max_staleness_min=1e9,
                                    recent_closes=np.array(ss.closes) if len(ss.closes) > 30 else None)
                 if not v.ok and any("out-of-order" in r or "inconsistent" in r for r in v.reasons):
@@ -156,6 +167,8 @@ class Service:
             for built in ss.h1.tick(now):
                 stats["signals"] += self._on_h1_close(sym, built, now, stats)
             self._update_data_status(sym, now)
+        if self.need_quote:
+            stats["events"] += await self._quote_entries()
         self._maybe_daily_report(now)
         self._heartbeat(now, stats)
         return stats
@@ -170,8 +183,17 @@ class Service:
         if ss.last_bar_t is None:
             ss.status, ss.status_reason = "no_data", "no bars received yet"
             return
-        age = (now - (ss.last_bar_t + pd.Timedelta(minutes=1))).total_seconds()
-        if age > self.risk.cfg.max_data_age_s:
+        # stale = the next bar is overdue. M1: newest bar closed > max_data_age_s ago. Hourly
+        # (staggered polling): the following hourly bar has been closed for > grace + max_data_age_s.
+        # After the weekend, measure from the weekly open, not from Friday's last bar.
+        ref = max(ss.last_bar_t, last_market_open(now) - pd.Timedelta(minutes=self.bar_minutes))
+        if self.bar_minutes == 1:
+            age = (now - (ref + pd.Timedelta(minutes=1))).total_seconds()
+            limit = self.risk.cfg.max_data_age_s
+        else:
+            age = (now - (ref + 2 * pd.Timedelta(minutes=self.bar_minutes))).total_seconds()
+            limit = self.risk.cfg.max_data_age_s + self.hourly_grace_s
+        if age > limit:
             if ss.status != "stale":
                 self.store.incident(iso(now), "stale_data", f"{sym}: last bar {age:.0f}s old")
             ss.status, ss.status_reason = "stale", f"last bar {age:.0f}s old"
@@ -222,8 +244,8 @@ class Service:
         inst = instruments.get(sym)
         ss = self.st[sym]
         reasons = []
-        if self.label != "REPLAY" and (now - pd.Timestamp(row.time)) > pd.Timedelta(minutes=5):
-            reasons.append("signal bar closed more than 5 min ago (processing lag)")
+        if self.label != "REPLAY" and (now - pd.Timestamp(row.time)) > self.max_lag:
+            reasons.append(f"signal bar closed more than {self.max_lag.seconds // 60} min ago (processing lag)")
         if ss.status not in ("ok",):
             reasons.append(f"data not OK: {ss.status} {ss.status_reason}".strip())
         if not market_open(pd.Timestamp(row.time).to_pydatetime()):
@@ -248,7 +270,7 @@ class Service:
         st = self.portfolio_state(now)
         prop = Proposal("?", sym, side, float(row.entry_ref), float(row.stop), tgt,
                         spread / inst.pip_size, 0.0 if self.label == "REPLAY" else
-                        (now - (ss.last_bar_t + pd.Timedelta(minutes=1))).total_seconds() if ss.last_bar_t is not None else 1e9,
+                        0.0 if ss.status == "ok" else 1e9,
                         cost_r)
         dec = self.risk.evaluate(prop, inst, st, self.corr)
         reasons += dec.reasons
@@ -300,7 +322,33 @@ class Service:
         self.store.add_event(rec.id, iso(now), "published", detail={"channel": ROUTE[rec.evidence_class]})
         text = fmt.new_signal(sig, instruments.get(sym), dict(rec.context, published_at=iso(now)))
         self.store.enqueue(f"new:{rec.id}", ROUTE[rec.evidence_class], "signal", self._tag(text), iso(now))
+        if self.bar_minutes > 1 and hasattr(self.feed, "quote"):
+            self.need_quote.append(rec.id)
         return True
+
+    async def _quote_entries(self) -> int:
+        """Hourly feeds: paper-enter newly published signals at a live quote (1 API credit each)."""
+        n = 0
+        todo, self.need_quote = self.need_quote, []
+        for sid in todo:
+            sig = self.store.signal(sid)
+            key = f"track:{sid}"
+            st = self.store.kv_get(key, {"phase": "pending", "published_at": sig["created_at"]})
+            try:
+                t, px = await self.feed.quote(sig["symbol"])
+            except Exception as ex:
+                self.store.incident(iso(self.feed.now()), "quote_failed", f"{sid}: {type(ex).__name__}: {str(ex)[:150]}")
+                continue  # stays pending; hourly bars decide (it will most likely expire)
+            st, trs = self.trackers[sig["symbol"]].enter_at(sig, st, pd.Timestamp(t), px)
+            self.store.kv_set(key, st, iso(t))
+            inst = instruments.get(sig["symbol"])
+            for tr in trs:
+                self.store.add_event(sid, iso(tr.ts), tr.kind, tr.price, tr.r_result, tr.detail)
+                self.store.enqueue(f"evt:{sid}:{tr.kind}", ROUTE[sig["evidence_class"]], "update",
+                                   self._tag(fmt.update(sig, inst, tr.kind, tr.ts, tr.price, tr.r_result, tr.detail)),
+                                   iso(tr.ts))
+                n += 1
+        return n
 
     def _tag(self, text: str) -> str:
         return (f"<b>[{self.label}]</b> " + text) if self.label != "LIVE" else text

@@ -41,7 +41,7 @@ running in the background after this session.
 ## Readiness verdict
 | Use | Ready? |
 |---|---|
-| Admin-only research/paper monitor (labelled research) | Yes, after OANDA token + Telegram bot are configured and a VPS is provisioned |
+| Admin-only research/paper monitor (labelled research) | Yes, after a price-feed key (Twelve Data free = hourly, or OANDA = 1-minute) + Telegram bot are configured and a VPS is provisioned |
 | Private paper feed of "validated" signals | **No** – nothing has passed the gates |
 | Inviting other people | **No** |
 | Real money / FTMO challenge | **No** – no edge; FTMO rules unverified |
@@ -50,3 +50,10 @@ running in the background after this session.
 1. A new hypothesis, declared in RESEARCH_LOG before testing, that passes Gates R, V and M.
 2. Then holdouts (once), then ≥ 3 months / ≥ 50 forward paper signals within the backtest's
    90 % interval. Only then is small-risk live trading even worth discussing.
+
+## Feeds (added 2026-10-20)
+* **Twelve Data (free, hourly)** – connector `TwelveDataFeed`, tested against a mocked API only
+  (host blocked in the build environment); verify with `fxsignal feed-selftest` on the server.
+  Coarser than the research assumptions: hourly stop/target resolution (stop-first), no real
+  spreads. Forward results from this feed are labelled and must not be pooled with 1-minute results.
+* **OANDA (free practice, 1-minute)** – preferred; used automatically once `OANDA_API_TOKEN` is set.
