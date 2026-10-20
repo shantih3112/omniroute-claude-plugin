@@ -1,0 +1,22 @@
+# Alternativ til Docker: systemd på en Linux-server.
+# Installer: sudo cp deploy/kampanalyse.service /etc/systemd/system/ && sudo systemctl enable --now kampanalyse
+[Unit]
+Description=Kampanalysen Telegram-bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=kampanalyse
+WorkingDirectory=/opt/kampanalyse
+EnvironmentFile=/opt/kampanalyse/.env
+ExecStart=/opt/kampanalyse/.venv/bin/python -m kampanalyse run
+Restart=always
+RestartSec=10
+# Herding
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/kampanalyse/data
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

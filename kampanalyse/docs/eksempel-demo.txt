@@ -1,0 +1,518 @@
+EKSEMPELUTSKRIFT FRA 'python -m kampanalyse demo --date 2026-10-20'
+ALLE LAG, KAMPER OG ODDS ER FIKTIVE. Dette er IKKE dagens kamper eller ekte Norsk Tipping-priser.
+Varslingsnivå i demoen: normal (mål og gule kort vises bare på nivå 'detaljert').
+
+────────── [08:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+🌅 MORGENBRIEF | TIRSDAG 20. OKT. 2026
+Publisert: 08:00 · Data sist kontrollert: 08:00
+
+DAGENS OVERBLIKK
+8 kamper kartlagt, 8 med godt nok datagrunnlag. 9 enkeltspill kvalifisert, 6 bonger.
+
+HOVEDFORSLAG
+K-261020-B1 · 3 ledd · totalodds 3.06 (ikke verifisert hos NT)
+Største usikkerhet: Nordby FK – Solbakken BK, Nordby FK (draw no bet) (59 %).
+
+ØVRIGE BONGER
+• Kombinasjon 10–20: K-261020-C1 · odds 11.34
+• Kombinasjon 20–40: K-261020-D1 · odds 20.13 · spekulativ
+• Kombinasjon 40–70: K-261020-E1 · odds 40.67 · spekulativ
+• Kombinasjon 70–100: K-261020-F1 · odds 70.65 · spekulativ
+• Ekstrembong 100+: K-261020-G1 · odds 102.01 · spekulativ
+
+DAGENS ENKELTSPILL
+1. Granlund IL – Skoglia FK 13:00: Granlund IL eller Skoglia FK @ 1.32 · Høy treffmulighet
+2. Brattøy IL – Østgård FK 20:45: Brattøy IL eller Østgård FK @ 1.37 · Høy treffmulighet
+3. Nordby FK – Solbakken BK 17:00: Nordby FK (draw no bet) @ 1.69 · Høy treffmulighet
+4. Lysefjord FK – Vestmark SK 19:00: Vestmark SK +1 (asiatisk) @ 1.33 · Høy treffmulighet
+5. Fjellstad IL – Havnevik SK 18:00: Over 1.5 mål @ 1.37 · Høy treffmulighet
+…og 4 til under /singles
+
+DETTE FØLGER VI MED PÅ
+• Oppstilling Granlund IL–Skoglia FK ca. 12:00
+• Oppstilling Tindvik IF–Sjøvik FK ca. 14:00
+• Oppstilling Dalheim BK–Kystby IF ca. 14:00
+• Oppstilling Nordby FK–Solbakken BK ca. 16:00
+• Oppstilling Fjellstad IL–Havnevik SK ca. 17:00
+
+NESTE OPPDATERING
+Oppstillinger fra ca. 12:00, deretter automatisk kampoppfølging.
+
+Spill ansvarlig. Ingen forslag er sikre. Hjelpelinjen: 800 800 40.
+  [Enkeltspill]  [Alle bonger]  [Kampstatus]
+
+────────── [08:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ HOVEDBONG
+ID: K-261020-B1 | Versjon: 1
+Status: foreløpig
+Publisert: 20.10 kl. 08:00
+Odds kontrollert: 20.10 kl. 08:00
+
+1. Granlund IL – Skoglia FK · 13:00
+Dobbeltsjanse: Granlund IL eller Skoglia FK
+Odds: 1.32 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Anslått treffmulighet ca. 77% (høy treffmulighet er ikke det samme som god pris).
+Usikkerhet: Granlund IL har bare 3 hviledager.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+2. Nordby FK – Solbakken BK · 17:00
+Draw no bet (uavgjort gir tilbakebetaling): Nordby FK (draw no bet)
+Odds: 1.69 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Anslått treffmulighet ca. 71% (høy treffmulighet er ikke det samme som god pris).
+Usikkerhet: Nordby FK har +5.5 i målforskjell over forventning siste 5 – resultatene kan være preget av flaks.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+3. Brattøy IL – Østgård FK · 20:45
+Dobbeltsjanse: Brattøy IL eller Østgård FK
+Odds: 1.37 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Anslått treffmulighet ca. 74% (høy treffmulighet er ikke det samme som god pris).
+Usikkerhet: Brattøy IL har bare 3 hviledager.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+TOTALODDS
+3.06 – beregnet produkt av leddene. Ikke verifisert hos Norsk Tipping.
+
+RISIKO
+Grovt treffanslag: 40 % (uvalidert modell, antar uavhengighet mellom kampene). Forventet verdi ut fra estimatene: +2.5 %.
+Deler kamp med: K-261020-C1, K-261020-E1, K-261020-F1, K-261020-G1. Ett resultat kan påvirke flere bonger.
+
+FORBEHOLD
+Minste akseptable odds: ledd 1 ≥ 1.25, ledd 2 ≥ 1.58, ledd 3 ≥ 1.29
+Trekkes ved vesentlige fravær i bekreftet oppstilling eller odds under minstegrensen.
+Ikke klar til innlevering før prisene er kontrollert i Oddsen.
+  [Full analyse]  [Kilder]  [Kampstatus]  [Andre bonger]
+
+────────── [08:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ KOMBINASJON 10–20
+ID: K-261020-C1 | Versjon: 1
+Status: foreløpig
+Publisert: 20.10 kl. 08:00
+Odds kontrollert: 20.10 kl. 08:00
+
+1. Granlund IL – Skoglia FK · 13:00
+Asiatisk handikap: Skoglia FK -0.25 (asiatisk)
+Odds: 2.91 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Tilbudt odds 2.91 er tydelig høyere enn markedets marginfrie pris 2.77.
+Usikkerhet: Modellen venter 0.21 mål i favør av Granlund IL.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+2. Tindvik IF – Sjøvik FK · 15:00
+Asiatisk handikap: Sjøvik FK -0.25 (asiatisk)
+Odds: 3.02 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Modellen anslår 38% mot markedets 33% (uvalidert modell).
+Usikkerhet: Modellen venter 0.17 mål i favør av Tindvik IF.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+3. Fjellstad IL – Havnevik SK · 18:00
+Asiatisk handikap: Fjellstad IL +0.25 (asiatisk)
+Odds: 1.29 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Anslått treffmulighet ca. 80% (høy treffmulighet er ikke det samme som god pris).
+Usikkerhet: Modellen er mer negativ (75%) enn markedet (77%).
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+TOTALODDS
+11.34 – beregnet produkt av leddene. Ikke verifisert hos Norsk Tipping.
+
+RISIKO
+Grovt treffanslag: 15 % (uvalidert modell, antar uavhengighet mellom kampene). Forventet verdi ut fra estimatene: +8.3 %.
+Deler kamp med: K-261020-B1, K-261020-D1, K-261020-E1, K-261020-F1, K-261020-G1. Ett resultat kan påvirke flere bonger.
+
+FORBEHOLD
+Minste akseptable odds: ledd 1 ≥ 2.59, ledd 2 ≥ 2.76, ledd 3 ≥ 1.24
+Trekkes ved vesentlige fravær i bekreftet oppstilling eller odds under minstegrensen.
+Ikke klar til innlevering før prisene er kontrollert i Oddsen.
+  [Full analyse]  [Kilder]  [Kampstatus]  [Andre bonger]
+
+────────── [08:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ KOMBINASJON 20–40 · spekulativ
+ID: K-261020-D1 | Versjon: 1
+Status: foreløpig
+Publisert: 20.10 kl. 08:00
+Odds kontrollert: 20.10 kl. 08:00
+
+1. Tindvik IF – Sjøvik FK · 15:00
+Fulltid H-U-B: Sjøvik FK vinner
+Odds: 3.43 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Tilbudt odds 3.43 er tydelig høyere enn markedets marginfrie pris 3.27.
+Usikkerhet: Modellen venter 0.17 mål i favør av Tindvik IF.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+2. Dalheim BK – Kystby IF · 15:00
+Draw no bet (uavgjort gir tilbakebetaling): Kystby IF (draw no bet)
+Odds: 1.90 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Usikkerhet: Tilbudt odds 1.90 er lavere enn markedets marginfrie pris 1.99 – prisen inneholder margin.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+3. Lysefjord FK – Vestmark SK · 19:00
+Dobbeltsjanse: Vestmark SK eller uavgjort
+Odds: 1.67 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Modellen anslår 64% mot markedets 60% (uvalidert modell).
+Usikkerhet: Lysefjord FK har bare 3 hviledager.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+4. Myrvoll SK – Elvedal BK · 20:00
+Asiatisk handikap: Elvedal BK -0.25 (asiatisk)
+Odds: 1.85 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Modellen anslår 57% mot markedets 53% (uvalidert modell).
+Usikkerhet: Tilbudt odds 1.85 er lavere enn markedets marginfrie pris 1.90 – prisen inneholder margin.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+TOTALODDS
+20.13 – beregnet produkt av leddene. Ikke verifisert hos Norsk Tipping.
+
+RISIKO
+Grovt treffanslag: 7 % (uvalidert modell, antar uavhengighet mellom kampene). Forventet verdi ut fra estimatene: +4.5 %.
+Spekulativ bong med lav treffmulighet. Høy totalodds betyr ikke god pris.
+Deler kamp med: K-261020-C1, K-261020-E1, K-261020-F1, K-261020-G1. Ett resultat kan påvirke flere bonger.
+
+FORBEHOLD
+Minste akseptable odds: ledd 1 ≥ 3.06, ledd 2 ≥ 1.87, ledd 3 ≥ 1.57, ledd 4 ≥ 1.77
+Trekkes ved vesentlige fravær i bekreftet oppstilling eller odds under minstegrensen.
+Ikke klar til innlevering før prisene er kontrollert i Oddsen.
+  [Full analyse]  [Kilder]  [Kampstatus]  [Andre bonger]
+
+────────── [08:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ KOMBINASJON 40–70 · spekulativ
+ID: K-261020-E1 | Versjon: 1
+Status: foreløpig
+Publisert: 20.10 kl. 08:00
+Odds kontrollert: 20.10 kl. 08:00
+
+1. Granlund IL – Skoglia FK · 13:00
+Totalt antall mål: Under 3.5 mål
+Odds: 1.77 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: xG for siste 10: Granlund IL 1.41, Skoglia FK 1.17.
+Usikkerhet: Forventede mål 1.79–1.57 (sum 3.36, ligasnitt 3.10).
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+2. Dalheim BK – Kystby IF · 15:00
+Fulltid H-U-B: Dalheim BK vinner
+Odds: 2.66 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Tilbudt odds 2.66 er tydelig høyere enn markedets marginfrie pris 2.55.
+Usikkerhet: Jevn kamp ifølge modellen (forventet målforskjell 0.05).
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+3. Fjellstad IL – Havnevik SK · 18:00
+Totalt antall mål: Over 1.5 mål
+Odds: 1.37 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Anslått treffmulighet ca. 73% (høy treffmulighet er ikke det samme som god pris).
+Usikkerhet: Forventede mål 1.67–0.99 (sum 2.66, ligasnitt 3.10).
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+4. Lysefjord FK – Vestmark SK · 19:00
+Hjemmelagets antall mål: Lysefjord FK under 1.5 mål
+Odds: 2.79 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Modellen anslår 39% mot markedets 35% (uvalidert modell).
+Usikkerhet: Forventede mål 2.05–2.28 (sum 4.33, ligasnitt 3.10).
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+5. Brattøy IL – Østgård FK · 20:45
+Asiatisk handikap: Østgård FK -0.25 (asiatisk)
+Odds: 2.26 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Usikkerhet: Tilbudt odds 2.26 er lavere enn markedets marginfrie pris 2.31 – prisen inneholder margin.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+TOTALODDS
+40.67 – beregnet produkt av leddene. Ikke verifisert hos Norsk Tipping.
+
+RISIKO
+Grovt treffanslag: 3 % (uvalidert modell, antar uavhengighet mellom kampene). Forventet verdi ut fra estimatene: +4.2 %.
+Spekulativ bong med lav treffmulighet. Høy totalodds betyr ikke god pris.
+Deler kamp med: K-261020-B1, K-261020-C1, K-261020-D1, K-261020-F1, K-261020-G1. Ett resultat kan påvirke flere bonger.
+
+FORBEHOLD
+Minste akseptable odds: ledd 1 ≥ 1.68, ledd 2 ≥ 2.46, ledd 3 ≥ 1.31, ledd 4 ≥ 2.63, ledd 5 ≥ 2.18
+Trekkes ved vesentlige fravær i bekreftet oppstilling eller odds under minstegrensen.
+Ikke klar til innlevering før prisene er kontrollert i Oddsen.
+  [Full analyse]  [Kilder]  [Kampstatus]  [Andre bonger]
+
+────────── [08:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ KOMBINASJON 70–100 · spekulativ
+ID: K-261020-F1 | Versjon: 1
+Status: foreløpig
+Publisert: 20.10 kl. 08:00
+Odds kontrollert: 20.10 kl. 08:00
+
+1. Granlund IL – Skoglia FK · 13:00
+Asiatisk handikap: Skoglia FK -0.25 (asiatisk)
+Odds: 2.91 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Tilbudt odds 2.91 er tydelig høyere enn markedets marginfrie pris 2.77.
+Usikkerhet: Modellen venter 0.21 mål i favør av Granlund IL.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+2. Dalheim BK – Kystby IF · 15:00
+Dobbeltsjanse: Dalheim BK eller uavgjort
+Odds: 1.59 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Usikkerhet: Jevn kamp ifølge modellen (forventet målforskjell 0.05).
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+3. Nordby FK – Solbakken BK · 17:00
+Asiatisk handikap: Solbakken BK +0.5 (asiatisk)
+Odds: 1.67 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Usikkerhet: Modellen venter 0.24 mål i favør av Nordby FK.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+4. Fjellstad IL – Havnevik SK · 18:00
+Begge lag scorer: Begge lag scorer: Ja
+Odds: 2.09 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Modellen anslår 52% mot markedets 48% (uvalidert modell).
+Usikkerhet: Forventede mål 1.67–0.99 (sum 2.66, ligasnitt 3.10).
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+5. Lysefjord FK – Vestmark SK · 19:00
+Asiatisk handikap: Vestmark SK +1 (asiatisk)
+Odds: 1.33 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Anslått treffmulighet ca. 79% (høy treffmulighet er ikke det samme som god pris).
+Usikkerhet: Lysefjord FK har bare 3 hviledager.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+6. Myrvoll SK – Elvedal BK · 20:00
+Fulltid H-U-B: Elvedal BK vinner
+Odds: 2.15 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Modellen anslår 50% mot markedets 45% (uvalidert modell).
+Usikkerhet: Tilbudt odds 2.15 er lavere enn markedets marginfrie pris 2.21 – prisen inneholder margin.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+7. Brattøy IL – Østgård FK · 20:45
+Dobbeltsjanse: Østgård FK eller uavgjort
+Odds: 1.53 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Anslått treffmulighet ca. 65% (høy treffmulighet er ikke det samme som god pris).
+Usikkerhet: Jevn kamp ifølge modellen (forventet målforskjell 0.06).
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+TOTALODDS
+70.65 – beregnet produkt av leddene. Ikke verifisert hos Norsk Tipping.
+
+RISIKO
+Grovt treffanslag: 2 % (uvalidert modell, antar uavhengighet mellom kampene). Forventet verdi ut fra estimatene: +1.8 %.
+Spekulativ bong med lav treffmulighet. Høy totalodds betyr ikke god pris.
+Deler kamp med: K-261020-B1, K-261020-C1, K-261020-D1, K-261020-E1, K-261020-G1. Ett resultat kan påvirke flere bonger.
+
+FORBEHOLD
+Minste akseptable odds: ledd 1 ≥ 2.59, ledd 2 ≥ 1.56, ledd 3 ≥ 1.62, ledd 4 ≥ 1.96, ledd 5 ≥ 1.27, ledd 6 ≥ 2.06, ledd 7 ≥ 1.47
+Trekkes ved vesentlige fravær i bekreftet oppstilling eller odds under minstegrensen.
+Ikke klar til innlevering før prisene er kontrollert i Oddsen.
+  [Full analyse]  [Kilder]  [Kampstatus]  [Andre bonger]
+
+────────── [08:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ EKSTREMBONG 100+ · spekulativ
+ID: K-261020-G1 | Versjon: 1
+Status: foreløpig
+Publisert: 20.10 kl. 08:00
+Odds kontrollert: 20.10 kl. 08:00
+
+1. Tindvik IF – Sjøvik FK · 15:00
+Asiatisk handikap: Sjøvik FK -0.25 (asiatisk)
+Odds: 3.02 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Modellen anslår 38% mot markedets 33% (uvalidert modell).
+Usikkerhet: Modellen venter 0.17 mål i favør av Tindvik IF.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+2. Dalheim BK – Kystby IF · 15:00
+Draw no bet (uavgjort gir tilbakebetaling): Kystby IF (draw no bet)
+Odds: 1.90 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Usikkerhet: Tilbudt odds 1.90 er lavere enn markedets marginfrie pris 1.99 – prisen inneholder margin.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+3. Nordby FK – Solbakken BK · 17:00
+Asiatisk handikap: Solbakken BK +1 (asiatisk)
+Odds: 1.27 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Anslått treffmulighet ca. 81% (høy treffmulighet er ikke det samme som god pris).
+Usikkerhet: Tilbudt odds 1.27 er lavere enn markedets marginfrie pris 1.31 – prisen inneholder margin.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+4. Lysefjord FK – Vestmark SK · 19:00
+Hjemmelagets antall mål: Lysefjord FK under 1.5 mål
+Odds: 2.79 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Modellen anslår 39% mot markedets 35% (uvalidert modell).
+Usikkerhet: Forventede mål 2.05–2.28 (sum 4.33, ligasnitt 3.10).
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+5. Myrvoll SK – Elvedal BK · 20:00
+Totalt antall mål: Over 2.5 mål
+Odds: 2.22 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Hvorfor: Modellen anslår 49% mot markedets 44% (uvalidert modell).
+Usikkerhet: Tilbudt odds 2.22 er lavere enn markedets marginfrie pris 2.28 – prisen inneholder margin.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+6. Brattøy IL – Østgård FK · 20:45
+Asiatisk handikap: Østgård FK -0.25 (asiatisk)
+Odds: 2.26 · DEMO-pris (fiktiv) · kontrollert 20.10 kl. 08:00
+Usikkerhet: Tilbudt odds 2.26 er lavere enn markedets marginfrie pris 2.31 – prisen inneholder margin.
+Oppstilling: ikke publisert ennå · Status: Ikke startet
+
+TOTALODDS
+102.01 – beregnet produkt av leddene. Ikke verifisert hos Norsk Tipping.
+
+RISIKO
+Grovt treffanslag: 2 % (uvalidert modell, antar uavhengighet mellom kampene). Forventet verdi ut fra estimatene: -3.0 %.
+Spekulativ bong med lav treffmulighet. Høy totalodds betyr ikke god pris.
+Deler kamp med: K-261020-B1, K-261020-C1, K-261020-D1, K-261020-E1, K-261020-F1. Ett resultat kan påvirke flere bonger.
+
+FORBEHOLD
+Minste akseptable odds: ledd 1 ≥ 2.76, ledd 2 ≥ 1.87, ledd 3 ≥ 1.25, ledd 4 ≥ 2.63, ledd 5 ≥ 2.11, ledd 6 ≥ 2.18
+Trekkes ved vesentlige fravær i bekreftet oppstilling eller odds under minstegrensen.
+Ikke klar til innlevering før prisene er kontrollert i Oddsen.
+  [Full analyse]  [Kilder]  [Kampstatus]  [Andre bonger]
+
+────────── [12:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+📋 BEKREFTEDE LAGOPPSTILLINGER
+Granlund IL – Skoglia FK · 13:00
+Granlund IL (4-3-3): Granlund spiller 1, Granlund spiller 2, Granlund spiller 3, Granlund spiller 4, Granlund spiller 5, Granlund spiller 6, Granlund spiller 7, Granlund spiller 8, Granlund spiller 9, Granlund spiller 10, Granlund spiller 11
+Skoglia FK (4-3-3): Skoglia spiller 1, Skoglia spiller 2, Skoglia spiller 3, Skoglia spiller 4, Skoglia spiller 5, Skoglia spiller 6, Skoglia spiller 7, Skoglia spiller 8, Skoglia spiller 9, Skoglia spiller 10, Skoglia spiller 11
+
+────────── [13:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ Avspark: Granlund IL – Skoglia FK
+
+────────── [14:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+📋 BEKREFTEDE LAGOPPSTILLINGER
+Tindvik IF – Sjøvik FK · 15:00
+Tindvik IF (4-3-3): Tindvik spiller 1, Tindvik spiller 2, Tindvik spiller 3, Tindvik spiller 4, Tindvik spiller 5, Tindvik spiller 6, Tindvik spiller 7, Tindvik spiller 8, Tindvik spiller 9, Tindvik spiller 10, Tindvik spiller 11
+Sjøvik FK (4-3-3): Sjøvik spiller 1, Sjøvik spiller 2, Sjøvik spiller 3, Sjøvik spiller 4, Sjøvik spiller 5, Sjøvik spiller 6, Sjøvik spiller 7, Sjøvik spiller 8, Sjøvik spiller 9, Sjøvik spiller 10, Sjøvik spiller 11
+
+────────── [14:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+📋 BEKREFTEDE LAGOPPSTILLINGER
+Dalheim BK – Kystby IF · 15:00
+Dalheim BK (4-3-3): Dalheim spiller 1, Dalheim spiller 2, Dalheim spiller 3, Dalheim spiller 4, Dalheim spiller 5, Dalheim spiller 6, Dalheim spiller 7, Dalheim spiller 8, Dalheim spiller 9, Dalheim spiller 10, Dalheim spiller 11
+Kystby IF (4-3-3): Kystby spiller 1, Kystby spiller 2, Kystby spiller 3, Kystby spiller 4, Kystby spiller 5, Kystby spiller 6, Kystby spiller 7, Kystby spiller 8, Kystby spiller 9, Kystby spiller 10, Kystby spiller 11
+
+────────── [15:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ Avspark: Tindvik IF – Sjøvik FK
+
+────────── [15:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ Avspark: Dalheim BK – Kystby IF
+
+────────── [15:07] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+❌ BEKREFTET TAPT
+Granlund IL – Skoglia FK: Skoglia FK -0.25 (asiatisk) røk.
+Berørte bonger: K-261020-C1, K-261020-E1, K-261020-F1
+Bekreftet ut fra offisielt sluttresultat. Norsk Tippings oppgjør er gjeldende.
+
+────────── [15:07] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+🔎 Ny analyse fullført — ingen nye spill oppfyller kravene
+Utløst av: Bekreftet tapt: K-261020-C1, K-261020-E1, K-261020-F1
+
+────────── [16:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+📋 BEKREFTEDE LAGOPPSTILLINGER
+Nordby FK – Solbakken BK · 17:00
+Nordby FK (4-3-3): Nordby spiller 1, Nordby spiller 2, Nordby spiller 3, Nordby spiller 4, Nordby spiller 5, Nordby spiller 6, Nordby spiller 7, Nordby spiller 8, Nordby spiller 9, Nordby spiller 10, Nordby spiller 11
+Solbakken BK (4-3-3): Solbakken spiller 1, Solbakken spiller 2, Solbakken spiller 3, Solbakken spiller 4, Solbakken spiller 5, Solbakken spiller 6, Solbakken spiller 7, Solbakken spiller 8, Solbakken spiller 9, Solbakken spiller 10, Solbakken spiller 11
+
+────────── [17:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+📋 BEKREFTEDE LAGOPPSTILLINGER
+Fjellstad IL – Havnevik SK · 18:00
+Fjellstad IL (4-3-3): Fjellstad spiller 1, Fjellstad spiller 2, Fjellstad spiller 3, Fjellstad spiller 4, Fjellstad spiller 5, Fjellstad spiller 6, Fjellstad spiller 7, Fjellstad spiller 8, Fjellstad spiller 9, Fjellstad spiller 10, Fjellstad spiller 11
+Havnevik SK (4-3-3): Havnevik spiller 1, Havnevik spiller 2, Havnevik spiller 3, Havnevik spiller 4, Havnevik spiller 5, Havnevik spiller 6, Havnevik spiller 7, Havnevik spiller 8, Havnevik spiller 9, Havnevik spiller 10, Havnevik spiller 11
+
+────────── [17:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ Avspark: Nordby FK – Solbakken BK
+
+────────── [17:07] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+❌ BEKREFTET TAPT
+Tindvik IF – Sjøvik FK: Sjøvik FK vinner røk.
+Berørte bonger: K-261020-D1, K-261020-G1
+Bekreftet ut fra offisielt sluttresultat. Norsk Tippings oppgjør er gjeldende.
+
+────────── [18:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+📋 BEKREFTEDE LAGOPPSTILLINGER
+Lysefjord FK – Vestmark SK · 19:00
+Lysefjord FK (4-3-3): Lysefjord spiller 1, Lysefjord spiller 2, Lysefjord spiller 3, Lysefjord spiller 4, Lysefjord spiller 5, Lysefjord spiller 6, Lysefjord spiller 7, Lysefjord spiller 8, Lysefjord spiller 9, Lysefjord spiller 10, Lysefjord spiller 11
+Vestmark SK (4-3-3): Vestmark spiller 1, Vestmark spiller 2, Vestmark spiller 3, Vestmark spiller 4, Vestmark spiller 5, Vestmark spiller 6, Vestmark spiller 7, Vestmark spiller 8, Vestmark spiller 9, Vestmark spiller 10, Vestmark spiller 11
+
+────────── [18:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ Avspark: Fjellstad IL – Havnevik SK
+
+────────── [19:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+📋 BEKREFTEDE LAGOPPSTILLINGER
+Myrvoll SK – Elvedal BK · 20:00
+Myrvoll SK (4-3-3): Myrvoll spiller 1, Myrvoll spiller 2, Myrvoll spiller 3, Myrvoll spiller 4, Myrvoll spiller 5, Myrvoll spiller 6, Myrvoll spiller 7, Myrvoll spiller 8, Myrvoll spiller 9, Myrvoll spiller 10, Myrvoll spiller 11
+Elvedal BK (4-3-3): Elvedal spiller 1, Elvedal spiller 2, Elvedal spiller 3, Elvedal spiller 4, Elvedal spiller 5, Elvedal spiller 6, Elvedal spiller 7, Elvedal spiller 8, Elvedal spiller 9, Elvedal spiller 10, Elvedal spiller 11
+
+────────── [19:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ Avspark: Lysefjord FK – Vestmark SK
+
+────────── [19:45] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+📋 BEKREFTEDE LAGOPPSTILLINGER
+Brattøy IL – Østgård FK · 20:45
+Brattøy IL (4-3-3): Brattøy spiller 1, Brattøy spiller 2, Brattøy spiller 3, Brattøy spiller 4, Brattøy spiller 5, Brattøy spiller 6, Brattøy spiller 7, Brattøy spiller 8, Brattøy spiller 9, Brattøy spiller 10, Brattøy spiller 11
+Østgård FK (4-3-3): Østgård spiller 1, Østgård spiller 2, Østgård spiller 3, Østgård spiller 4, Østgård spiller 5, Østgård spiller 6, Østgård spiller 7, Østgård spiller 8, Østgård spiller 9, Østgård spiller 10, Østgård spiller 11
+
+────────── [20:00] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ Avspark: Myrvoll SK – Elvedal BK
+
+────────── [20:45] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+⚽ Avspark: Brattøy IL – Østgård FK
+
+────────── [22:52] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+❌ BEKREFTET TAPT
+Brattøy IL – Østgård FK: Brattøy IL eller Østgård FK røk.
+Berørte bonger: K-261020-B1
+Bekreftet ut fra offisielt sluttresultat. Norsk Tippings oppgjør er gjeldende.
+
+────────── [23:30] til 1 ──────────
+🧪 DEMO – EKSEMPELDATA. Fiktive lag og odds, ikke dagens kamper.
+
+📊 DAGSRAPPORT | TIRSDAG 20. OKT. 2026
+
+Enkeltspill: 9 · V 5 · T 3 · A 1 · uavklart 0
+Bonger: 6 · V 0 · T 6 · uavklart 0
+Simulert flat innsats (1 enhet per forslag): netto -6.84 enheter
+Ekstra runde: Bekreftet tapt: K-261020-C1, K-261020-E1, K-261020-F1
+
+Én dag sier ingenting om kvalitet. Se /stats for samlet historikk.
+
+28 meldinger sendt i simuleringen (fiktive data).

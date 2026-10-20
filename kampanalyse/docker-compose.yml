@@ -1,0 +1,18 @@
+services:
+  kampanalyse:
+    build: .
+    container_name: kampanalyse
+    restart: unless-stopped          # automatisk omstart ved krasj og etter omstart av serveren
+    env_file: .env                   # hemmeligheter ligger KUN her (ikke i git)
+    volumes:
+      - ./data:/data                 # varig database
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "5" }
+  # Valgfritt: start containeren på nytt hvis helsesjekken feiler (Docker restarter ikke
+  # "unhealthy" containere av seg selv). Fjern blokken hvis du ikke ønsker dette.
+  autoheal:
+    image: willfarrell/autoheal:1.2.0
+    restart: unless-stopped
+    environment: { AUTOHEAL_CONTAINER_LABEL: all }
+    volumes: ["/var/run/docker.sock:/var/run/docker.sock"]
