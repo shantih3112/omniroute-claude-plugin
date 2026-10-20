@@ -22,7 +22,12 @@ fail() { printf '  \033[31mPROBLEM\033[0m  %s\n' "$*"; }
 ask()  { local __v; read -r -p "$1" __v </dev/tty; printf '%s' "$__v"; }
 asks() { local __v; read -r -s -p "$1" __v </dev/tty; echo >/dev/tty; printf '%s' "$__v"; }
 
+main() {
+# When piped from curl, stdin is the script itself: detach every command from it.
+# Questions are read from the terminal (/dev/tty) instead.
+exec </dev/null
 [ "$(id -u)" -eq 0 ] || { echo "Please run with sudo (or as root)."; exit 1; }
+[ -r /dev/tty ] || { echo "Please run this in an interactive terminal (SSH session)."; exit 1; }
 
 say "1/7  Installing system packages (a minute or two)"
 export DEBIAN_FRONTEND=noninteractive
@@ -165,3 +170,7 @@ Useful commands on this server:
   sudo fxsignal-update                install the newest version, keep settings
   sudo fxsignal-reconfigure           change keys / Telegram ID
 EOF
+}
+
+# Wrapped in a function so the whole script is downloaded before anything runs.
+main "$@"
