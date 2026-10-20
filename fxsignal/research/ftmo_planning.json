@@ -1,0 +1,460 @@
+{
+ "profile": "FTMO 2-Step Challenge / Standard / Phase 1",
+ "profile_version": "2026-10-20-secondary",
+ "verified": false,
+ "compliance": "FTMO rules UNVERIFIED against official source: challenge use blocked",
+ "research_candidates": {
+  "trend_pullback risk 0.5%": {
+   "starts": 60,
+   "pass_pct": 6.7,
+   "pass_ci90": [
+    3.0,
+    14.0
+   ],
+   "breach_pct": 8.3,
+   "breach_ci90": [
+    4.1,
+    16.1
+   ],
+   "median_days_to_pass": 104.5,
+   "outcomes": {
+    "incomplete": 51,
+    "breach_max_loss": 5,
+    "pass": 4
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic",
+   "trades_after_limits": 1038,
+   "trades_before": 1132
+  },
+  "trend_pullback risk 1.0%": {
+   "starts": 60,
+   "pass_pct": 18.3,
+   "pass_ci90": [
+    11.5,
+    27.9
+   ],
+   "breach_pct": 65.0,
+   "breach_ci90": [
+    54.4,
+    74.3
+   ],
+   "median_days_to_pass": 53.0,
+   "outcomes": {
+    "breach_max_daily_loss": 26,
+    "breach_max_loss": 13,
+    "pass": 11,
+    "incomplete": 10
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic",
+   "trades_after_limits": 1038,
+   "trades_before": 1132
+  },
+  "tsmom_weekly risk 0.5%": {
+   "starts": 60,
+   "pass_pct": 0.0,
+   "pass_ci90": [
+    0,
+    4.3
+   ],
+   "breach_pct": 0.0,
+   "breach_ci90": [
+    0,
+    4.3
+   ],
+   "median_days_to_pass": null,
+   "outcomes": {
+    "incomplete": 60
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic",
+   "trades_after_limits": 962,
+   "trades_before": 2627
+  },
+  "tsmom_weekly risk 1.0%": {
+   "starts": 60,
+   "pass_pct": 1.7,
+   "pass_ci90": [
+    0.4,
+    7.1
+   ],
+   "breach_pct": 1.7,
+   "breach_ci90": [
+    0.4,
+    7.1
+   ],
+   "median_days_to_pass": 68.0,
+   "outcomes": {
+    "incomplete": 58,
+    "breach_max_loss": 1,
+    "pass": 1
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic",
+   "trades_after_limits": 962,
+   "trades_before": 2627
+  },
+  "random risk 0.5%": {
+   "starts": 60,
+   "pass_pct": 0.0,
+   "pass_ci90": [
+    0,
+    4.3
+   ],
+   "breach_pct": 45.0,
+   "breach_ci90": [
+    34.9,
+    55.6
+   ],
+   "median_days_to_pass": null,
+   "outcomes": {
+    "incomplete": 33,
+    "breach_max_loss": 18,
+    "breach_max_daily_loss": 9
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic",
+   "trades_after_limits": 999,
+   "trades_before": 2277
+  },
+  "random risk 1.0%": {
+   "starts": 60,
+   "pass_pct": 5.0,
+   "pass_ci90": [
+    2.0,
+    11.9
+   ],
+   "breach_pct": 91.7,
+   "breach_ci90": [
+    83.9,
+    95.9
+   ],
+   "median_days_to_pass": 90.0,
+   "outcomes": {
+    "breach_max_daily_loss": 41,
+    "breach_max_loss": 14,
+    "pass": 3,
+    "incomplete": 2
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic",
+   "trades_after_limits": 999,
+   "trades_before": 2277
+  }
+ },
+ "hypothetical": {
+  "assumed +0.0R/trade, 40% win, ~1 trade/day, risk 0.5%": {
+   "starts": 80,
+   "pass_pct": 5.0,
+   "pass_ci90": [
+    2.3,
+    10.7
+   ],
+   "breach_pct": 17.5,
+   "breach_ci90": [
+    11.6,
+    25.5
+   ],
+   "median_days_to_pass": 89.0,
+   "outcomes": {
+    "incomplete": 62,
+    "breach_max_loss": 14,
+    "pass": 4
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic"
+  },
+  "assumed +0.0R/trade, 40% win, ~1 trade/day, risk 1.0%": {
+   "starts": 80,
+   "pass_pct": 41.2,
+   "pass_ci90": [
+    32.6,
+    50.4
+   ],
+   "breach_pct": 51.2,
+   "breach_ci90": [
+    42.2,
+    60.3
+   ],
+   "median_days_to_pass": 58.0,
+   "outcomes": {
+    "breach_max_loss": 41,
+    "pass": 33,
+    "incomplete": 6
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic"
+  },
+  "assumed +0.1R/trade, 40% win, ~1 trade/day, risk 0.5%": {
+   "starts": 80,
+   "pass_pct": 32.5,
+   "pass_ci90": [
+    24.6,
+    41.6
+   ],
+   "breach_pct": 10.0,
+   "breach_ci90": [
+    5.7,
+    16.9
+   ],
+   "median_days_to_pass": 78.5,
+   "outcomes": {
+    "incomplete": 46,
+    "pass": 26,
+    "breach_max_loss": 8
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic"
+  },
+  "assumed +0.1R/trade, 40% win, ~1 trade/day, risk 1.0%": {
+   "starts": 80,
+   "pass_pct": 47.5,
+   "pass_ci90": [
+    38.5,
+    56.6
+   ],
+   "breach_pct": 42.5,
+   "breach_ci90": [
+    33.8,
+    51.7
+   ],
+   "median_days_to_pass": 39.0,
+   "outcomes": {
+    "pass": 38,
+    "breach_max_loss": 34,
+    "incomplete": 8
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic"
+  },
+  "assumed +0.2R/trade, 40% win, ~1 trade/day, risk 0.5%": {
+   "starts": 80,
+   "pass_pct": 45.0,
+   "pass_ci90": [
+    36.2,
+    54.2
+   ],
+   "breach_pct": 5.0,
+   "breach_ci90": [
+    2.3,
+    10.7
+   ],
+   "median_days_to_pass": 65.5,
+   "outcomes": {
+    "incomplete": 40,
+    "pass": 36,
+    "breach_max_loss": 4
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic"
+  },
+  "assumed +0.2R/trade, 40% win, ~1 trade/day, risk 1.0%": {
+   "starts": 80,
+   "pass_pct": 65.0,
+   "pass_ci90": [
+    55.9,
+    73.2
+   ],
+   "breach_pct": 23.8,
+   "breach_ci90": [
+    16.9,
+    32.4
+   ],
+   "median_days_to_pass": 35.5,
+   "outcomes": {
+    "pass": 52,
+    "breach_max_loss": 19,
+    "incomplete": 9
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic"
+  },
+  "assumed +0.3R/trade, 40% win, ~1 trade/day, risk 0.5%": {
+   "starts": 80,
+   "pass_pct": 55.0,
+   "pass_ci90": [
+    45.8,
+    63.8
+   ],
+   "breach_pct": 1.2,
+   "breach_ci90": [
+    0.3,
+    5.4
+   ],
+   "median_days_to_pass": 53.0,
+   "outcomes": {
+    "pass": 44,
+    "incomplete": 35,
+    "breach_max_loss": 1
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic"
+  },
+  "assumed +0.3R/trade, 40% win, ~1 trade/day, risk 1.0%": {
+   "starts": 80,
+   "pass_pct": 75.0,
+   "pass_ci90": [
+    66.3,
+    82.1
+   ],
+   "breach_pct": 22.5,
+   "breach_ci90": [
+    15.8,
+    31.0
+   ],
+   "median_days_to_pass": 30.5,
+   "outcomes": {
+    "pass": 60,
+    "breach_max_loss": 18,
+    "incomplete": 2
+   },
+   "caveat": "overlapping start dates are not independent; intervals are optimistic"
+  }
+ },
+ "planning": {
+  "no edge (what the research found)": {
+   "inputs": {
+    "start_capital": 1000,
+    "monthly_contribution": 100,
+    "monthly_costs": 15,
+    "years": 10,
+    "trades_per_month": 20,
+    "risk_pct": 0.5,
+    "expectancy_r": 0.0,
+    "r_sd": 1.2,
+    "monthly_withdrawal_pct_above_hwm": 0.0,
+    "ruin_floor": 100.0,
+    "min_lot_risk_floor": 0.0,
+    "n_paths": 5000,
+    "seed": 1
+   },
+   "final_equity": {
+    "p05": 8311.006994421135,
+    "p25": 9791.48500974692,
+    "median": 10983.922902894341,
+    "p75": 12376.847193898946,
+    "p95": 14854.475108643139
+   },
+   "total_deposits": 13000.0,
+   "trading_pnl": {
+    "p05": -2888.99300557886,
+    "p25": -1408.5149902530763,
+    "median": -216.07709710566226,
+    "p75": 1176.8471938989417,
+    "p95": 3654.4751086431434
+   },
+   "costs_paid": 1800.0,
+   "withdrawn": {
+    "p05": 0.0,
+    "p25": 0.0,
+    "median": 0.0,
+    "p75": 0.0,
+    "p95": 0.0
+   },
+   "max_drawdown": {
+    "p05": 0.050837986692862394,
+    "p25": 0.07254713479726813,
+    "median": 0.09309804911467312,
+    "p75": 0.12089818526348253,
+    "p95": 0.18111175103058183
+   },
+   "p_below_start_plus_deposits": 0.8228,
+   "p_exhausted": 0.0,
+   "label": "ILLUSTRATIVE - assumed returns, not a forecast"
+  },
+  "assumed +0.1R": {
+   "inputs": {
+    "start_capital": 1000,
+    "monthly_contribution": 100,
+    "monthly_costs": 15,
+    "years": 10,
+    "trades_per_month": 20,
+    "risk_pct": 0.5,
+    "expectancy_r": 0.1,
+    "r_sd": 1.2,
+    "monthly_withdrawal_pct_above_hwm": 0.0,
+    "ruin_floor": 100.0,
+    "min_lot_risk_floor": 0.0,
+    "n_paths": 5000,
+    "seed": 1
+   },
+   "final_equity": {
+    "p05": 16162.446162691944,
+    "p25": 19540.693576533104,
+    "median": 22311.087470646085,
+    "p75": 25629.951572702674,
+    "p95": 31595.81225174764
+   },
+   "total_deposits": 13000.0,
+   "trading_pnl": {
+    "p05": 4962.446162691943,
+    "p25": 8340.693576533102,
+    "median": 11111.087470646087,
+    "p75": 14429.951572702681,
+    "p95": 20395.81225174763
+   },
+   "costs_paid": 1800.0,
+   "withdrawn": {
+    "p05": 0.0,
+    "p25": 0.0,
+    "median": 0.0,
+    "p75": 0.0,
+    "p95": 0.0
+   },
+   "max_drawdown": {
+    "p05": 0.037702265128196674,
+    "p25": 0.05528908266259844,
+    "median": 0.07173165702377166,
+    "p75": 0.0962157024599467,
+    "p95": 0.14986210853599077
+   },
+   "p_below_start_plus_deposits": 0.0024,
+   "p_exhausted": 0.0,
+   "label": "ILLUSTRATIVE - assumed returns, not a forecast"
+  },
+  "assumed +0.2R": {
+   "inputs": {
+    "start_capital": 1000,
+    "monthly_contribution": 100,
+    "monthly_costs": 15,
+    "years": 10,
+    "trades_per_month": 20,
+    "risk_pct": 0.5,
+    "expectancy_r": 0.2,
+    "r_sd": 1.2,
+    "monthly_withdrawal_pct_above_hwm": 0.0,
+    "ruin_floor": 100.0,
+    "min_lot_risk_floor": 0.0,
+    "n_paths": 5000,
+    "seed": 1
+   },
+   "final_equity": {
+    "p05": 35264.427932200604,
+    "p25": 43895.07592142255,
+    "median": 50809.992927619875,
+    "p75": 59191.320972139605,
+    "p95": 74646.19530716678
+   },
+   "total_deposits": 13000.0,
+   "trading_pnl": {
+    "p05": 24064.42793220059,
+    "p25": 32695.07592142252,
+    "median": 39609.99292761987,
+    "p75": 47991.3209721396,
+    "p95": 63446.19530716676
+   },
+   "costs_paid": 1800.0,
+   "withdrawn": {
+    "p05": 0.0,
+    "p25": 0.0,
+    "median": 0.0,
+    "p75": 0.0,
+    "p95": 0.0
+   },
+   "max_drawdown": {
+    "p05": 0.026458588074965473,
+    "p25": 0.041727853760808564,
+    "median": 0.05711544430798837,
+    "p75": 0.07863696871691353,
+    "p95": 0.12951498603756825
+   },
+   "p_below_start_plus_deposits": 0.0,
+   "p_exhausted": 0.0,
+   "label": "ILLUSTRATIVE - assumed returns, not a forecast"
+  }
+ },
+ "min_account_for_0.01_lot": {
+  "10-pip stop at 0.5%": 210.0,
+  "20-pip stop at 0.5%": 410.0,
+  "40-pip stop at 0.5%": 810.0,
+  "80-pip stop at 0.5%": 1610.0
+ }
+}

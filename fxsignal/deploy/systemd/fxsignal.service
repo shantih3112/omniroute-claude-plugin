@@ -1,0 +1,24 @@
+[Unit]
+Description=fxsignal paper signal service
+After=network-online.target time-sync.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=fxsignal
+Group=fxsignal
+WorkingDirectory=/opt/fxsignal
+EnvironmentFile=/etc/fxsignal/fxsignal.env
+ExecStart=/opt/fxsignal/.venv/bin/fxsignal serve --base-dir /opt/fxsignal
+Restart=always
+RestartSec=10
+# hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/fxsignal/var
+PrivateTmp=true
+MemoryMax=1G
+
+[Install]
+WantedBy=multi-user.target

@@ -52,8 +52,11 @@ async def _guard(name: str, store: Store, coro_fn, every: float, stop: asyncio.E
             await coro_fn()
         except Exception as ex:  # keep other tasks alive; record and back off
             tok = os.environ.get("TELEGRAM_BOT_TOKEN")
-            store.incident(iso(pd.Timestamp.now(tz="UTC")), f"task_error:{name}", redact(repr(ex), tok)[:500])
-            log.exception("task %s failed", name)
+            try:
+                store.incident(iso(pd.Timestamp.now(tz="UTC")), f"task_error:{name}", redact(repr(ex), tok)[:500])
+            except Exception:  # the database itself may be the failing component
+                pass
+            log.error("task %s failed: %s", name, redact(repr(ex), tok)[:500])
             await asyncio.sleep(min(60, every * 3))
         try:
             await asyncio.wait_for(stop.wait(), timeout=every)

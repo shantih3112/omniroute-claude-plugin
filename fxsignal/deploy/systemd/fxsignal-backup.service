@@ -1,0 +1,8 @@
+[Unit]
+Description=fxsignal SQLite backup
+
+[Service]
+Type=oneshot
+User=fxsignal
+WorkingDirectory=/opt/fxsignal
+ExecStart=/bin/sh -c '/opt/fxsignal/.venv/bin/fxsignal backup --db /opt/fxsignal/var/fxsignal.sqlite --dest /opt/fxsignal/var/backups/fxsignal-$(date -u +%%Y%%m%%dT%%H%%MZ).sqlite && find /opt/fxsignal/var/backups -name "*.sqlite" -mtime +14 -delete'

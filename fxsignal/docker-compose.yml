@@ -1,0 +1,18 @@
+# Alternative to systemd. The watchdog runs in its own container sharing the state volume.
+services:
+  fxsignal:
+    build: .
+    env_file: /etc/fxsignal/fxsignal.env
+    volumes: [fxdata:/opt/fxsignal/var]
+    restart: unless-stopped
+  watchdog:
+    build: .
+    command: ["python", "-m", "fxsignal.ops.watchdog"]
+    env_file: /etc/fxsignal/fxsignal.env
+    environment:
+      FXSIGNAL_HOME: /opt/fxsignal
+      WATCHDOG_HEALTH_URL: ""        # health port is container-local; heartbeat file is checked instead
+    volumes: [fxdata:/opt/fxsignal/var]
+    restart: unless-stopped
+volumes:
+  fxdata: {}
