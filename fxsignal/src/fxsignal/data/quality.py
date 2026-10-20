@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 import numpy as np
 import pandas as pd
 
-from ..timeutil import market_open
+from ..timeutil import open_hours_between
 
 
 @dataclass
@@ -38,20 +38,19 @@ def quality_report(df: pd.DataFrame, source: str, tf_minutes: int, symbol: str |
     symbol = symbol or df.attrs.get("symbol", "?")
     idx = df.index
     dups = int(idx.duplicated().sum())
-    ooo = int((np.diff(idx.asi8) < 0).sum())
+    ns = idx.as_unit("ns").asi8
+    ooo = int((np.diff(ns) < 0).sum())
     o, h, l, c = (df[k].to_numpy() for k in ["open", "high", "low", "close"])
     viol = int(((h < np.maximum(o, c) - 1e-12) | (l > np.minimum(o, c) + 1e-12) | (h < l)).sum())
     nonpos = int(((o <= 0) | (h <= 0) | (l <= 0) | (c <= 0)).sum())
 
-    gaps = np.diff(idx.asi8) / 6e10  # minutes
-    starts = idx[:-1]
-    # A gap is "intraweek" if the market was open throughout: check the midpoint is in hours.
-    big = np.where(gaps > max(4 * tf_minutes, 60))[0]
+    gaps = np.diff(ns) / 6e10  # minutes
+    # A hole = market-open time (outside weekends and year-end holidays) with no bars.
     intraweek = []
-    for i in big:
-        mid = starts[i] + pd.Timedelta(minutes=gaps[i] / 2)
-        if market_open(mid.to_pydatetime()) and gaps[i] < 60 * 40:
-            intraweek.append(gaps[i])
+    for i in np.flatnonzero(gaps > max(4 * tf_minutes, 120)):
+        miss = open_hours_between(idx[i], idx[i + 1])
+        if miss >= 2:
+            intraweek.append(miss * 60)
     # Flat runs: >= 30 consecutive bars with zero range (frozen feed symptom).
     rng0 = (h - l) == 0
     runs, cur = 0, 0

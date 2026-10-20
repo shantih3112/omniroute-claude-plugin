@@ -75,3 +75,22 @@ def floor_minute(ts: datetime) -> datetime:
 
 def minutes(n: float) -> timedelta:
     return timedelta(minutes=n)
+
+
+def open_hours_between(t0: datetime, t1: datetime, skip_holidays: bool = True) -> float:
+    """Hours of regular FX market time strictly inside (t0, t1), sampled every 15 minutes.
+
+    With `skip_holidays`, Dec 24-26 and Dec 31-Jan 2 do not count (many venues close).
+    """
+    a, b = pd.Timestamp(t0), pd.Timestamp(t1)
+    if b - a <= pd.Timedelta(minutes=15):
+        return 0.0
+    grid = pd.date_range(a + pd.Timedelta(minutes=15), b - pd.Timedelta(minutes=1), freq="15min")
+    ny = grid.tz_convert(NY)
+    wd, h = ny.dayofweek, ny.hour
+    open_ = ~((wd == 5) | ((wd == 4) & (h >= 17)) | ((wd == 6) & (h < 17)))
+    if skip_holidays:
+        md = list(zip(ny.month, ny.day))
+        hol = pd.Index(md).isin([(12, 24), (12, 25), (12, 26), (12, 31), (1, 1), (1, 2)])
+        open_ = open_ & ~hol
+    return float(open_.sum()) / 4.0

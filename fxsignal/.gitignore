@@ -10,3 +10,4 @@ var/
 *.db
 .env
 secrets/
+*.egg-info/
