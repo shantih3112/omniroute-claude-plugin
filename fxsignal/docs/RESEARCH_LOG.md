@@ -81,3 +81,45 @@ stated alternative), development split only, same gates:
 
 Additionally a descriptive (not traded) table of mean gross returns by London hour, to judge
 whether intraday seasonality is large relative to the spread at all.
+
+### Round 2 results (tag `gateR-r2`), development split, 11 FX pairs (USD pairs only for `usd_fix`)
+
+| Hypothesis | n | Net exp (R) | Gross exp (R) | t | PF | Verdict |
+|---|---|---|---|---|---|---|
+| H2a `usd_fix` pre (long USD 14→16 London) | 5,849 | −0.073 | −0.050 | −4.6 | 0.79 | fail – sign opposite to hypothesis in this sample |
+| H2b `usd_fix` post (short USD 16→19 London) | 6,696 | −0.035 | −0.012 | −2.3 | 0.87 | fail |
+| H2c `round_break` 1.5 R | 3,581 | −0.102 | −0.067 | −4.9 | 0.83 | fail |
+| H2c `round_break` 1.0 R (declared alternative) | 3,611 | −0.097 | −0.064 | −5.5 | 0.81 | fail |
+
+Descriptive seasonality (`scripts/seasonality.py`): mean USD move per London hour is 0.1–0.6
+pips, with signs that mostly flip between development and validation, against a ~1 pip
+round-trip cost. Our 1-hour bars on 6 pairs therefore do not show a tradable version of the
+published fix pattern; this neither confirms nor refutes the paper (which uses different
+data, windows and test design).
+
+### Engine bias check (tag `engine-bias-check`)
+Random entries at zero cost and zero delay, 8 seeds: mean +0.017 R (sd 0.031 R between seeds).
+The simulator is not producing the negative results by itself; the stop-first rule costs little.
+The seed-to-seed sd (~0.03 R at ~2,200 trades) is a useful yardstick: gross effects of ±0.03 R
+are indistinguishable from noise.
+
+### XAUUSD, separate evaluation (tag `gateR-xau`)
+All 17 configurations negative after costs (−0.035 to −1.1 R); the random null spans −0.06 to
+−0.24 R. Small samples (15–450 trades) and 218 vendor holes in the M15 series. Fail.
+
+## Conclusion after rounds 1–2 (2026-10-20)
+
+**No tested strategy shows a credible edge.** 40 configurations across 13 families were
+logged; none passes Gate R. The validation split and both holdouts remain **untouched** and
+are kept for future, pre-declared hypotheses. Following SCORECARD §3, nothing is promoted to
+the paper-forward feed. The live service is built and runs in *research-paper* mode: candidate
+signals go only to the admin chat, labelled "RESEARCH – NO VALIDATED EDGE", to accumulate forward
+evidence without anyone acting on them.
+
+### What could still be tried (not done; each would need its own pre-declaration)
+* Carry and cross-sectional currency momentum (Menkhoff et al. 2012) – need interest-rate
+  history (not reachable from this environment).
+* Event-driven rules around scheduled releases – need a historical calendar with actual/
+  consensus values and release timestamps (not available here).
+* Using measured broker spreads instead of the assumed table (costs are ~0.03 R/trade; they
+  are not why the strategies fail — gross expectancy is already ≈ 0).

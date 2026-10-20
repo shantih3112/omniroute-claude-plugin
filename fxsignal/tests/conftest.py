@@ -18,7 +18,9 @@ def synthetic_m15(n_days=400, seed=1, start="2019-01-06 22:00"):
     spread = np.abs(rng.normal(0, vol, len(idx))) * c
     h = np.maximum(o, c) + spread
     l = np.minimum(o, c) - spread
-    return pd.DataFrame({"open": o, "high": h, "low": l, "close": c, "tick_volume": 1.0}, index=idx)
+    df = pd.DataFrame({"open": o, "high": h, "low": l, "close": c, "tick_volume": 1.0}, index=idx)
+    df.attrs["symbol"] = "EURUSD"
+    return df
 
 
 @pytest.fixture(scope="session")

@@ -14,7 +14,7 @@ for fam in fams:
     cfgs = GRIDS.get(fam, [dict(seed=s) for s in range(3)])
     for cfg in cfgs:
         t0 = time.time()
-        tr, s = run(fam, cfg, EJ_FX, "dev", tag="gateR-fix2")
+        tr, s = run(fam, cfg, EJ_FX, "dev", tag="gateR-r2")
         rows.append(dict(family=fam, cfg=cfg, n=s.get("filled"), exp_r=s.get("expectancy_r"),
                          gross_r=s.get("expectancy_gross_r"), t=s.get("t_stat_weekly"), pf=s.get("profit_factor"),
                          win=s.get("win_rate"), mdd=s.get("max_dd_pct"), ci=s.get("expectancy_ci90"),

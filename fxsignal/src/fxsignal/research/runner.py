@@ -72,7 +72,9 @@ def run(name: str, cfg: dict, symbols: list[str], split: str, source: str = "ejt
     for sym in symbols:
         d = series(sym, source)
         strat = REGISTRY[name](**cfg)
-        sig = strat.generate(d[strat.signal_tf])
+        inp = d[strat.signal_tf]
+        inp.attrs["symbol"] = sym
+        sig = strat.generate(inp)
         sig = sig[(sig["time"] >= a) & (sig["time"] < b)].reset_index(drop=True)
         if filt is not None:
             sig = filt(sig, sym, d).reset_index(drop=True)

@@ -33,8 +33,8 @@ def _london_hour(idx: pd.DatetimeIndex, tf_min: int) -> np.ndarray:
 
 def _hash_uniform(idx: pd.DatetimeIndex, seed: int) -> np.ndarray:
     """SplitMix64 hash of (timestamp, seed) -> uniform [0, 1)."""
-    x = (idx.as_unit("s").asi8.astype(np.uint64) + np.uint64(seed) * np.uint64(0x9E3779B97F4A7C15))
     with np.errstate(over="ignore"):
+        x = idx.as_unit("s").asi8.astype(np.uint64) + np.uint64(seed) * np.uint64(0x9E3779B97F4A7C15)
         x = (x ^ (x >> np.uint64(30))) * np.uint64(0xBF58476D1CE4E5B9)
         x = (x ^ (x >> np.uint64(27))) * np.uint64(0x94D049BB133111EB)
         x = x ^ (x >> np.uint64(31))
@@ -360,6 +360,74 @@ class WeeklyTSMOM(Strategy):
                           note=f"{p['lookback_d']}-day return sign")
 
 
+class UsdFixWindow(Strategy):
+    """Round 2 (Krohn, Mueller & Whelan 2024; Ranaldo 2007): the dollar tends to strengthen into
+    the 16:00 London WM/R fix and weaken afterwards. USD pairs only.
+
+    leg="pre":  at the H1 close of `start` London hour, long USD; time exit at 16:00 London.
+    leg="post": at the 16:00 London H1 close, short USD; time exit `hold_h` hours later.
+    Protective stop 1.5 x H1 ATR. No target.
+    """
+
+    def __init__(self, leg="pre", start=14, hold_h=3, stop_atr=1.5):
+        super().__init__("usd_fix", "1", "H1", (), dict(leg=leg, start=start, hold_h=hold_h, stop_atr=stop_atr))
+
+    def generate(self, sig):
+        p = self.params
+        sym = sig.attrs.get("symbol", "")
+        if "USD" not in sym or sym.startswith("XAU"):
+            return self.frame(sig, pd.Series(False, index=sig.index), 1)
+        usd_side = 1 if sym.startswith("USD") else -1  # +1 = buying the pair buys USD
+        close_loc = (sig.index + pd.Timedelta(hours=1)).tz_convert(LONDON)
+        wd = close_loc.dayofweek
+        if p["leg"] == "pre":
+            at = (close_loc.hour == p["start"]) & (close_loc.minute == 0)
+            side, hold = usd_side, (16 - p["start"]) * 60
+        else:
+            at = (close_loc.hour == 16) & (close_loc.minute == 0)
+            side, hold = -usd_side, p["hold_h"] * 60
+        a = F.atr(sig, 14)
+        mask = pd.Series(at & (wd <= 4), index=sig.index) & a.notna()
+        c = sig["close"]
+        stop = c - side * p["stop_atr"] * a
+        return self.frame(sig, mask, side, entry_type="market", entry_ref=c, stop=stop, target=np.nan,
+                          max_hold_min=hold, expiry_min=20, atr=a, regime=_regime(sig),
+                          note=f"USD {'into' if p['leg'] == 'pre' else 'after'} the 16:00 London fix")
+
+
+class RoundNumberBreak(Strategy):
+    """Round 2 (Osler 2003): stop-loss orders cluster just beyond round numbers, so crossing a
+    100-pip level tends to accelerate. H1 close crosses the level by >= `min_pips` and by less
+    than 0.5 ATR, 07-18 London; stop 0.5 ATR back beyond the level; target `rr` R."""
+
+    def __init__(self, rr=1.5, min_pips=3.0, hold_h=24):
+        super().__init__("round_break", "1", "H1", (), dict(rr=rr, min_pips=min_pips, hold_h=hold_h))
+
+    def generate(self, sig):
+        p = self.params
+        sym = sig.attrs.get("symbol", "EURUSD")
+        pip = 0.01 if sym.endswith("JPY") else 0.0001
+        step = 100 * pip
+        c, pc = sig["close"], sig["close"].shift(1)
+        a = F.atr(sig, 14)
+        lvl_up = np.floor(c / step) * step          # highest round level at/below close
+        lvl_dn = np.ceil(c / step) * step           # lowest round level at/above close
+        up = (pc < lvl_up) & (c - lvl_up >= p["min_pips"] * pip) & (c - lvl_up < 0.5 * a)
+        dn = (pc > lvl_dn) & (lvl_dn - c >= p["min_pips"] * pip) & (lvl_dn - c < 0.5 * a)
+        lh = _london_hour(sig.index, 60)
+        sess = pd.Series((lh >= 7) & (lh <= 18), index=sig.index)
+        up, dn = up & sess, dn & sess
+        side = np.where(up, 1, -1)
+        lvl = pd.Series(np.where(up, lvl_up, lvl_dn), index=sig.index)
+        stop = lvl - side * 0.5 * a
+        dist = (c - stop).abs()
+        tgt = c + side * p["rr"] * dist
+        mask = (up | dn) & a.notna()
+        return self.frame(sig, mask, side, entry_type="market", entry_ref=c, stop=stop, target=tgt,
+                          max_hold_min=p["hold_h"] * 60, expiry_min=60, atr=a, regime=_regime(sig),
+                          note="close through a 100-pip round level")
+
+
 REGISTRY = {
     "random": RandomEntry,
     "ma_cross": MACross,
@@ -370,6 +438,8 @@ REGISTRY = {
     "asian_breakout": AsianRangeBreakout,
     "sweep_reversal": SweepReversal,
     "tsmom_weekly": WeeklyTSMOM,
+    "usd_fix": UsdFixWindow,
+    "round_break": RoundNumberBreak,
 }
 
 # Small, pre-declared grids searched on the development split only.
@@ -383,4 +453,7 @@ GRIDS = {
     "asian_breakout": [dict(rr=1.5, stop_mode="mid"), dict(rr=1.0, stop_mode="opposite")],
     "sweep_reversal": [dict(min_pen=0.05, rr=2.0), dict(min_pen=0.1, rr=1.5)],
     "tsmom_weekly": [dict(lookback_d=60), dict(lookback_d=120)],
+    # round 2 (declared in docs/RESEARCH_LOG.md before running)
+    "usd_fix": [dict(leg="pre", start=14), dict(leg="post", hold_h=3)],
+    "round_break": [dict(rr=1.5), dict(rr=1.0)],
 }
