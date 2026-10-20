@@ -119,7 +119,11 @@ def _cmd_feed_selftest(a):
     from .live.app import load_config, make_feed
 
     async def go():
-        feed = make_feed(load_config(a.config))
+        try:
+            feed = make_feed(load_config(a.config))
+        except Exception as ex:
+            print(f"FAIL: {ex}")
+            return 1
         try:
             h = await feed.history_h1(a.symbol, 30)
             print(f"feed={feed.name} symbol={a.symbol} bars={len(h)}")
@@ -132,6 +136,9 @@ def _cmd_feed_selftest(a):
             print(f"newest completed bar closed {age:.1f} h ago; OHLC consistent: {sane}")
             print("OK" if sane and (age < 2 or age > 40) else "CHECK: data older than expected (market closed?)")
             return 0
+        except Exception as ex:
+            print(f"FAIL: could not get prices from {feed.name}: {type(ex).__name__}: {str(ex)[:200]}")
+            return 1
         finally:
             await feed.close()
     sys.exit(asyncio.run(go()))
