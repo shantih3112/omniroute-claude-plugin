@@ -1,0 +1,30 @@
+
+// ═════════════════════════════ ORDERS (strategy only) ═════════════════════════════
+// Orders mirror the core lifecycle events. Fills come from TradingView's broker
+// emulator, which can resolve a bar touching both stop and target differently
+// from the core's conservative "stop first" rule; a sync guard closes any drift.
+f_qty(riskPerUnit) =>
+    riskCash = strategy.equity * i_riskPct / 100
+    q        = riskCash / (riskPerUnit * syminfo.pointvalue)
+    lev      = isForex ? 20.0 : 1.0
+    qCap     = strategy.equity * lev / (close * syminfo.pointvalue)
+    qq       = math.min(q, qCap)
+    isStock ? math.floor(qq) : isForex ? math.floor(qq / 1000) * 1000 : math.floor(qq * 10000) / 10000
+
+if evNewL or evNewS
+    id  = evNewL ? "L" : "S"
+    q   = f_qty(math.abs(sRef - sStop))
+    if q > 0
+        strategy.entry(id, evNewL ? strategy.long : strategy.short, qty = q, limit = sLim, comment = sStrat)
+        strategy.exit(id + "-T1", id, qty_percent = 50, stop = sStop, limit = sT1, comment_profit = "T1", comment_loss = "SL")
+        strategy.exit(id + "-T2", id, qty_percent = 100, stop = sStop, limit = sT2, comment_profit = "T2", comment_loss = "SL")
+if evT1 and strategy.position_size != 0
+    id = sDir == 1 ? "L" : "S"
+    strategy.exit(id + "-T2", id, qty_percent = 100, stop = strategy.position_avg_price, limit = sT2, comment_profit = "T2", comment_loss = "BE")
+if evExp
+    strategy.cancel(expDir == 1 ? "L" : "S")
+if evExit and (exitKind == "TIME STOP" or str.startswith(exitKind, "INVALID") or str.startswith(exitKind, "EXIT"))
+    strategy.close_all(comment = exitKind)
+// Sync guard: core says no open trade but emulator still holds one.
+if barstate.isconfirmed and sState != 2 and sState != 1 and strategy.position_size != 0 and not evExit
+    strategy.close_all(comment = "sync")

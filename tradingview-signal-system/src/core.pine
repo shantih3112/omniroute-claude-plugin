@@ -1,0 +1,539 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// SHARED CORE — identical in the indicator and the strategy (assembled by
+// build.py). Edit here, never in build/ outputs.
+//
+// Design rules
+//  • Every decision is taken on a CONFIRMED (closed) bar. Historical markers
+//    therefore equal what the script could know at that bar's close.
+//  • Swing pivots are only used after their confirmation delay (pvR bars);
+//    nothing is drawn back onto the pivot candle as a signal.
+//  • Higher-timeframe data = previous COMPLETED HTF bar (expr[1] + lookahead_on).
+//    HTF bias uses EMA 20/50 (EMA 200 on W/M would need 4–16 years of history).
+//  • Technical analysis only. No news, headlines or live economic calendar
+//    are available to Pine Script; event awareness = earnings data (stocks)
+//    + manual blackout windows.
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ───────────────────────────── Inputs ─────────────────────────────
+G_GEN  = "1 · General"
+G_STR  = "2 · Strategies"
+G_LVL  = "3 · Levels & risk"
+G_FIL  = "4 · Filters & events"
+G_VIS  = "5 · Visuals"
+
+i_profile = input.string("Auto", "Asset profile", options = ["Auto", "Stock", "Forex", "Crypto", "Generic"], group = G_GEN, tooltip = "Auto uses the symbol type reported by TradingView. Economic, bond, spread and other unsupported types always show WAIT.")
+i_htf     = input.string("Auto", "Higher timeframe", options = ["Auto", "60", "240", "D", "W", "M"], group = G_GEN, tooltip = "Auto: ≤5m→1h, ≤1h→4h, ≤4h→D, D→W, W→M. Uses the last COMPLETED higher-timeframe bar only.")
+i_logic   = input.string("Full system", "Signal logic", options = ["Full system", "Baseline: EMA 20/50 cross"], group = G_GEN, tooltip = "Baseline exists to compare the full system against a simple rule using the same exits.")
+i_warmup  = input.int(250, "Warm-up bars (no signals before)", minval = 50, group = G_GEN)
+i_prelim  = input.bool(false, "Show PRELIMINARY intrabar preview", group = G_GEN, tooltip = "Shows a provisional marker while the live bar is still forming. It CAN DISAPPEAR before the close, is never alerted and is not part of any statistic.")
+
+i_useTP   = input.bool(true, "A · Trend pullback", group = G_STR)
+i_useBO   = input.bool(true, "B · Squeeze breakout", group = G_STR)
+i_useMR   = input.bool(false, "C · Range mean reversion (experimental)", group = G_STR, tooltip = "Off by default: too few trades and mixed results on the development data.")
+i_useSW   = input.bool(false, "D · Liquidity-sweep reclaim (experimental)", group = G_STR, tooltip = "Off by default: negative expectancy after costs on the development data in every market tested.")
+i_pvL     = input.int(5, "Swing pivot: left bars", minval = 2, group = G_STR)
+i_pvR     = input.int(3, "Swing pivot: right bars (confirmation delay)", minval = 1, group = G_STR)
+i_adxIn   = input.float(0.0, "ADX trend threshold (0 = profile default)", minval = 0, group = G_STR)
+i_sqzPct  = input.float(20.0, "Squeeze: BB-width percentile ≤", minval = 1, maxval = 50, group = G_STR)
+i_donLen  = input.int(20, "Breakout channel length", minval = 5, group = G_STR)
+i_shortStk = input.bool(false, "Allow SHORT entries on stocks", group = G_STR, tooltip = "Off: bearish setups on stocks only produce 'EXIT LONG' / avoid-longs information, never a short entry.")
+
+i_t1R     = input.float(1.0, "Target 1 (R multiple)", minval = 0.25, step = 0.25, group = G_LVL)
+i_t2R     = input.float(2.0, "Target 2 (R multiple)", minval = 0.5, step = 0.25, group = G_LVL)
+i_minStop = input.float(0.0, "Min stop distance, ATR (0 = profile)", minval = 0, step = 0.25, group = G_LVL)
+i_maxStop = input.float(0.0, "Max stop distance, ATR (0 = profile)", minval = 0, step = 0.25, group = G_LVL)
+i_chase   = input.float(0.25, "Entry limit: max chase beyond signal close, ATR", minval = 0, step = 0.05, group = G_LVL)
+i_expiry  = input.int(3, "Entry window (bars) before an unfilled signal expires", minval = 1, group = G_LVL)
+i_maxHold = input.int(40, "Time stop (bars in trade)", minval = 2, group = G_LVL)
+i_regExit = input.bool(true, "Invalidate trade when trend flips against it", group = G_LVL)
+i_riskPct = input.float(1.0, "Risk per trade, % of account", minval = 0.05, maxval = 5, step = 0.05, group = G_LVL)
+i_showSz  = input.bool(false, "Show position-size ESTIMATE", group = G_LVL)
+i_acct    = input.float(10000, "Account size (for estimate)", minval = 1, group = G_LVL)
+i_acctCcy = input.string("USD", "Account currency (ISO code)", group = G_LVL)
+
+i_fVol    = input.bool(true, "WAIT in EXTREME volatility (ATR% > 95th pct)", group = G_FIL)
+i_fGap    = input.bool(true, "WAIT on gap bars (> 1.5 ATR)", group = G_FIL)
+i_fExt    = input.bool(true, "Stocks: no signals on extended-hours bars", group = G_FIL)
+i_fOpen   = input.bool(true, "Stocks intraday: skip first regular-session bar", group = G_FIL)
+i_earnN   = input.int(3, "Stocks: WAIT N bars after reported earnings (0 = off)", minval = 0, group = G_FIL)
+i_fxRoll  = input.bool(true, "Forex: avoid rollover window", group = G_FIL)
+i_fxRollS = input.session("1645-1745", "Rollover window (New York time)", group = G_FIL)
+i_dBlk    = input.bool(false, "Daily blackout window (scheduled releases)", group = G_FIL)
+i_dBlkS   = input.session("0825-0845", "Daily blackout (New York time)", group = G_FIL)
+i_b1      = input.bool(false, "Event blackout 1", inline = "b1", group = G_FIL)
+i_b1t     = input.time(timestamp("06 Nov 2026 13:30 +0000"), "", inline = "b1", group = G_FIL)
+i_b2      = input.bool(false, "Event blackout 2", inline = "b2", group = G_FIL)
+i_b2t     = input.time(timestamp("10 Dec 2026 19:00 +0000"), "", inline = "b2", group = G_FIL)
+i_b3      = input.bool(false, "Event blackout 3", inline = "b3", group = G_FIL)
+i_b3t     = input.time(timestamp("13 Nov 2026 13:30 +0000"), "", inline = "b3", group = G_FIL)
+i_bHrs    = input.float(2.0, "Each event blackout: hours before & after", minval = 0.25, step = 0.25, group = G_FIL)
+
+i_dash    = input.bool(true, "Show dashboard", group = G_VIS)
+i_dashPos = input.string("Top right", "Dashboard position", options = ["Top right", "Top left", "Bottom right", "Bottom left"], group = G_VIS)
+i_dashSz  = input.string("Small", "Dashboard text", options = ["Tiny", "Small", "Normal"], group = G_VIS)
+i_compact = input.bool(false, "Compact dashboard (mobile)", group = G_VIS)
+i_zones   = input.bool(true, "Show support/resistance zones", group = G_VIS)
+i_levels  = input.bool(true, "Show entry / stop / target lines", group = G_VIS)
+i_exits   = input.bool(true, "Show exit labels", group = G_VIS)
+i_emas    = input.bool(true, "Show EMA 50 / 200", group = G_VIS)
+
+// ───────────────────────────── Asset profile ─────────────────────────────
+f_autoClass() =>
+    t = syminfo.type
+    t == "stock" or t == "fund" or t == "dr" ? "Stock" : t == "forex" ? "Forex" : t == "crypto" ? "Crypto" : t == "index" or t == "futures" or t == "cfd" or t == "commodity" ? "Generic" : "Unsupported"
+
+assetClass = i_profile == "Auto" ? f_autoClass() : i_profile
+isStock    = assetClass == "Stock"
+isForex    = assetClass == "Forex"
+isCrypto   = assetClass == "Crypto"
+supported  = assetClass != "Unsupported"
+isPerp     = isCrypto and (str.contains(syminfo.ticker, ".P") or str.contains(syminfo.ticker, "PERP"))
+baseline   = i_logic != "Full system"
+
+adxTrend   = i_adxIn > 0 ? i_adxIn : isStock ? 20.0 : 22.0
+adxRange   = adxTrend - 2.0
+minStopAtr = i_minStop > 0 ? i_minStop : isCrypto ? 1.0 : 0.75
+maxStopAtr = i_maxStop > 0 ? i_maxStop : isCrypto ? 3.5 : 3.0
+
+tfSec       = timeframe.in_seconds(timeframe.period)
+tfSupported = not timeframe.isseconds and not timeframe.isticks
+autoHtf     = tfSec <= 300 ? "60" : tfSec <= 3600 ? "240" : tfSec <= 14400 ? "D" : tfSec <= 86400 ? "W" : "M"
+htfTf       = i_htf == "Auto" ? autoHtf : i_htf
+htfValid    = timeframe.in_seconds(htfTf) > tfSec
+
+// ───────────────────────────── Core series ─────────────────────────────
+atr   = ta.atr(14)
+emaF  = ta.ema(close, 20)
+emaM  = ta.ema(close, 50)
+emaS  = ta.ema(close, 200)
+[diP, diM, adx] = ta.dmi(14, 14)
+rsi   = ta.rsi(close, 14)
+[bbMid, bbUp, bbLo] = ta.bb(close, 20, 2.0)
+bbw       = (bbUp - bbLo) / bbMid
+bbwRank   = ta.percentrank(bbw, 120)
+sqzRecent = ta.lowest(bbwRank, 5)[1] <= i_sqzPct
+donHi     = ta.highest(high, i_donLen)[1]
+donLo     = ta.lowest(low, i_donLen)[1]
+atrRank   = ta.percentrank(atr / close, 100)
+slopeM    = (emaM - emaM[10]) / atr
+lo3 = ta.lowest(low, 3)
+hi3 = ta.highest(high, 3)
+lo5 = ta.lowest(low, 5)
+hi5 = ta.highest(high, 5)
+blCrossUp = ta.crossover(emaF, emaM)
+blCrossDn = ta.crossunder(emaF, emaM)
+
+cumVol    = ta.cum(nz(volume))
+volOk     = cumVol > 0 and not na(volume)
+volSma    = ta.sma(volume, 20)
+useVolume = (isStock or isCrypto) and volOk
+volConf   = not useVolume or volume > volSma * 1.2
+
+earnVal   = request.earnings(syminfo.tickerid, earnings.actual, barmerge.gaps_on, ignore_invalid_symbol = true)
+barsEarn  = ta.barssince(not na(earnVal))
+fxRate    = request.currency_rate(syminfo.currency, i_acctCcy, ignore_invalid_currency = true)
+
+// ───────────────────────────── Market structure ─────────────────────────────
+// Pivots become known i_pvR bars after the pivot candle. All state below is
+// updated on the bar where the pivot is CONFIRMED.
+ph = ta.pivothigh(high, i_pvL, i_pvR)
+pl = ta.pivotlow(low, i_pvL, i_pvR)
+var float lastPH = na
+var float prevPH = na
+var float lastPL = na
+var float prevPL = na
+var bool  phSwept = false
+var bool  plSwept = false
+var array<float> zHi    = array.new<float>()
+var array<int>   zHiBar = array.new<int>()
+var array<float> zLo    = array.new<float>()
+var array<int>   zLoBar = array.new<int>()
+if not na(ph)
+    prevPH  := lastPH
+    lastPH  := ph
+    phSwept := false
+    zHi.unshift(ph)
+    zHiBar.unshift(bar_index)
+    if zHi.size() > 3
+        zHi.pop()
+        zHiBar.pop()
+if not na(pl)
+    prevPL  := lastPL
+    lastPL  := pl
+    plSwept := false
+    zLo.unshift(pl)
+    zLoBar.unshift(bar_index)
+    if zLo.size() > 3
+        zLo.pop()
+        zLoBar.pop()
+
+structUp = lastPH > prevPH and lastPL > prevPL
+structDn = lastPH < prevPH and lastPL < prevPL
+
+// ───────────────────────────── Regime ─────────────────────────────
+// trend: 1 = UP, -1 = DOWN, 0 = RANGE, 2 = UNCERTAIN
+upPts = (close > emaS ? 1 : 0) + (emaM > emaS ? 1 : 0) + (slopeM > 0.2 ? 1 : 0) + (structUp ? 1 : 0) + (diP > diM ? 1 : 0)
+dnPts = (close < emaS ? 1 : 0) + (emaM < emaS ? 1 : 0) + (slopeM < -0.2 ? 1 : 0) + (structDn ? 1 : 0) + (diM > diP ? 1 : 0)
+trend = adx >= adxTrend and upPts >= 4 ? 1 : adx >= adxTrend and dnPts >= 4 ? -1 : adx < adxRange and math.abs(slopeM) < 0.5 ? 0 : 2
+
+f_htfBias() =>
+    e20 = ta.ema(close, 20)
+    e50 = ta.ema(close, 50)
+    b   = close > e20 and e20 > e50 ? 1 : close < e20 and e20 < e50 ? -1 : 0
+    na(e50[1]) ? int(na) : b[1]
+htfRaw  = request.security(syminfo.tickerid, htfTf, f_htfBias(), lookahead = barmerge.lookahead_on)
+htfBias = htfValid ? htfRaw : 0
+
+volReg = atrRank > 95 ? "EXTREME" : atrRank > 75 ? "HIGH" : atrRank < 25 ? "LOW" : "NORMAL"
+
+// ───────────────────────────── Setups (evaluated on every bar, acted on at close) ─────────────────────────────
+tpL = trend == 1 and htfBias >= 0 and lo3 <= emaF + 0.25 * atr and close > emaF and close > open and close > high[1] and close - emaF <= atr
+tpS = trend == -1 and htfBias <= 0 and hi3 >= emaF - 0.25 * atr and close < emaF and close < open and close < low[1] and emaF - close <= atr
+boL = sqzRecent and close > donHi and close > open and high - low >= atr and trend != -1 and htfBias >= 0 and volConf
+boS = sqzRecent and close < donLo and close < open and high - low >= atr and trend != 1 and htfBias <= 0 and volConf
+mrL = trend == 0 and htfBias >= 0 and low[1] < bbLo[1] and close > bbLo and close > open and rsi[1] < 35
+mrS = trend == 0 and htfBias <= 0 and high[1] > bbUp[1] and close < bbUp and close < open and rsi[1] > 65
+swL = not plSwept and not na(lastPL) and low < lastPL and close > lastPL and close > open and math.min(open, close) - low >= 0.5 * (high - low) and trend != -1 and htfBias >= 0
+swS = not phSwept and not na(lastPH) and high > lastPH and close < lastPH and close < open and high - math.max(open, close) >= 0.5 * (high - low) and trend != 1 and htfBias <= 0
+
+// A sweep "uses up" the level whether or not it produced a signal.
+if low < lastPL
+    plSwept := true
+if high > lastPH
+    phSwept := true
+
+stratL = baseline ? (blCrossUp ? "Baseline EMA cross" : "") : i_useSW and swL ? "D · Sweep reclaim" : i_useTP and tpL ? "A · Trend pullback" : i_useBO and boL ? "B · Squeeze breakout" : i_useMR and mrL ? "C · Range reversion" : ""
+stratS = baseline ? (blCrossDn ? "Baseline EMA cross" : "") : i_useSW and swS ? "D · Sweep reclaim" : i_useTP and tpS ? "A · Trend pullback" : i_useBO and boS ? "B · Squeeze breakout" : i_useMR and mrS ? "C · Range reversion" : ""
+
+rawStopL = stratL == "D · Sweep reclaim" ? low - 0.2 * atr : stratL == "C · Range reversion" ? lo3 - 0.2 * atr : stratL == "B · Squeeze breakout" ? (donHi + donLo) / 2 : lo5 - 0.2 * atr
+rawStopS = stratS == "D · Sweep reclaim" ? high + 0.2 * atr : stratS == "C · Range reversion" ? hi3 + 0.2 * atr : stratS == "B · Squeeze breakout" ? (donHi + donLo) / 2 : hi5 + 0.2 * atr
+distL    = close - rawStopL
+distS    = rawStopS - close
+wideL    = distL > maxStopAtr * atr
+wideS    = distS > maxStopAtr * atr
+stopL    = close - math.max(distL, minStopAtr * atr)
+stopS    = close + math.max(distS, minStopAtr * atr)
+
+// ───────────────────────────── Filters ─────────────────────────────
+bMs       = int(i_bHrs * 3600000)
+f_inEvt(on, t) => on and time < t + bMs and time_close > t - bMs
+nonStd    = not chart.is_standard
+inWarmup  = bar_index < i_warmup
+htfMiss   = htfValid and na(htfRaw)
+fExtVol   = i_fVol and atrRank > 95
+fGap      = i_fGap and math.abs(open - close[1]) > 1.5 * nz(atr[1])
+fExtHrs   = isStock and timeframe.isintraday and i_fExt and not session.ismarket
+fOpenBar  = isStock and timeframe.isintraday and i_fOpen and session.isfirstbar_regular
+fEarn     = isStock and i_earnN > 0 and barsEarn < i_earnN
+fFxRoll   = isForex and timeframe.isintraday and i_fxRoll and not na(time(timeframe.period, i_fxRollS, "America/New_York"))
+fDaily    = timeframe.isintraday and i_dBlk and not na(time(timeframe.period, i_dBlkS, "America/New_York"))
+fEvent    = f_inEvt(i_b1, i_b1t) or f_inEvt(i_b2, i_b2t) or f_inEvt(i_b3, i_b3t)
+blocked   = not supported or not tfSupported or nonStd or inWarmup or htfMiss or fExtVol or fGap or fExtHrs or fOpenBar or fEarn or fFxRoll or fDaily or fEvent
+shortOk   = not isStock or i_shortStk
+
+sigL      = not blocked and stratL != "" and not wideL
+sigSraw   = not blocked and stratS != "" and not wideS and not sigL
+sigS      = sigSraw and shortOk
+sigStkEx  = sigSraw and not shortOk
+
+// ───────────────────────────── Signal lifecycle (confirmed bars only) ─────────────────────────────
+// sState: 0 idle, 1 pending entry, 2 in trade, 3 closed
+var int    sDir     = 0
+var int    sState   = 0
+var float  sRef     = na
+var float  sLim     = na
+var float  sStop    = na
+var float  sCur     = na
+var float  sT1      = na
+var float  sT2      = na
+var float  sFill    = na
+var float  sExitPx  = na
+var float  sR       = na
+var int    sBar     = na
+var int    sTime    = na
+var int    sFillBar = na
+var int    sExitBar = na
+var bool   sT1Hit   = false
+var string sStrat   = ""
+var string sOut     = ""
+
+evNewL = false
+evNewS = false
+evFill = false
+evT1   = false
+evExit = false
+evExp  = false
+evStkX = false
+exitKind = ""
+float  exR    = na
+float  exFill = na
+float  exPx   = na
+int    exDir  = 0
+int    expDir = 0
+string exStrat = ""
+string expMsg = ""
+
+f_closeTrade(px, kind) =>
+    risk = math.abs(sFill - sStop)
+    r2   = sDir * (px - sFill) / risk
+    r    = sT1Hit ? 0.5 * sDir * (sT1 - sFill) / risk + 0.5 * r2 : r2
+    [px, r, kind]
+
+if barstate.isconfirmed
+    // 1 · pending entry: fill or expire
+    if sState == 1
+        filled = sDir == 1 ? low <= sLim : high >= sLim
+        if filled
+            sFill    := sDir == 1 ? math.min(open, sLim) : math.max(open, sLim)
+            sFillBar := bar_index
+            sState   := 2
+            evFill   := true
+        else if bar_index - sBar >= i_expiry
+            sState   := 3
+            sOut     := "EXPIRED (entry not filled)"
+            sExitBar := bar_index
+            sR       := na
+            evExp    := true
+            expDir   := sDir
+            expMsg   := sOut + " | " + sStrat
+    // 2 · open trade: stop first (conservative), then targets, time, regime
+    if sState == 2
+        gapOk   = bar_index != sFillBar
+        hitStop = sDir == 1 ? low <= sCur : high >= sCur
+        hitT2   = sDir == 1 ? high >= sT2 : low <= sT2
+        hitT1   = sDir == 1 ? high >= sT1 : low <= sT1
+        float  xPx   = na
+        string xKind = ""
+        if hitStop
+            xPx   := gapOk ? (sDir == 1 ? math.min(open, sCur) : math.max(open, sCur)) : sCur
+            xKind := sT1Hit ? "STOP at breakeven (after T1)" : "STOPPED"
+        else
+            if hitT1 and not sT1Hit
+                sT1Hit := true
+                sCur   := sFill
+                evT1   := true
+            if hitT2
+                xPx   := sT2
+                xKind := "TARGET 2"
+            else if bar_index - sFillBar >= i_maxHold
+                xPx   := close
+                xKind := "TIME STOP"
+            else if i_regExit and trend == -sDir
+                xPx   := close
+                xKind := "INVALIDATED: trend flipped"
+        if not na(xPx)
+            [p, r, k] = f_closeTrade(xPx, xKind)
+            sExitPx  := p
+            sR       := r
+            sOut     := k
+            sState   := 3
+            sExitBar := bar_index
+            evExit   := true
+            exitKind := k
+            exR      := r
+            exFill   := sFill
+            exPx     := p
+            exDir    := sDir
+            exStrat  := sStrat
+    // 3 · new confirmed signal
+    if sigL or sigS or sigStkEx
+        d = sigL ? 1 : -1
+        if sState == 2 and sDir == -d
+            [p, r, k] = f_closeTrade(close, sigStkEx ? "EXIT LONG: bearish setup" : "EXIT: opposite signal")
+            sExitPx  := p
+            sR       := r
+            sOut     := k
+            sState   := 3
+            sExitBar := bar_index
+            evExit   := true
+            exitKind := k
+            exR      := r
+            exFill   := sFill
+            exPx     := p
+            exDir    := sDir
+            exStrat  := sStrat
+            evStkX   := sigStkEx
+        else if sState == 1 and sDir == -d
+            sState   := 3
+            sOut     := "CANCELLED: opposite signal"
+            sExitBar := bar_index
+            sR       := na
+            evExp    := true
+            expDir   := sDir
+            expMsg   := sOut + " | " + sStrat
+        sameBusy = (sState == 1 or sState == 2) and sDir == d
+        if (sigL or sigS) and not sameBusy
+            riskPlan = d == 1 ? close - stopL : stopS - close
+            sDir     := d
+            sState   := 1
+            sRef     := close
+            sLim     := close + d * i_chase * atr
+            sStop    := d == 1 ? stopL : stopS
+            sCur     := sStop
+            sT1      := close + d * i_t1R * riskPlan
+            sT2      := close + d * i_t2R * riskPlan
+            sFill    := na
+            sExitPx  := na
+            sR       := na
+            sBar     := bar_index
+            sTime    := time
+            sFillBar := na
+            sExitBar := na
+            sT1Hit   := false
+            sStrat   := d == 1 ? stratL : stratS
+            sOut     := ""
+            evNewL   := d == 1
+            evNewS   := d == -1
+
+// ───────────────────────────── Visuals ─────────────────────────────
+f_fmt(x) => na(x) ? "–" : str.tostring(x, format.mintick)
+cUp   = color.new(#089981, 0)
+cDn   = color.new(#F23645, 0)
+cWait = color.new(#787B86, 0)
+cZoneR = color.new(#F23645, 85)
+cZoneS = color.new(#089981, 85)
+
+plot(i_emas ? emaM : na, "EMA 50", color.new(#2962FF, 30), 1)
+plot(i_emas ? emaS : na, "EMA 200", color.new(#FF9800, 30), 2)
+plotshape(evNewL, "BUY", shape.labelup, location.belowbar, cUp, text = "BUY", textcolor = color.white, size = size.small)
+plotshape(evNewS, "SELL", shape.labeldown, location.abovebar, cDn, text = "SELL", textcolor = color.white, size = size.small)
+
+if i_exits and evExit
+    win  = exR > 0
+    txt  = (evStkX ? "EXIT LONG" : exitKind == "TARGET 2" ? "T2" : str.startswith(exitKind, "STOP") ? "SL" : str.startswith(exitKind, "INVALID") ? "INVALID" : str.startswith(exitKind, "TIME") ? "TIME" : "EXIT") + " " + (exR >= 0 ? "+" : "") + str.tostring(exR, "#.##") + "R"
+    label.new(bar_index, exDir == 1 ? high : low, txt, yloc = exDir == 1 ? yloc.abovebar : yloc.belowbar, style = exDir == 1 ? label.style_label_down : label.style_label_up, color = color.new(win ? cUp : cWait, 25), textcolor = color.white, size = size.tiny, tooltip = exitKind + " — gross of costs, indicator estimate")
+if i_exits and evExp
+    label.new(bar_index, expDir == 1 ? low : high, "EXP", yloc = expDir == 1 ? yloc.belowbar : yloc.abovebar, style = label.style_none, textcolor = cWait, size = size.tiny, tooltip = expMsg)
+
+// Preliminary preview: live bar only, replaced on every tick, deleted at close.
+var label prelimLbl = na
+label.delete(prelimLbl)
+prelimLbl := na
+if i_prelim and barstate.isrealtime and not barstate.isconfirmed and (sigL or sigS)
+    prelimLbl := label.new(bar_index, sigL ? low : high, (sigL ? "BUY?" : "SELL?") + " PRELIMINARY", yloc = sigL ? yloc.belowbar : yloc.abovebar, style = sigL ? label.style_label_up : label.style_label_down, color = color.new(sigL ? cUp : cDn, 70), textcolor = color.white, size = size.small, tooltip = "Bar not closed. This may disappear. Not alerted, not counted.")
+
+var array<line>  lvLines  = array.new<line>()
+var array<label> lvLabels = array.new<label>()
+var array<box>   zBoxes   = array.new<box>()
+
+f_lvl(y, x1, x2, col, sty, txt) =>
+    lvLines.push(line.new(x1, y, x2, y, color = col, style = sty, width = 1))
+    lvLabels.push(label.new(x2, y, txt + " " + f_fmt(y), style = label.style_label_left, color = color.new(col, 80), textcolor = col, size = size.tiny))
+
+if barstate.islast
+    for l in lvLines
+        line.delete(l)
+    for b in lvLabels
+        label.delete(b)
+    for z in zBoxes
+        box.delete(z)
+    lvLines.clear()
+    lvLabels.clear()
+    zBoxes.clear()
+    if i_zones and not na(atr)
+        pad = 0.15 * atr
+        if zHi.size() > 0
+            for i = 0 to zHi.size() - 1
+                zBoxes.push(box.new(zHiBar.get(i), zHi.get(i) + pad, bar_index + 8, zHi.get(i) - pad, border_color = na, bgcolor = cZoneR))
+        if zLo.size() > 0
+            for i = 0 to zLo.size() - 1
+                zBoxes.push(box.new(zLoBar.get(i), zLo.get(i) + pad, bar_index + 8, zLo.get(i) - pad, border_color = na, bgcolor = cZoneS))
+    if i_levels and not na(sBar) and bar_index - sBar <= 300
+        x2 = sState == 3 ? sExitBar : bar_index + 6
+        f_lvl(sLim, sBar, sState == 1 ? sBar + i_expiry : nz(sFillBar, sBar), color.new(#2962FF, 0), line.style_dotted, "Entry limit")
+        f_lvl(sStop, sBar, x2, cDn, line.style_solid, "SL")
+        if sCur != sStop and sState == 2
+            f_lvl(sCur, nz(sFillBar, sBar), x2, color.new(#FF9800, 0), line.style_dashed, "Stop (BE)")
+        f_lvl(sT1, sBar, x2, cUp, line.style_dashed, "T1")
+        f_lvl(sT2, sBar, x2, cUp, line.style_solid, "T2")
+
+// ───────────────────────────── Dashboard ─────────────────────────────
+f_trendTxt(t) => t == 1 ? "UP" : t == -1 ? "DOWN" : t == 0 ? "RANGE" : "UNCERTAIN"
+f_col(t) => t == 1 ? cUp : t == -1 ? cDn : cWait
+
+f_reasons() =>
+    string r = ""
+    if not supported
+        r += "Unsupported instrument type (" + syminfo.type + "). "
+    if not tfSupported
+        r += "Seconds/tick charts unsupported. "
+    if nonStd
+        r += "Non-standard chart type (Heikin Ashi/Renko…): switch to candles. "
+    if inWarmup
+        r += "Warming up: " + str.tostring(bar_index + 1) + "/" + str.tostring(i_warmup) + " bars. "
+    if htfMiss
+        r += "Higher-timeframe data not ready. "
+    if fExtVol
+        r += "Extreme volatility. "
+    if fGap
+        r += "Gap bar. "
+    if fExtHrs
+        r += "Extended-hours bar. "
+    if fOpenBar
+        r += "Session opening bar. "
+    if fEarn
+        r += "Just after earnings. "
+    if fFxRoll
+        r += "FX rollover window. "
+    if fDaily or fEvent
+        r += "Manual event blackout. "
+    if r == ""
+        if (stratL != "" and wideL) or (stratS != "" and wideS)
+            r := "Setup seen, but stop would exceed " + str.tostring(maxStopAtr) + " ATR. "
+        else if sigStkEx
+            r := "Bearish setup on a stock — shorting disabled; avoid new longs. "
+        else
+            r := trend == 1 ? "Uptrend, but no pullback/breakout trigger on the last closed bar." : trend == -1 ? (shortOk ? "Downtrend, but no short trigger on the last closed bar." : "Downtrend — long setups off, stock shorting disabled.") : trend == 0 ? "Range — waiting for a band extreme and reversal bar." : "Trend unclear: EMAs, structure and ADX disagree."
+    r
+
+var table dash = table.new(i_dashPos == "Top left" ? position.top_left : i_dashPos == "Bottom right" ? position.bottom_right : i_dashPos == "Bottom left" ? position.bottom_left : position.top_right, 2, 14, bgcolor = color.new(#131722, 10), border_color = color.new(#787B86, 60), border_width = 1, frame_color = color.new(#787B86, 40), frame_width = 1)
+txtSz = i_dashSz == "Tiny" ? size.tiny : i_dashSz == "Normal" ? size.normal : size.small
+
+f_row(row, k, v, vc) =>
+    table.cell(dash, 0, row, k, text_color = color.new(#B2B5BE, 0), text_size = txtSz, text_halign = text.align_left)
+    table.cell(dash, 1, row, v, text_color = vc, text_size = txtSz, text_halign = text.align_left)
+
+if barstate.islast and i_dash
+    table.clear(dash, 0, 0, 1, 13)
+    bool   pend   = sState == 1
+    bool   prel   = i_prelim and barstate.isrealtime and not barstate.isconfirmed and (sigL or sigS)
+    bool   recent = sState == 3 and bar_index - sExitBar <= 1
+    string setup  = pend ? (sDir == 1 ? "BUY" : "SELL") : prel ? (sigL ? "BUY?" : "SELL?") : "WAIT"
+    color  setupC = pend ? (sDir == 1 ? cUp : cDn) : prel ? color.new(#FF9800, 0) : cWait
+    string status = pend ? "CONFIRMED · entry window " + str.tostring(i_expiry - (bar_index - sBar)) + " bar(s) left" : prel ? "PRELIMINARY — bar not closed, may vanish" : sState == 2 ? "IN TRADE " + (sDir == 1 ? "LONG" : "SHORT") + (sT1Hit ? " · T1 hit, stop at BE" : "") + " — late entry not advised" : recent ? (str.contains(sOut, "INVALID") or str.contains(sOut, "STOP") or str.contains(sOut, "CANCEL") ? "INVALIDATED · " : "CLOSED · ") + sOut : "No active signal"
+    string sideTxt = isStock and not i_shortStk ? " (long-only)" : isCrypto and not isPerp ? " (spot: short needs margin)" : ""
+    int r = 0
+    f_row(r, "Market", syminfo.ticker + " · " + timeframe.period, color.white)
+    r += 1
+    f_row(r, "Asset", assetClass + sideTxt + (isPerp ? " · perpetual" : ""), supported ? color.white : cDn)
+    r += 1
+    f_row(r, "Trend", f_trendTxt(trend) + "  (ADX " + str.tostring(adx, "#") + ")", f_col(trend))
+    r += 1
+    f_row(r, "HTF " + htfTf, not htfValid ? "n/a" : na(htfRaw) ? "loading" : htfBias == 1 ? "UP" : htfBias == -1 ? "DOWN" : "NEUTRAL", f_col(htfBias))
+    r += 1
+    f_row(r, "Volatility", volReg, volReg == "EXTREME" ? cDn : color.white)
+    r += 1
+    f_row(r, "Setup", setup, setupC)
+    r += 1
+    f_row(r, "Status", status, color.white)
+    r += 1
+    if sState != 0
+        f_row(r, "Strategy", sStrat + " · signal " + str.format_time(sTime, "yyyy-MM-dd HH:mm", syminfo.timezone), color.white)
+        r += 1
+        f_row(r, "Levels", (sDir == 1 ? "Buy ≤ " : "Sell ≥ ") + f_fmt(sLim) + " · SL " + f_fmt(sStop) + " · T1 " + f_fmt(sT1) + " · T2 " + f_fmt(sT2), color.white)
+        r += 1
+    if setup == "WAIT"
+        f_row(r, "Why WAIT", f_reasons(), color.new(#FF9800, 0))
+        r += 1
+    if not i_compact
+        string data = (volOk ? "" : "No volume data. ") + (isForex ? "Broker-specific FX quotes. " : "") + (isCrypto ? "Exchange-specific prices. " : "") + "History: " + str.tostring(bar_index + 1) + " bars. " + (tfSec < 14400 ? "Below 4h: offline tests were flat-to-negative after costs. " : "") + "News NOT checked — technical only."
+        f_row(r, "Data", data, color.new(#B2B5BE, 0))
+        r += 1
+        if sState == 3 and not na(sR)
+            f_row(r, "Last trade", sOut + " " + str.tostring(sR, "#.##") + "R (gross)", sR > 0 ? cUp : cDn)
+            r += 1
+    if i_showSz and (sState == 1 or sState == 2)
+        risk1 = math.abs(nz(sFill, sRef) - sStop) * syminfo.pointvalue * fxRate
+        units = i_acct * i_riskPct / 100 / risk1
+        szTxt = na(units) ? "n/a (currency conversion unavailable)" : "≈ " + str.tostring(units, "#.####") + " units" + (isForex ? " (" + str.tostring(units / 100000, "#.##") + " lots)" : "") + " · ESTIMATE, excl. costs/min size"
+        f_row(r, "Size est.", szTxt, color.white)

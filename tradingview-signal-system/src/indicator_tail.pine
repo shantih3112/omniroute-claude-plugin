@@ -1,0 +1,26 @@
+
+// ═════════════════════════════ ALERTS (indicator only) ═════════════════════════════
+// Hidden values for {{plot("…")}} placeholders in alertcondition() messages.
+plot(evNewL or evNewS ? sLim : na, "Alert Entry Limit", display = display.data_window)
+plot(evNewL or evNewS ? sStop : na, "Alert Stop", display = display.data_window)
+plot(evNewL or evNewS ? sT1 : na, "Alert T1", display = display.data_window)
+plot(evNewL or evNewS ? sT2 : na, "Alert T2", display = display.data_window)
+
+alertcondition(evNewL, "1 · Confirmed BUY", 'Confirmed BUY {{exchange}}:{{ticker}} [{{interval}}] bar {{time}} UTC | Buy limit <= {{plot("Alert Entry Limit")}} | SL {{plot("Alert Stop")}} | T1 {{plot("Alert T1")}} | T2 {{plot("Alert T2")}} | Cancel if unfilled within the entry window. Technical signal only; news not checked.')
+alertcondition(evNewS, "2 · Confirmed SELL (short entry)", 'Confirmed SELL {{exchange}}:{{ticker}} [{{interval}}] bar {{time}} UTC | Sell limit >= {{plot("Alert Entry Limit")}} | SL {{plot("Alert Stop")}} | T1 {{plot("Alert T1")}} | T2 {{plot("Alert T2")}} | Cancel if unfilled within the entry window. Technical signal only; news not checked.')
+alertcondition(evExit, "3 · Exit / stop / invalidation", 'EXIT {{exchange}}:{{ticker}} [{{interval}}] bar {{time}} UTC — signal closed (stop, target, time stop, trend-flip invalidation or opposite signal). See chart label.')
+alertcondition(evExp, "4 · Entry expired / cancelled", 'EXPIRED {{exchange}}:{{ticker}} [{{interval}}] bar {{time}} UTC — pending entry not filled in time or cancelled by an opposite signal.')
+
+// One alert using "Any alert() function call" delivers all of the detailed messages below.
+f_ts() => str.format_time(time_close, "yyyy-MM-dd HH:mm", "UTC") + " UTC"
+f_hdr(kind) => kind + " | " + syminfo.tickerid + " | TF " + timeframe.period + " | bar close " + f_ts()
+if evNewL or evNewS
+    side = evNewL ? "BUY (long entry)" : "SELL (short entry)"
+    msg  = f_hdr(side) + "\nStrategy: " + sStrat + " | Trend " + f_trendTxt(trend) + " | HTF " + (htfBias == 1 ? "UP" : htfBias == -1 ? "DOWN" : "NEUTRAL") + " | Vol " + volReg + "\nEntry: " + (evNewL ? "buy limit <= " : "sell limit >= ") + f_fmt(sLim) + " (signal close " + f_fmt(sRef) + ")" + "\nStop " + f_fmt(sStop) + " | T1 " + f_fmt(sT1) + " (" + str.tostring(i_t1R) + "R, then stop to breakeven) | T2 " + f_fmt(sT2) + " (" + str.tostring(i_t2R) + "R)" + "\nExpires if not filled within " + str.tostring(i_expiry) + " bars. Invalid if stop trades first, trend flips, or opposite signal." + "\nTechnical signal only. News/events NOT checked. Not financial advice."
+    alert(msg, alert.freq_once_per_bar_close)
+if evT1
+    alert(f_hdr("T1 HIT — move stop to breakeven") + "\n" + sStrat + " | entry " + f_fmt(sFill) + " | T2 " + f_fmt(sT2), alert.freq_once_per_bar_close)
+if evExit
+    alert(f_hdr(evStkX ? "EXIT LONG (bearish setup; shorting disabled)" : "EXIT — " + exitKind) + "\n" + exStrat + " | entry " + f_fmt(exFill) + " | exit ≈ " + f_fmt(exPx) + " | " + str.tostring(exR, "#.##") + "R gross (estimate)", alert.freq_once_per_bar_close)
+if evExp
+    alert(f_hdr("ENTRY EXPIRED/CANCELLED") + "\n" + expMsg, alert.freq_once_per_bar_close)

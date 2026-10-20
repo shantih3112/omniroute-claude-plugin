@@ -1,0 +1,4 @@
+//@version=6
+// Multi-Market Signal Analyst — INDICATOR
+// Technical analysis aid. Not financial advice. No guarantee of accuracy or profit.
+indicator("Multi-Market Signal Analyst", shorttitle = "MM Analyst", overlay = true, max_labels_count = 300, max_lines_count = 60, max_boxes_count = 20, max_bars_back = 500)
