@@ -1,0 +1,2 @@
+[console_scripts]
+fxsignal = fxsignal.cli:main
