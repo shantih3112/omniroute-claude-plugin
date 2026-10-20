@@ -3,9 +3,9 @@
 mode: research_paper          # research_paper | paper_forward | (live is not implemented)
 timezone_display: Europe/Oslo
 symbols: [EURUSD, GBPUSD, USDJPY, AUDUSD, USDCAD, USDCHF, EURGBP, EURJPY, GBPJPY, AUDJPY, EURCHF]
-account:                      # illustrative only, used for example sizes in admin messages
-  equity: 10000
-  currency: USD
+account:                      # owner's planned capital (2026-10-20); used for example sizes only
+  equity: 1000
+  currency: EUR
 risk:
   risk_per_trade_pct: 0.5
   hard_max_risk_per_trade_pct: 1.0
