@@ -236,8 +236,16 @@ async def run_once(cfg: dict, base_dir: Path, feed=None, tg: TelegramClient | No
     chats = dict(chats or {})
     admins = set(admins or set())
     if tg is not None:
+        # connection check, reported in the (public) log without any secret
+        try:
+            me = await tg.call("getMe")
+            info["telegram"] = (f"ok as @{me['result'].get('username')}" if me.get("ok") else
+                                f"ERROR {me.get('error_code')}: {str(me.get('description', ''))[:80]}")
+        except Exception as ex:
+            info["telegram"] = f"ERROR {type(ex).__name__}"
         offset = store.kv_get("tg_offset")
         updates = await tg.get_updates(offset, timeout=0)
+        info["telegram_messages_received"] = len(updates)
         if not admins:
             saved = store.kv_get("auto_admin_id")
             if saved:
@@ -252,6 +260,7 @@ async def run_once(cfg: dict, base_dir: Path, feed=None, tg: TelegramClient | No
                     await tg.send(first["chat"]["id"],
                                   "You are now the admin of this fxsignal bot (first person to message it). "
                                   "If that is wrong, set the TELEGRAM_ADMIN_ID secret. Send /help for commands.")
+        info["admin_known"] = bool(admins)
         if not chats.get("admin") and admins:
             chats["admin"] = str(next(iter(admins)))
         admin = Admin(svc, admins)
