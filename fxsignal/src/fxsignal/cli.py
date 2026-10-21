@@ -140,7 +140,8 @@ def _cmd_run_once(a):
                     await tg.close()
     info = asyncio.run(go())
     # this log is public for public repositories: counts and statuses only
-    print(json.dumps({k: info.get(k) for k in ("new_bars", "cycle", "sent", "outbox", "symbols")}, default=str))
+    print(json.dumps({k: info.get(k) for k in ("telegram", "telegram_messages_received", "admin_known", "new_bars", "cycle", "sent", "outbox",
+                                          "symbols")}, default=str))
 
 
 def _cmd_feed_selftest(a):
