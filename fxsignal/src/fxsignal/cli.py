@@ -25,6 +25,8 @@ ROOT = Path(__file__).resolve().parents[2]
 def _cmd_serve(a):
     from .live.app import serve
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
+    for noisy in ("httpx", "httpcore"):
+        logging.getLogger(noisy).setLevel(logging.WARNING)
     asyncio.run(serve(a.config, Path(a.base_dir).resolve()))
 
 
@@ -114,6 +116,33 @@ def _cmd_check(a):
     sys.exit(0 if ok else 1)
 
 
+def _cmd_run_once(a):
+    """One scheduled cycle; used by the GitHub Actions workflow (no server needed)."""
+    import httpx
+    from .live.app import load_config, run_once, telegram_from_env
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+    # request URLs can contain API keys (Twelve Data uses ?apikey=); never log them
+    for noisy in ("httpx", "httpcore"):
+        logging.getLogger(noisy).setLevel(logging.WARNING)
+    cfg = load_config(a.config)
+    tg, chats, admins = telegram_from_env()
+    extra = os.environ.get("TELEGRAM_ADMIN_ID", "").strip()
+    if extra.isdigit():
+        admins.add(int(extra))
+        chats["admin"] = chats.get("admin") or extra
+
+    async def go():
+        async with httpx.AsyncClient(timeout=20) as http:
+            try:
+                return await run_once(cfg, Path(a.base_dir).resolve(), tg=tg, chats=chats, admins=admins, http=http)
+            finally:
+                if tg:
+                    await tg.close()
+    info = asyncio.run(go())
+    # this log is public for public repositories: counts and statuses only
+    print(json.dumps({k: info.get(k) for k in ("new_bars", "cycle", "sent", "outbox", "symbols")}, default=str))
+
+
 def _cmd_feed_selftest(a):
     """Fetch a few real bars from the configured feed and check them. Uses ~2 API credits."""
     from .live.app import load_config, make_feed
@@ -181,6 +210,10 @@ def main(argv=None):
     b.add_argument("--db", default=str(ROOT / "var" / "fxsignal.sqlite"))
     b.add_argument("--dest", required=True)
     b.set_defaults(fn=_cmd_backup)
+    o = sub.add_parser("run-once")
+    o.add_argument("--config", default=str(ROOT / "config" / "default.yaml"))
+    o.add_argument("--base-dir", default=str(ROOT))
+    o.set_defaults(fn=_cmd_run_once)
     f = sub.add_parser("feed-selftest")
     f.add_argument("--config", default=str(ROOT / "config" / "default.yaml"))
     f.add_argument("--symbol", default="EURUSD")

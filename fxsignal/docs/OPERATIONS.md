@@ -14,7 +14,22 @@
 | VPS | Any Debian/Ubuntu host, 1–2 vCPU, 2 GB RAM, ~5–10 USD/month | Choose a region near London for lower feed latency |
 | Dead-man switch | e.g. a free healthchecks.io check, ping URL in `DEADMAN_PING_URL` | Alerts you if the whole VPS dies |
 
-## 2. Install on a VPS (systemd)
+## 2a. Easiest: run on GitHub Actions (no server, free for public repos)
+`.github/workflows/fxsignal.yml` runs `fxsignal run-once` every hour at :07 UTC.
+1. Repository → Settings → Secrets and variables → Actions → New repository secret:
+   `TWELVEDATA_API_KEY` and `TELEGRAM_BOT_TOKEN` (optional `TELEGRAM_ADMIN_ID`).
+2. Send your bot a private message (e.g. `/start`). On the next run the first private sender
+   becomes admin and gets a confirmation (set `TELEGRAM_ADMIN_ID` to pin it instead).
+3. Actions tab → "fxsignal hourly" → Run workflow, to start immediately.
+
+Trade-offs vs a VPS: commands are answered once per hour (not instantly); GitHub may start
+scheduled runs late (signals published > 45 min after their bar are dropped, never sent late);
+state lives in an Actions cache (evicted after 7 days without runs; signals are also in Telegram);
+GitHub pauses schedules after 60 days without repository activity (it emails you first);
+a failing run triggers GitHub's own failure e-mail, which acts as the watchdog.
+Logs are public in a public repo: the job prints counts only, and secrets are masked.
+
+## 2b. Install on a VPS (systemd)
 ```bash
 # as root on the VPS
 git clone <your repo> /opt/fxsignal-src && cp -r /opt/fxsignal-src/fxsignal /opt/fxsignal

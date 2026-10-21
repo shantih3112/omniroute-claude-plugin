@@ -164,9 +164,10 @@ class Service:
                 stats["events"] += self._track(sym, bar)
                 for built in ss.h1.add(bar):
                     stats["signals"] += self._on_h1_close(sym, built, now, stats)
+            # judge data health with the bars just received, BEFORE the newest bar is evaluated
+            self._update_data_status(sym, now)
             for built in ss.h1.tick(now):
                 stats["signals"] += self._on_h1_close(sym, built, now, stats)
-            self._update_data_status(sym, now)
         if self.need_quote:
             stats["events"] += await self._quote_entries()
         self._maybe_daily_report(now)

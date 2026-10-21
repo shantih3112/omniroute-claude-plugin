@@ -169,3 +169,101 @@ async def replay(cfg: dict, store: Store, m1: dict[str, pd.DataFrame], start: pd
         if outbox is not None:
             await outbox.drain_once()
     return svc
+
+
+class BatchFeed:
+    """Hands the service the bars that completed since the previous run, then nothing.
+    Quotes and the clock come from the real feed underneath."""
+
+    def __init__(self, inner):
+        self.inner = inner
+        self.pending: dict[str, list] = {}
+        self.bar_minutes = getattr(inner, "bar_minutes", 60)
+        self.name = f"batch:{getattr(inner, 'name', '?')}"
+
+    def now(self):
+        return self.inner.now()
+
+    async def poll(self, symbol):
+        from .feeds import FeedBatch
+        bars, self.pending[symbol] = self.pending.get(symbol, []), []
+        return FeedBatch(symbol, bars, self.now())
+
+    async def quote(self, symbol):
+        return await self.inner.quote(symbol)
+
+
+async def run_once(cfg: dict, base_dir: Path, feed=None, tg: TelegramClient | None = None,
+                   chats: dict | None = None, admins: set[int] | None = None, http=None,
+                   history_bars: int = 1500) -> dict:
+    """One scheduled cycle (e.g. hourly GitHub Actions run) with state kept in the SQLite file.
+
+    Processes every hourly bar that completed since the last run (gaps are caught up), tracks
+    open paper signals, generates and publishes signals for the latest bar only (older bars are
+    rejected by the processing-lag rule), refreshes the calendar, answers admin commands that
+    arrived since the last run, sends the daily report when due, and drains the outbox.
+    """
+    store = Store(base_dir / cfg["storage"]["db_path"])
+    feed = feed or make_feed(cfg)
+    bf = BatchFeed(feed)
+    label = "RESEARCH-PAPER" if cfg.get("mode") == "research_paper" else "LIVE-PAPER"
+    svc = Service(cfg, store, bf, label=label, base_dir=base_dir)
+    # a scheduled job can start late; signals more than this after the bar close are not published
+    svc.max_lag = pd.Timedelta(minutes=cfg.get("feed", {}).get("batch_max_lag_min", 45))
+    info = {"new_bars": {}}
+    restored = svc.restore()
+    for sym in svc.symbols:
+        hist = await feed.history_h1(sym, history_bars)
+        last = svc.st[sym].last_bar_t
+        if last is None:  # first run: everything is history except the newest completed bar
+            seed, new = hist.iloc[:-1], hist.iloc[-1:]
+        else:
+            seed, new = hist[hist.index <= last], hist[hist.index > last]
+        svc.seed_history(sym, seed)
+        from ..signals.lifecycle import Bar
+        bf.pending[sym] = [Bar(t, float(r.open), float(r.high), float(r.low), float(r.close), None)
+                           for t, r in new.iterrows()]
+        info["new_bars"][sym] = len(new)
+    svc.update_correlations()
+    if http is not None:
+        try:
+            svc.set_calendar(await cal.fetch_ff(http), pd.Timestamp(feed.now()))
+        except Exception as ex:
+            store.incident(iso(feed.now()), "calendar_error", f"{type(ex).__name__}: {str(ex)[:200]}")
+    info["cycle"] = await svc.step()
+    svc.prune(30)
+    # admin commands received since the last run
+    chats = dict(chats or {})
+    admins = set(admins or set())
+    if tg is not None:
+        offset = store.kv_get("tg_offset")
+        updates = await tg.get_updates(offset, timeout=0)
+        if not admins:
+            saved = store.kv_get("auto_admin_id")
+            if saved:
+                admins = {int(saved)}
+            else:
+                # no admin configured: the FIRST person who messaged the bot privately becomes admin
+                first = next((u["message"] for u in updates if u.get("message", {}).get("chat", {}).get("type") == "private"), None)
+                if first:
+                    admins = {int(first["from"]["id"])}
+                    store.kv_set("auto_admin_id", first["from"]["id"], iso(feed.now()))
+                    store.incident(iso(feed.now()), "admin_auto_set", str(first["from"]["id"]))
+                    await tg.send(first["chat"]["id"],
+                                  "You are now the admin of this fxsignal bot (first person to message it). "
+                                  "If that is wrong, set the TELEGRAM_ADMIN_ID secret. Send /help for commands.")
+        if not chats.get("admin") and admins:
+            chats["admin"] = str(next(iter(admins)))
+        admin = Admin(svc, admins)
+        for u in updates:
+            store.kv_set("tg_offset", u["update_id"] + 1, iso(feed.now()))
+            m = u.get("message") or {}
+            reply = admin.handle((m.get("from") or {}).get("id"), m.get("text", ""))
+            if reply and m.get("chat", {}).get("type") == "private":
+                await tg.send(m["chat"]["id"], reply)
+        info["commands"] = len(updates)
+    sent = await Outbox(store, tg, chats, 20, now=lambda: feed.now()).drain_once() if tg else 0
+    info.update(sent=sent, outbox=store.outbox_stats(), restored=restored,
+                symbols={s: v.status for s, v in svc.st.items()})
+    store.conn.close()
+    return info

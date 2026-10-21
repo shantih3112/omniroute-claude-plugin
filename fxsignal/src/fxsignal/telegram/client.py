@@ -68,6 +68,7 @@ class TelegramClient:
 
     async def get_updates(self, offset: int | None, timeout: int = 25) -> list[dict]:
         params = {"timeout": timeout, "allowed_updates": ["message"]}
+        # (timeout=0 for scheduled one-shot runs: return immediately)
         if offset is not None:
             params["offset"] = offset
         try:
