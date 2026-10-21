@@ -1,0 +1,322 @@
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260914-1600-AUDUSD-TP | AUDUSD | BUY</b>
+<i>RESEARCH ONLY - no validated edge. Do not trade this.</i>
+
+<b>Status:</b> Pending
+<b>Created:</b> 2026-09-14 18:00 CEST
+<b>Published:</b> 2026-09-14 18:01 CEST
+<b>Expires:</b> 2026-09-14 19:00 CEST
+
+<b>Plan</b>
+Entry: market, only inside 0.71241 – 0.71467
+Stop: 0.71096 (29.6 pips)
+Target: 0.71985 (59.3 pips)
+Time stop: 72 h after entry
+Outside the zone or after expiry: <b>do not chase</b>.
+
+<b>Risk</b>
+Illustrative risk: 0.50% of account. Size from YOUR account with /size.
+Est. costs: 0.03 R · reward:risk after costs 1.93
+Stops can fill worse in gaps and fast markets.
+
+<b>Context</b>
+Strategy: trend_pullback v1
+HTF: D1 close above EMA50
+Regime: trend/hivol
+News: CALENDAR UNAVAILABLE - news risk unknown
+Exposure: no other open paper signals
+Why: D1 trend + H1 pullback resumed above/below EMA20
+Cancel if: the stop trades before entry, or the entry zone is left
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260914-1600-AUDUSD-TP | AUDUSD | BUY — Triggered</b>
+2026-09-14 18:01 CEST
+Paper price: 0.71393
+<i>Paper tracking with modelled prices; your fills will differ.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-14</b>
+
+New signals: 1
+Open/pending signals: 1
+
+Data: EURUSD:ok, GBPUSD:ok, AUDUSD:ok, USDCAD:ok
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 2, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-15</b>
+
+New signals: 0
+No qualified signals today.
+Open/pending signals: 1
+
+Data: EURUSD:ok, GBPUSD:ok, AUDUSD:ok, USDCAD:ok
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 3, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260914-1600-AUDUSD-TP | AUDUSD | BUY — Closed</b>
+2026-09-16 20:26 CEST
+Paper price: 0.71094
+Result: -1.03 R after modelled costs (stop)
+<i>Paper tracking with modelled prices; your fills will differ.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-16</b>
+
+New signals: 0
+No qualified signals today.
+Closed today: 1 · total -1.03 R (paper)
+
+Data: EURUSD:ok, GBPUSD:ok, AUDUSD:ok, USDCAD:ok
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 5, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260917-0800-EURUSD-RD | EURUSD | SELL</b>
+<i>RESEARCH ONLY - no validated edge. Do not trade this.</i>
+
+<b>Status:</b> Pending
+<b>Created:</b> 2026-09-17 10:00 CEST
+<b>Published:</b> 2026-09-17 10:01 CEST
+<b>Expires:</b> 2026-09-17 10:30 CEST
+
+<b>Plan</b>
+Entry: market, only inside 1.14691 – 1.14814
+Stop: 1.14895 (16.3 pips)
+Target: 1.14405 (32.7 pips)
+Time stop: 48 h after entry
+Outside the zone or after expiry: <b>do not chase</b>.
+
+<b>Risk</b>
+Illustrative risk: 0.50% of account. Size from YOUR account with /size.
+Est. costs: 0.06 R · reward:risk after costs 1.94
+Stops can fill worse in gaps and fast markets.
+
+<b>Context</b>
+Strategy: random v1
+HTF: D1 close below EMA50
+Regime: trend/hivol
+News: CALENDAR UNAVAILABLE - news risk unknown
+Exposure: no other open paper signals
+Why: random baseline
+Cancel if: the stop trades before entry, or the entry zone is left
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260917-0800-AUDUSD-RD | AUDUSD | SELL</b>
+<i>RESEARCH ONLY - no validated edge. Do not trade this.</i>
+
+<b>Status:</b> Pending
+<b>Created:</b> 2026-09-17 10:00 CEST
+<b>Published:</b> 2026-09-17 10:01 CEST
+<b>Expires:</b> 2026-09-17 10:30 CEST
+
+<b>Plan</b>
+Entry: market, only inside 0.71133 – 0.71235
+Stop: 0.71302 (13.5 pips)
+Target: 0.70896 (27.1 pips)
+Time stop: 48 h after entry
+Outside the zone or after expiry: <b>do not chase</b>.
+
+<b>Risk</b>
+Illustrative risk: 0.50% of account. Size from YOUR account with /size.
+Est. costs: 0.07 R · reward:risk after costs 1.93
+Stops can fill worse in gaps and fast markets.
+
+<b>Context</b>
+Strategy: random v1
+HTF: D1 close below EMA50
+Regime: trend/hivol
+News: CALENDAR UNAVAILABLE - news risk unknown
+Exposure: EUR -0.5%, USD +0.5%
+Why: random baseline
+Cancel if: the stop trades before entry, or the entry zone is left
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260917-0800-USDCAD-RD | USDCAD | SELL</b>
+<i>RESEARCH ONLY - no validated edge. Do not trade this.</i>
+
+<b>Status:</b> Pending
+<b>Created:</b> 2026-09-17 10:00 CEST
+<b>Published:</b> 2026-09-17 10:01 CEST
+<b>Expires:</b> 2026-09-17 10:30 CEST
+
+<b>Plan</b>
+Entry: market, only inside 1.39819 – 1.39923
+Stop: 1.39992 (13.8 pips)
+Target: 1.39577 (27.7 pips)
+Time stop: 48 h after entry
+Outside the zone or after expiry: <b>do not chase</b>.
+
+<b>Risk</b>
+Illustrative risk: 0.50% of account. Size from YOUR account with /size.
+Est. costs: 0.10 R · reward:risk after costs 1.90
+Stops can fill worse in gaps and fast markets.
+
+<b>Context</b>
+Strategy: random v1
+HTF: D1 close above EMA50
+Regime: trend/normvol
+News: CALENDAR UNAVAILABLE - news risk unknown
+Exposure: EUR -0.5%, USD +1.0%, AUD -0.5%
+Why: random baseline
+Cancel if: the stop trades before entry, or the entry zone is left
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260917-0800-EURUSD-RD | EURUSD | SELL — Triggered</b>
+2026-09-17 10:01 CEST
+Paper price: 1.14732
+<i>Paper tracking with modelled prices; your fills will differ.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260917-0800-AUDUSD-RD | AUDUSD | SELL — Triggered</b>
+2026-09-17 10:01 CEST
+Paper price: 0.71157
+<i>Paper tracking with modelled prices; your fills will differ.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260917-0800-USDCAD-RD | USDCAD | SELL — Triggered</b>
+2026-09-17 10:01 CEST
+Paper price: 1.39853
+<i>Paper tracking with modelled prices; your fills will differ.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260917-0800-USDCAD-RD | USDCAD | SELL — Closed</b>
+2026-09-17 13:58 CEST
+Paper price: 1.39994
+Result: -1.07 R after modelled costs (stop)
+<i>Paper tracking with modelled prices; your fills will differ.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260917-0800-EURUSD-RD | EURUSD | SELL — Closed</b>
+2026-09-17 14:22 CEST
+Paper price: 1.14897
+Result: -1.04 R after modelled costs (stop)
+<i>Paper tracking with modelled prices; your fills will differ.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-17</b>
+
+New signals: 3
+Why the system abstained:
+• effectively the same bet as open EURUSD signal: 1
+Closed today: 2 · total -2.11 R (paper)
+Open/pending signals: 1
+
+Data: EURUSD:ok, GBPUSD:ok, AUDUSD:ok, USDCAD:ok
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 14, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>260917-0800-AUDUSD-RD | AUDUSD | SELL — Closed</b>
+2026-09-18 05:34 CEST
+Paper price: 0.71304
+Result: -1.15 R after modelled costs (stop)
+<i>Paper tracking with modelled prices; your fills will differ.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-18</b>
+
+New signals: 0
+No qualified signals today.
+Closed today: 1 · total -1.15 R (paper)
+
+Data: EURUSD:ok, GBPUSD:ok, AUDUSD:ok, USDCAD:ok
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 16, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-19</b>
+
+New signals: 0
+No qualified signals today.
+
+Data: EURUSD:market_closed, GBPUSD:market_closed, AUDUSD:market_closed, USDCAD:market_closed
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 17, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-20</b>
+
+New signals: 0
+No qualified signals today.
+
+Data: EURUSD:market_closed, GBPUSD:market_closed, AUDUSD:market_closed, USDCAD:market_closed
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 18, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-21</b>
+
+New signals: 0
+No qualified signals today.
+
+Data: EURUSD:ok, GBPUSD:ok, AUDUSD:suspect, USDCAD:ok
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 19, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-22</b>
+
+New signals: 0
+No qualified signals today.
+
+Data: EURUSD:ok, GBPUSD:ok, AUDUSD:suspect, USDCAD:ok
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 20, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-23</b>
+
+New signals: 0
+No qualified signals today.
+
+Data: EURUSD:ok, GBPUSD:ok, AUDUSD:suspect, USDCAD:ok
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 21, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-24</b>
+
+New signals: 0
+No qualified signals today.
+
+Data: EURUSD:ok, GBPUSD:ok, AUDUSD:suspect, USDCAD:ok
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 22, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+
+--- to admin-chat ---
+<b>[REPLAY]</b> <b>Daily report — 2026-09-25</b>
+
+New signals: 0
+No qualified signals today.
+
+Data: EURUSD:ok, GBPUSD:ok, AUDUSD:suspect, USDCAD:ok
+Calendar: UNAVAILABLE - fail-open configured: news risk NOT checked
+Delivery: accepted by Telegram API: 23, pending: 0, failed: 0 (acceptance is not proof of receipt)
+
+<i>No strategy has passed the validation gates; everything here is research output.</i>
+

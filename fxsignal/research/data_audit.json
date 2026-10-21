@@ -1,0 +1,901 @@
+{
+ "quality": [
+  {
+   "symbol": "AUDJPY",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-11-14 03:15:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 9,
+   "longest_intraweek_gap_min": 180.0,
+   "flat_runs": 0,
+   "spikes": 214,
+   "expected_rows_estimate": 232990,
+   "coverage_pct": 98.89,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "AUDJPY",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-11-15 21:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 5,
+   "longest_intraweek_gap_min": 165.0,
+   "flat_runs": 0,
+   "spikes": 48,
+   "expected_rows_estimate": 58217,
+   "coverage_pct": 98.94,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "AUDUSD",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-11-14 21:00:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 7,
+   "longest_intraweek_gap_min": 135.0,
+   "flat_runs": 0,
+   "spikes": 206,
+   "expected_rows_estimate": 232939,
+   "coverage_pct": 98.91,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "AUDUSD",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-11-16 08:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 5,
+   "longest_intraweek_gap_min": 165.0,
+   "flat_runs": 0,
+   "spikes": 38,
+   "expected_rows_estimate": 58209,
+   "coverage_pct": 98.95,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "EURCHF",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-10-29 12:30:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 9,
+   "longest_intraweek_gap_min": 14400.0,
+   "flat_runs": 0,
+   "spikes": 330,
+   "expected_rows_estimate": 234060,
+   "coverage_pct": 98.44,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "EURCHF",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-10-30 14:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 7,
+   "longest_intraweek_gap_min": 14400.0,
+   "flat_runs": 0,
+   "spikes": 60,
+   "expected_rows_estimate": 58496,
+   "coverage_pct": 98.47,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "EURGBP",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-11-14 18:45:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 7,
+   "longest_intraweek_gap_min": 165.0,
+   "flat_runs": 0,
+   "spikes": 300,
+   "expected_rows_estimate": 232945,
+   "coverage_pct": 98.91,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "EURGBP",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-11-16 06:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 5,
+   "longest_intraweek_gap_min": 165.0,
+   "flat_runs": 0,
+   "spikes": 66,
+   "expected_rows_estimate": 58210,
+   "coverage_pct": 98.95,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "EURJPY",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-11-14 12:00:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 7,
+   "longest_intraweek_gap_min": 180.0,
+   "flat_runs": 0,
+   "spikes": 204,
+   "expected_rows_estimate": 232965,
+   "coverage_pct": 98.9,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "EURJPY",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-11-15 23:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 5,
+   "longest_intraweek_gap_min": 225.0,
+   "flat_runs": 0,
+   "spikes": 57,
+   "expected_rows_estimate": 58215,
+   "coverage_pct": 98.94,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "EURUSD",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-11-14 13:00:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 9,
+   "longest_intraweek_gap_min": 210.0,
+   "flat_runs": 0,
+   "spikes": 291,
+   "expected_rows_estimate": 232962,
+   "coverage_pct": 98.9,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "EURUSD",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-11-15 22:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 6,
+   "longest_intraweek_gap_min": 165.0,
+   "flat_runs": 0,
+   "spikes": 69,
+   "expected_rows_estimate": 58216,
+   "coverage_pct": 98.94,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "GBPJPY",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-11-14 02:30:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 7,
+   "longest_intraweek_gap_min": 810.0,
+   "flat_runs": 0,
+   "spikes": 209,
+   "expected_rows_estimate": 232992,
+   "coverage_pct": 98.89,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "GBPJPY",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-11-15 13:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 5,
+   "longest_intraweek_gap_min": 825.0,
+   "flat_runs": 0,
+   "spikes": 46,
+   "expected_rows_estimate": 58222,
+   "coverage_pct": 98.93,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "GBPUSD",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-11-14 18:15:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 7,
+   "longest_intraweek_gap_min": 210.0,
+   "flat_runs": 0,
+   "spikes": 293,
+   "expected_rows_estimate": 232947,
+   "coverage_pct": 98.91,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "GBPUSD",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-11-16 03:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 5,
+   "longest_intraweek_gap_min": 165.0,
+   "flat_runs": 0,
+   "spikes": 69,
+   "expected_rows_estimate": 58212,
+   "coverage_pct": 98.95,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "USDCAD",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-11-14 18:45:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 4,
+   "longest_intraweek_gap_min": 210.0,
+   "flat_runs": 0,
+   "spikes": 219,
+   "expected_rows_estimate": 232945,
+   "coverage_pct": 98.91,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "USDCAD",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-11-16 16:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 2,
+   "longest_intraweek_gap_min": 165.0,
+   "flat_runs": 0,
+   "spikes": 50,
+   "expected_rows_estimate": 58203,
+   "coverage_pct": 98.96,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "USDCHF",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-11-14 02:00:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 8,
+   "longest_intraweek_gap_min": 1665.0,
+   "flat_runs": 0,
+   "spikes": 257,
+   "expected_rows_estimate": 232993,
+   "coverage_pct": 98.89,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "USDCHF",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-11-15 12:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 6,
+   "longest_intraweek_gap_min": 1665.0,
+   "flat_runs": 0,
+   "spikes": 69,
+   "expected_rows_estimate": 58223,
+   "coverage_pct": 98.93,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "USDJPY",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-11-14 19:15:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 6,
+   "longest_intraweek_gap_min": 135.0,
+   "flat_runs": 0,
+   "spikes": 279,
+   "expected_rows_estimate": 232944,
+   "coverage_pct": 98.91,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "USDJPY",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-11-16 10:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 4,
+   "longest_intraweek_gap_min": 165.0,
+   "flat_runs": 0,
+   "spikes": 59,
+   "expected_rows_estimate": 58207,
+   "coverage_pct": 98.96,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "XAUUSD",
+   "source": "ejtrader",
+   "tf": "15m",
+   "first": "2012-05-15 05:00:00+00:00",
+   "last": "2022-03-04 21:45:00+00:00",
+   "rows": 230400,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 218,
+   "longest_intraweek_gap_min": 1740.0,
+   "flat_runs": 0,
+   "spikes": 360,
+   "expected_rows_estimate": 245533,
+   "coverage_pct": 93.84,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "XAUUSD",
+   "source": "ejtrader",
+   "tf": "60m",
+   "first": "2012-05-17 05:00:00+00:00",
+   "last": "2022-03-04 21:00:00+00:00",
+   "rows": 57600,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 111,
+   "longest_intraweek_gap_min": 1785.0,
+   "flat_runs": 0,
+   "spikes": 80,
+   "expected_rows_estimate": 61348,
+   "coverage_pct": 93.89,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "EURUSD",
+   "source": "dukascopy",
+   "tf": "1m",
+   "first": "2020-01-01 22:02:00+00:00",
+   "last": "2026-10-04 23:59:00+00:00",
+   "rows": 2514216,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 0,
+   "longest_intraweek_gap_min": 0.0,
+   "flat_runs": 2,
+   "spikes": 3013,
+   "expected_rows_estimate": 2538597,
+   "coverage_pct": 99.04,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "EURUSD",
+   "source": "oanda",
+   "tf": "1m",
+   "first": "2020-01-01 22:00:00+00:00",
+   "last": "2026-10-08 22:22:00+00:00",
+   "rows": 2490952,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 1,
+   "longest_intraweek_gap_min": 120.0,
+   "flat_runs": 0,
+   "spikes": 2842,
+   "expected_rows_estimate": 2542644,
+   "coverage_pct": 97.97,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "GBPUSD",
+   "source": "dukascopy",
+   "tf": "1m",
+   "first": "2020-01-01 22:02:00+00:00",
+   "last": "2026-10-04 23:59:00+00:00",
+   "rows": 2514987,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 0,
+   "longest_intraweek_gap_min": 0.0,
+   "flat_runs": 0,
+   "spikes": 2901,
+   "expected_rows_estimate": 2538597,
+   "coverage_pct": 99.07,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "GBPUSD",
+   "source": "oanda",
+   "tf": "1m",
+   "first": "2020-01-01 22:00:00+00:00",
+   "last": "2026-10-08 22:23:00+00:00",
+   "rows": 2477449,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 1,
+   "longest_intraweek_gap_min": 120.0,
+   "flat_runs": 0,
+   "spikes": 2805,
+   "expected_rows_estimate": 2542645,
+   "coverage_pct": 97.44,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "AUDUSD",
+   "source": "dukascopy",
+   "tf": "1m",
+   "first": "2020-01-01 22:00:00+00:00",
+   "last": "2026-10-05 23:59:00+00:00",
+   "rows": 2511498,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 0,
+   "longest_intraweek_gap_min": 0.0,
+   "flat_runs": 0,
+   "spikes": 2612,
+   "expected_rows_estimate": 2539627,
+   "coverage_pct": 98.89,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "AUDUSD",
+   "source": "oanda",
+   "tf": "1m",
+   "first": "2020-01-01 22:00:00+00:00",
+   "last": "2026-10-08 22:24:00+00:00",
+   "rows": 2446617,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 1,
+   "longest_intraweek_gap_min": 120.0,
+   "flat_runs": 0,
+   "spikes": 2184,
+   "expected_rows_estimate": 2542645,
+   "coverage_pct": 96.22,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "USDCAD",
+   "source": "dukascopy",
+   "tf": "1m",
+   "first": "2020-01-01 22:00:00+00:00",
+   "last": "2026-10-05 23:59:00+00:00",
+   "rows": 2511196,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 0,
+   "longest_intraweek_gap_min": 0.0,
+   "flat_runs": 1,
+   "spikes": 2046,
+   "expected_rows_estimate": 2539627,
+   "coverage_pct": 98.88,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "USDCAD",
+   "source": "oanda",
+   "tf": "1m",
+   "first": "2020-01-01 22:00:00+00:00",
+   "last": "2026-10-08 22:25:00+00:00",
+   "rows": 2474057,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 1,
+   "longest_intraweek_gap_min": 120.0,
+   "flat_runs": 0,
+   "spikes": 1790,
+   "expected_rows_estimate": 2542646,
+   "coverage_pct": 97.3,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "XAUUSD",
+   "source": "oanda",
+   "tf": "1m",
+   "first": "2019-01-01 23:00:00+00:00",
+   "last": "2026-10-08 22:24:00+00:00",
+   "rows": 2726742,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 69,
+   "longest_intraweek_gap_min": 1500.0,
+   "flat_runs": 0,
+   "spikes": 5051,
+   "expected_rows_estimate": 2918031,
+   "coverage_pct": 93.44,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption."
+   ]
+  },
+  {
+   "symbol": "EURUSD",
+   "source": "histdata",
+   "tf": "1m",
+   "first": "2010-01-03 22:00:00+00:00",
+   "last": "2025-12-31 21:57:00+00:00",
+   "rows": 5863042,
+   "duplicates": 0,
+   "out_of_order": 0,
+   "ohlc_violations": 0,
+   "nonpositive": 0,
+   "intraweek_gaps": 103,
+   "longest_intraweek_gap_min": 1320.0,
+   "flat_runs": 2,
+   "spikes": 6920,
+   "expected_rows_estimate": 6007883,
+   "coverage_pct": 97.59,
+   "notes": [
+    "BID prices only; ask is modelled from the spread assumption.",
+    "No volume field."
+   ]
+  }
+ ],
+ "cross_vendor": [
+  {
+   "pair": "EURUSD ejtrader vs dukascopy H1",
+   "overlap_bars": 13538,
+   "median_abs_diff_pips": 0.10000000000065512,
+   "p99_abs_diff_pips": 1.7000000000000348,
+   "mean_diff_pips": 0.03887575712809027,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 4.500000000000615,
+    "0": 0.10000000000065512,
+    "1": 4.500000000000615
+   }
+  },
+  {
+   "pair": "EURUSD ejtrader vs oanda H1",
+   "overlap_bars": 13535,
+   "median_abs_diff_pips": 0.5999999999994898,
+   "p99_abs_diff_pips": 3.065999999999377,
+   "mean_diff_pips": 0.6080753601772849,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 4.599999999999049,
+    "0": 0.5999999999994898,
+    "1": 4.599999999999049
+   }
+  },
+  {
+   "pair": "EURUSD dukascopy vs oanda H1",
+   "overlap_bars": 42071,
+   "median_abs_diff_pips": 0.5999999999994898,
+   "p99_abs_diff_pips": 2.4000000000001798,
+   "mean_diff_pips": 0.5637374913835754,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 4.500000000000615,
+    "0": 0.5999999999994898,
+    "1": 4.500000000000615
+   }
+  },
+  {
+   "pair": "GBPUSD ejtrader vs dukascopy H1",
+   "overlap_bars": 13538,
+   "median_abs_diff_pips": 0.20000000000131024,
+   "p99_abs_diff_pips": 3.4000000000000696,
+   "mean_diff_pips": 0.11503176244644843,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 6.6000000000010495,
+    "0": 0.20000000000131024,
+    "1": 6.599999999998829
+   }
+  },
+  {
+   "pair": "GBPUSD ejtrader vs oanda H1",
+   "overlap_bars": 13535,
+   "median_abs_diff_pips": 0.5999999999994898,
+   "p99_abs_diff_pips": 5.0659999999998675,
+   "mean_diff_pips": 0.6316143332102054,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 6.599999999998829,
+    "0": 0.5999999999994898,
+    "1": 6.6000000000010495
+   }
+  },
+  {
+   "pair": "GBPUSD dukascopy vs oanda H1",
+   "overlap_bars": 42071,
+   "median_abs_diff_pips": 0.4999999999988347,
+   "p99_abs_diff_pips": 3.6999999999998145,
+   "mean_diff_pips": 0.47805138931804786,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 6.099999999999994,
+    "0": 0.4999999999988347,
+    "1": 6.099999999999994
+   }
+  },
+  {
+   "pair": "AUDUSD ejtrader vs dukascopy H1",
+   "overlap_bars": 13538,
+   "median_abs_diff_pips": 0.20000000000020002,
+   "p99_abs_diff_pips": 1.9999999999997797,
+   "mean_diff_pips": 0.23117890382626996,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 4.8000000000003595,
+    "0": 0.20000000000020002,
+    "1": 4.799999999999249
+   }
+  },
+  {
+   "pair": "AUDUSD ejtrader vs oanda H1",
+   "overlap_bars": 13535,
+   "median_abs_diff_pips": 0.40000000000040004,
+   "p99_abs_diff_pips": 3.1000000000003247,
+   "mean_diff_pips": 0.4456150720354684,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 4.8000000000003595,
+    "0": 0.40000000000040004,
+    "1": 4.799999999999249
+   }
+  },
+  {
+   "pair": "AUDUSD dukascopy vs oanda H1",
+   "overlap_bars": 42095,
+   "median_abs_diff_pips": 0.1999999999990898,
+   "p99_abs_diff_pips": 2.300000000000635,
+   "mean_diff_pips": 0.11927307281148361,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 4.300000000000415,
+    "0": 0.1999999999990898,
+    "1": 4.300000000000415
+   }
+  },
+  {
+   "pair": "USDCAD ejtrader vs dukascopy H1",
+   "overlap_bars": 13538,
+   "median_abs_diff_pips": 0.20000000000131024,
+   "p99_abs_diff_pips": 2.9999999999996696,
+   "mean_diff_pips": 0.25453538188803165,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 5.899999999998684,
+    "0": 0.20000000000131024,
+    "1": 5.800000000000249
+   }
+  },
+  {
+   "pair": "USDCAD ejtrader vs oanda H1",
+   "overlap_bars": 13535,
+   "median_abs_diff_pips": 0.5999999999994898,
+   "p99_abs_diff_pips": 3.966000000000077,
+   "mean_diff_pips": 0.6309789434798502,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 5.9000000000009045,
+    "0": 0.5999999999994898,
+    "1": 5.800000000000249
+   }
+  },
+  {
+   "pair": "USDCAD dukascopy vs oanda H1",
+   "overlap_bars": 42094,
+   "median_abs_diff_pips": 0.2999999999997449,
+   "p99_abs_diff_pips": 3.1000000000003247,
+   "mean_diff_pips": 0.266940656625647,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 5.1000000000001044,
+    "0": 0.2999999999997449,
+    "1": 5.1000000000001044
+   }
+  },
+  {
+   "pair": "EURUSD ejtrader vs histdata H1",
+   "overlap_bars": 57476,
+   "median_abs_diff_pips": 0.2999999999997449,
+   "p99_abs_diff_pips": 26.199999999998447,
+   "mean_diff_pips": 3.305727608410787e-05,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 3.20000000000098,
+    "0": 0.2999999999997449,
+    "1": 4.899999999998794
+   }
+  },
+  {
+   "pair": "EURUSD dukascopy vs histdata H1",
+   "overlap_bars": 36546,
+   "median_abs_diff_pips": 0.0,
+   "p99_abs_diff_pips": 15.099999999999003,
+   "mean_diff_pips": 0.021509877962020515,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 4.699999999999704,
+    "0": 0.0,
+    "1": 4.199999999998649
+   }
+  },
+  {
+   "pair": "XAUUSD ejtrader vs oanda H1 (pips = cents)",
+   "overlap_bars": 18704,
+   "median_abs_diff_pips": 7.000000000016371,
+   "p99_abs_diff_pips": 155.39700000000823,
+   "mean_diff_pips": 12.996343028229143,
+   "median_abs_diff_by_hour_shift": {
+    "-1": 131.50000000000546,
+    "0": 7.000000000016371,
+    "1": 131.79999999999836
+   }
+  }
+ ]
+}

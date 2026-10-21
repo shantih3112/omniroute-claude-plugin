@@ -1,0 +1,16 @@
+[Unit]
+Description=fxsignal independent watchdog
+After=network-online.target
+
+[Service]
+Type=simple
+User=fxsignal
+WorkingDirectory=/opt/fxsignal
+EnvironmentFile=/etc/fxsignal/fxsignal.env
+Environment=FXSIGNAL_HOME=/opt/fxsignal
+ExecStart=/opt/fxsignal/.venv/bin/python -m fxsignal.ops.watchdog
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

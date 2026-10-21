@@ -1,0 +1,76 @@
+# fxsignal research monitor - runs every hour on GitHub's free runners (no server needed).
+# Needs two repository secrets (Settings -> Secrets and variables -> Actions):
+#   TWELVEDATA_API_KEY   from twelvedata.com
+#   TELEGRAM_BOT_TOKEN   from @BotFather
+# Optional: TELEGRAM_ADMIN_ID (your numeric Telegram ID). Without it, the first person who sends
+# the bot a private message becomes its admin.
+# State (signals, events, settings) lives in a GitHub Actions cache, not in the repository,
+# so nothing is published in this public repo.
+name: fxsignal hourly
+
+on:
+  schedule:
+    - cron: "7 * * * *"   # every hour at :07 UTC (GitHub may start it some minutes late)
+  workflow_dispatch: {}
+
+concurrency:
+  group: fxsignal
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: fxsignal
+    steps:
+      - name: Check secrets are set
+        id: secrets
+        working-directory: .
+        env:
+          TD: ${{ secrets.TWELVEDATA_API_KEY }}
+          TG: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: |
+          if [ -z "$TD" ] || [ -z "$TG" ]; then
+            echo "::notice::Add the TWELVEDATA_API_KEY and TELEGRAM_BOT_TOKEN secrets to start fxsignal."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.ready == 'true'
+      - uses: actions/setup-python@v5
+        if: steps.secrets.outputs.ready == 'true'
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: fxsignal/requirements.lock.txt
+      - name: Restore state
+        if: steps.secrets.outputs.ready == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: fxsignal/var
+          key: fxsignal-state-${{ github.run_id }}
+          restore-keys: fxsignal-state-
+      - name: Install
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          pip install -q -r requirements.lock.txt
+          pip install -q --no-deps -e .
+      - name: Run one cycle
+        if: steps.secrets.outputs.ready == 'true'
+        env:
+          TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_ADMIN_ID: ${{ secrets.TELEGRAM_ADMIN_ID }}
+        run: fxsignal run-once
+      - name: Save state
+        if: always() && steps.secrets.outputs.ready == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: fxsignal/var
+          key: fxsignal-state-${{ github.run_id }}

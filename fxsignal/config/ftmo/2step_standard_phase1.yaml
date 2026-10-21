@@ -1,0 +1,25 @@
+# FTMO 2-Step Challenge, Standard account, Phase 1 ("FTMO Challenge").
+# STATUS: UNVERIFIED. ftmo.com could not be reached from the build environment on 2026-10-20.
+# Values below come from secondary sources that agree with each other; verify each line on
+# https://ftmo.com/en/trading-objectives/ and the FTMO FAQ, then set verified: true and record
+# the date and URLs in `sources`.
+name: "FTMO 2-Step Challenge / Standard / Phase 1"
+version: "2026-10-20-secondary"
+verified: false
+initial_balance: 10000
+profit_target_pct: 10.0
+max_daily_loss_pct: 5.0
+daily_loss_basis: "prev_day_end_balance"   # one secondary source says max(balance, equity) at day start
+max_loss_pct: 10.0
+max_loss_type: "static"
+min_trading_days: 4
+reset_tz: "Europe/Prague"
+best_day_rule_pct: null          # secondary sources: applies to 1-Step, not 2-Step
+news_restriction_min: null       # 2-minute rule reported for funded Standard accounts, not evaluation
+weekend_holding_allowed: true    # reported allowed during evaluation; NOT on funded Standard accounts
+sources:
+  - "secondary: https://tradetanto.com/learn/ftmo-rules-evaluation-process (accessed 2026-10-20 via search snippet)"
+  - "secondary: https://www.jptradingcapital.com/blog/en/ftmo-rules (accessed 2026-10-20 via search snippet)"
+  - "secondary: https://brokeranalysis.com/prop-trading-firms/ftmo/rules/ (accessed 2026-10-20 via search snippet)"
+  - "official (NOT reached): https://ftmo.com/en/trading-objectives/"
+notes: "Daily loss counts floating P/L, commissions and swaps per secondary sources. Reset at midnight CE(S)T."
