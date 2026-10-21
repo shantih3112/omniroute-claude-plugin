@@ -43,6 +43,8 @@ class World:
 
     def telegram(self, req):
         body = json.loads(req.content)
+        if req.url.path.endswith("/getMe"):
+            return httpx.Response(200, json={"ok": True, "result": {"username": "test_bot"}})
         if req.url.path.endswith("/getUpdates"):
             off = body.get("offset") or 0
             return httpx.Response(200, json={"ok": True, "result": [u for u in self.updates if u["update_id"] >= off]})
@@ -61,6 +63,7 @@ def test_hourly_runs_carry_state(tmp_path):
     w.updates.append({"update_id": 10, "message": {"text": "/start", "from": {"id": 555}, "chat": {"id": 555, "type": "private"}}})
     info = one(w, tmp_path)
     assert info["new_bars"]["EURUSD"] == 1
+    assert info["telegram"] == "ok as @test_bot" and info["telegram_messages_received"] == 1 and info["admin_known"]
     assert any("You are now the admin" in m["text"] for m in w.sent)
     # a stranger later cannot take over or read anything
     w.updates.append({"update_id": 11, "message": {"text": "/status", "from": {"id": 999}, "chat": {"id": 999, "type": "private"}}})
