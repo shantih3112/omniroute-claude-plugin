@@ -24,3 +24,11 @@ if evExit
     alert(f_hdr(evStkX ? "EXIT LONG (bearish setup; shorting disabled)" : "EXIT — " + exitKind) + "\n" + exStrat + " | entry " + f_fmt(exFill) + " | exit ≈ " + f_fmt(exPx) + " | " + str.tostring(exR, "#.##") + "R gross (estimate)", alert.freq_once_per_bar_close)
 if evExp
     alert(f_hdr("ENTRY EXPIRED/CANCELLED") + "\n" + expMsg, alert.freq_once_per_bar_close)
+
+// Warnings (information only)
+alertcondition(evShock, "5 · WARNING: volatility shock", 'WARNING, not a trade signal: {{exchange}}:{{ticker}} [{{interval}}] bar {{time}} UTC: unusually large candle (shock threshold x ATR). Possible news/event. No entry implied; check the chart.')
+alertcondition(evTrendChg, "6 · WARNING: trend change", 'WARNING, not a trade signal: {{exchange}}:{{ticker}} [{{interval}}] bar {{time}} UTC: trend state changed into or out of UP/DOWN. See the chart label. No entry implied.')
+if i_wAlert and evShock
+    alert(f_hdr("WARNING — VOLATILITY SHOCK (not a trade signal)") + "\nCandle " + (shockUp ? "UP" : "DOWN") + " " + f_fmt(open) + " → " + f_fmt(close) + ", range " + str.tostring((high - low) / atr[1], "#.#") + "× ATR. Possible news/event: check the economic-calendar marker. Open signals are not changed by this warning.", alert.freq_once_per_bar_close)
+if i_wAlert and evTrendChg
+    alert(f_hdr("WARNING — TREND CHANGE (not a trade signal)") + "\nTrend " + f_trendTxt(prevAnn) + " → " + f_trendTxt(trend) + " (ADX " + str.tostring(adx, "#") + "). Information only; BUY/SELL still require a confirmed setup.", alert.freq_once_per_bar_close)

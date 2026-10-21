@@ -61,6 +61,11 @@ To create one per symbol/timeframe you want monitored:
 4. Notifications: tick **Notify in app**. Optionally add *Show toast* and *Send email*. Leave the webhook off.
 5. **Create**. Then check the *Alerts* panel to confirm it is listed as active.
 
+**Warning alerts (information only, not trade signals).** These are included in the same "Any alert() function call" alert, or can be created separately as `5 · WARNING: volatility shock` / `6 · WARNING: trend change`:
+- **Volatility shock ⚡**: a closed candle with a range ≥ 3 × ATR (adjustable; 5-bar cooldown). Often a news reaction.
+- **Trend change**: the trend moves into or out of UP/DOWN and holds for 2 closed bars. RANGE ↔ UNCERTAIN changes aren't announced.
+They never open, change or close a BUY/SELL signal. Turn them off under *6 · Warnings*.
+
 On your phone:
 - Install the TradingView app and log in to the same account.
 - Allow notifications for TradingView in the phone's system settings (iOS: Settings → Notifications → TradingView; Android: Settings → Apps → TradingView → Notifications).

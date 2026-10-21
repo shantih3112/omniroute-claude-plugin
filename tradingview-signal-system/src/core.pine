@@ -20,6 +20,7 @@ G_STR  = "2 · Strategies"
 G_LVL  = "3 · Levels & risk"
 G_FIL  = "4 · Filters & events"
 G_VIS  = "5 · Visuals"
+G_WRN  = "6 · Warnings (information only, not trade signals)"
 
 i_profile = input.string("Auto", "Asset profile", options = ["Auto", "Stock", "Forex", "Crypto", "Generic"], group = G_GEN, tooltip = "Auto uses the symbol type reported by TradingView. Economic, bond, spread and other unsupported types always show WAIT.")
 i_htf     = input.string("Auto", "Higher timeframe", options = ["Auto", "60", "240", "D", "W", "M"], group = G_GEN, tooltip = "Auto: ≤5m→1h, ≤1h→4h, ≤4h→D, D→W, W→M. Uses the last COMPLETED higher-timeframe bar only.")
@@ -76,6 +77,13 @@ i_zones   = input.bool(true, "Show support/resistance zones", group = G_VIS)
 i_levels  = input.bool(true, "Show entry / stop / target lines", group = G_VIS)
 i_exits   = input.bool(true, "Show exit labels", group = G_VIS)
 i_emas    = input.bool(true, "Show EMA 50 / 200", group = G_VIS)
+
+i_wShock  = input.bool(true, "Volatility-shock warning", group = G_WRN, tooltip = "Fires at the close of a candle whose range is at least the multiple below × the previous ATR. Often a news reaction. Not a trade signal.")
+i_shockX  = input.float(3.0, "Shock: candle range ≥ × ATR", minval = 1.5, step = 0.5, group = G_WRN)
+i_shockCd = input.int(5, "Shock warning cooldown (bars)", minval = 0, group = G_WRN)
+i_wTrend  = input.bool(true, "Trend-change warning (into or out of UP / DOWN)", group = G_WRN, tooltip = "Fires when a new trend state has held for 2 closed bars. RANGE ↔ UNCERTAIN changes are not announced.")
+i_wMarks  = input.bool(true, "Show warning markers on chart", group = G_WRN)
+i_wAlert  = input.bool(true, "Include warnings in the 'Any alert() function call' alert", group = G_WRN)
 
 // ───────────────────────────── Asset profile ─────────────────────────────
 f_autoClass() =>
@@ -537,3 +545,25 @@ if barstate.islast and i_dash
         units = i_acct * i_riskPct / 100 / risk1
         szTxt = na(units) ? "n/a (currency conversion unavailable)" : "≈ " + str.tostring(units, "#.####") + " units" + (isForex ? " (" + str.tostring(units / 100000, "#.##") + " lots)" : "") + " · ESTIMATE, excl. costs/min size"
         f_row(r, "Size est.", szTxt, color.white)
+
+// ───────────────────────────── Warnings (information only) ─────────────────────────────
+// These never create, change or close a signal; they only inform.
+var int lastShockBar = na
+shockRaw = not na(atr[1]) and high - low >= i_shockX * atr[1]
+evShock  = barstate.isconfirmed and i_wShock and supported and not inWarmup and shockRaw and (na(lastShockBar) or bar_index - lastShockBar > i_shockCd)
+if evShock
+    lastShockBar := bar_index
+shockUp = close >= open
+
+// Debounced trend change: the new state must hold for 2 closed bars.
+var int annTrend = na
+int prevAnn    = annTrend
+evTrendChg     = false
+if barstate.isconfirmed and trend == trend[1] and (na(annTrend) or trend != annTrend)
+    if not (na(annTrend) or inWarmup)
+        evTrendChg := i_wTrend and supported and (trend == 1 or trend == -1 or annTrend == 1 or annTrend == -1)
+    annTrend := trend
+
+plotchar(i_wMarks and evShock, "Volatility shock", "⚡", location.abovebar, color.new(#FF9800, 0), size = size.tiny)
+if i_wMarks and evTrendChg
+    label.new(bar_index, high, "Trend → " + f_trendTxt(trend), yloc = yloc.abovebar, style = label.style_label_down, color = color.new(#FF9800, 30), textcolor = color.white, size = size.tiny, tooltip = "Trend was " + f_trendTxt(prevAnn) + ". Information only — not a trade signal.")
