@@ -100,7 +100,7 @@ Når du oppretter en VM, finner skyens **kontrollplan** (*control plane*) en fys
    PUBLIC                 PRIVATE                HYBRID
  ┌─────────┐            ┌─────────┐       ┌─────────┐ VPN/  ┌─────────┐
  │  Azure  │            │  Eget   │       │  Eget   │═══════│  Azure  │
- │ (delt)  │            │datasenter│      │datasenter│Express│         │
+ │ (delt)  │            │   DC    │       │   DC    │Express│         │
  └─────────┘            └─────────┘       └─────────┘ Route └─────────┘
 ```
 

@@ -348,9 +348,9 @@
  │  ── VNet med subnett for Container Apps-miljø og private endpoints (prod) ──             │
  │                                                                                          │
  │  Observability: Log Analytics · Application Insights (OTel) · availability test          │
- │                 alerts (5xx-rate, latency p95, tilgjengelighet) → action group (e-post)   │
+ │                 alerts (5xx-rate, latency p95, tilgjengelighet) → action group (e-post)  │
  │  Styring: Azure Policy (tillatte regioner, påkrevde tags, ingen offentlig blob-tilgang)  │
- │           budsjett med varsler · tags på alt · ressurslås på prod-data                    │
+ │           budsjett med varsler · tags på alt · ressurslås på prod-data                   │
  │  Robusthet: PITR på database · soft delete/versjonering på blob · IaC for gjenoppbygging │
  └──────────────────────────────────────────────────────────────────────────────────────────┘
 ```

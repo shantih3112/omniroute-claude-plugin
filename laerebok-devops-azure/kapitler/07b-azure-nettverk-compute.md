@@ -18,7 +18,7 @@ I dette kapitlet bygger vi steg for steg denne klassiske arkitekturen, og lærer
   │      ┌────▼───┐  ┌───▼────┐                             │
   │      │ VM web1│  │ VM web2│   (i hver sin tilgjengelighetssone)
   │      └────┬───┘  └───┬────┘                             │
-  │ snet-data 10.0.2.0/24 (NSG: tillat 1433 kun fra snet-web)│
+  │ snet-data 10.0.2.0/24 (NSG: 1433 kun fra snet-web)      │
   │           └────┬─────┘                                  │
   │          Private Endpoint → Azure SQL Database          │
   │ AzureBastionSubnet 10.0.250.0/26 → Azure Bastion (SSH)  │

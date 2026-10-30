@@ -304,7 +304,7 @@ Her er en realistisk, moderne arkitektur for en nettbutikk som binder sammen tje
               │                ▼             ▼              ▼                │
               │           Key Vault     Azure SQL      Blob Storage          │
               │                    (Private Endpoints i VNet + Private DNS)  │
-              └───────────────────────────────┬───────────────────────────────┘
+              └───────────────────────────────┬──────────────────────────────┘
                                               │ logger, metrikker, traces
                                    ┌──────────▼───────────┐
                                    │ Azure Monitor        │──► Alerts ──► Action groups

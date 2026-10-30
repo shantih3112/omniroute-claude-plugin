@@ -37,9 +37,9 @@
 ```text
    INPUT              BEHANDLING               OUTPUT
  ┌────────┐        ┌─────────────────┐       ┌────────┐
- │Tastatur│ ─────► │   CPU  ◄──► RAM  │ ────► │ Skjerm │
- │  Mus   │        │        ▲         │       │Nettverk│
- │Nettverk│        │        │         │       │ Fil    │
+ │Tastatur│ ─────► │  CPU  ◄──► RAM  │ ────► │ Skjerm │
+ │  Mus   │        │        ▲        │       │Nettverk│
+ │Nettverk│        │        │        │       │ Fil    │
  └────────┘        │   SSD/Disk      │       └────────┘
                    │  (lagring)      │
                    └─────────────────┘
@@ -410,10 +410,10 @@ Fra enkelt til avansert finnes det flere arkitekturer:
  │ App A        │ App B        │ App C        │
  │ Ubuntu       │ Windows Srv  │ Red Hat      │
  ├──────────────┴──────────────┴──────────────┤
- │        HYPERVISOR (Hyper-V, KVM, ESXi)      │
- ├─────────────────────────────────────────────┤
- │   FYSISK SERVER: CPU · RAM · Disk · NIC     │
- └─────────────────────────────────────────────┘
+ │        HYPERVISOR (Hyper-V, KVM, ESXi)     │
+ ├────────────────────────────────────────────┤
+ │   FYSISK SERVER: CPU · RAM · Disk · NIC    │
+ └────────────────────────────────────────────┘
 ```
 
 To typer hypervisor:

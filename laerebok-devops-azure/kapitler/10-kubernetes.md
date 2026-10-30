@@ -46,23 +46,23 @@ Du sier ikke «start en container på server 4». Du sier «det skal alltid vær
 
 ```text
  ┌─────────────────────────────── KUBERNETES CLUSTER ───────────────────────────────┐
- │                                                                                   │
- │  KONTROLLPLAN (control plane) – «hjernen»   (i AKS: administrert av Microsoft)    │
- │  ┌────────────┐ ┌──────┐ ┌───────────┐ ┌────────────────────┐                     │
- │  │ API-server │ │ etcd │ │ scheduler │ │ controller-manager │ (+cloud-controller) │
- │  └─────▲──────┘ └──────┘ └───────────┘ └────────────────────┘                     │
- │        │ alle snakker med API-serveren                                            │
- │  ──────┼──────────────────────────────────────────────────────────────────────    │
- │        │                                                                          │
- │  WORKER-NODE 1 (en VM)              WORKER-NODE 2 (en VM)                          │
- │  ┌──────────────────────────┐       ┌──────────────────────────┐                   │
- │  │ kubelet · kube-proxy     │       │ kubelet · kube-proxy     │                   │
- │  │ container runtime        │       │ container runtime        │                   │
- │  │ ┌─────┐ ┌─────┐ ┌─────┐  │       │ ┌─────┐ ┌─────┐          │                   │
- │  │ │ Pod │ │ Pod │ │ Pod │  │       │ │ Pod │ │ Pod │          │                   │
- │  │ └─────┘ └─────┘ └─────┘  │       │ └─────┘ └─────┘          │                   │
- │  └──────────────────────────┘       └──────────────────────────┘                   │
- └───────────────────────────────────────────────────────────────────────────────────┘
+ │                                                                                  │
+ │  KONTROLLPLAN (control plane) – «hjernen»   (i AKS: administrert av Microsoft)   │
+ │  ┌────────────┐ ┌──────┐ ┌───────────┐ ┌────────────────────┐                    │
+ │  │ API-server │ │ etcd │ │ scheduler │ │ controller-manager │ (+cloud-controller)│
+ │  └─────▲──────┘ └──────┘ └───────────┘ └────────────────────┘                    │
+ │        │ alle snakker med API-serveren                                           │
+ │  ──────┼──────────────────────────────────────────────────────────────────────   │
+ │        │                                                                         │
+ │  WORKER-NODE 1 (en VM)              WORKER-NODE 2 (en VM)                        │
+ │  ┌──────────────────────────┐       ┌──────────────────────────┐                 │
+ │  │ kubelet · kube-proxy     │       │ kubelet · kube-proxy     │                 │
+ │  │ container runtime        │       │ container runtime        │                 │
+ │  │ ┌─────┐ ┌─────┐ ┌─────┐  │       │ ┌─────┐ ┌─────┐          │                 │
+ │  │ │ Pod │ │ Pod │ │ Pod │  │       │ │ Pod │ │ Pod │          │                 │
+ │  │ └─────┘ └─────┘ └─────┘  │       │ └─────┘ └─────┘          │                 │
+ │  └──────────────────────────┘       └──────────────────────────┘                 │
+ └──────────────────────────────────────────────────────────────────────────────────┘
         ▲
    kubectl (du)
 ```

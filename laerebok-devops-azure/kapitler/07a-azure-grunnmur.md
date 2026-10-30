@@ -268,7 +268,7 @@ $ az role definition list --name "Contributor" -o json # hva inneholder rollen?
  ┌──────────────┐ 1. «Gi meg et token for Key Vault»   ┌────────────────┐
  │  Web App     │ ───────────────────────────────────► │ Entra ID       │
  │ (med managed │ ◄─────────────────────────────────── │ (via lokal     │
- │  identity)   │ 2. kortlevd token                    │  token-tjeneste)│
+ │  identity)   │ 2. kortlevd token                    │ token-tjeneste)│
  └──────┬───────┘                                      └────────────────┘
         │ 3. Hent hemmelighet med token
         ▼

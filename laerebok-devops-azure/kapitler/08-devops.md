@@ -129,9 +129,9 @@ Manifestets fire verdier:
 
 ```text
  ┌──────────────── SPRINT (f.eks. 2 uker) ─────────────────┐
- │ Sprint Planning → Daily Scrum (15 min hver dag) → ...    │
- │                    → Sprint Review → Sprint Retrospective│
- └──────────────────────────────────────────────────────────┘
+ │ Sprint Planning → Daily Scrum (15 min hver dag) → ...   │
+ │                   → Sprint Review → Sprint Retrospective│
+ └─────────────────────────────────────────────────────────┘
 ```
 
 - **Sprint Planning** – hva skal vi levere, og hvordan?
@@ -337,8 +337,8 @@ Andre SRE-prinsipper: maks ~50 % av tiden på toil (resten på automatisering og
            │  self-service (portal, CLI, mal)
            ▼
  ┌─────────────────── INTERN UTVIKLERPLATTFORM ────────────────────┐
- │ Maler for nye tjenester · CI/CD-maler · Miljøer på forespørsel   │
- │ Observability ferdig koblet · Hemmeligheter · Sikkerhetsskanning │
+ │ Maler for nye tjenester · CI/CD-maler · Miljøer på forespørsel  │
+ │ Observability ferdig koblet · Hemmeligheter · Sikkerhetsskanning│
  │ Developer portal (f.eks. Backstage) · Dokumentasjon             │
  └──────────────────────────────┬──────────────────────────────────┘
                                 ▼
