@@ -1,0 +1,48 @@
+:root{
+  --ink:#1b2430; --muted:#5b6675; --accent:#0b5cad; --accent2:#0f7b6c;
+  --paper:#ffffff; --code-bg:#f4f6f9; --rule:#d9dee5;
+}
+@page { size: A4; margin: 20mm 18mm 22mm 18mm; }
+html{ font-size: 10.5pt; }
+body{ font-family: "Inter", "DejaVu Sans", sans-serif; color:var(--ink); background:var(--paper);
+  line-height:1.6; max-width: 820px; margin:0 auto; padding: 0 16px; hyphens:auto; }
+h1,h2,h3,h4{ font-family:"Inter Display","Inter",sans-serif; line-height:1.25; color:#0e1a2b; }
+h1{ font-size:2.1rem; border-bottom:4px solid var(--accent); padding-bottom:.35em; margin-top:0;
+  page-break-before: always; break-before: page; }
+h2{ font-size:1.45rem; margin-top:2em; color:var(--accent); border-bottom:1px solid var(--rule); padding-bottom:.2em; }
+h3{ font-size:1.15rem; margin-top:1.6em; }
+h4{ font-size:1rem; margin-top:1.3em; color:var(--muted); }
+h2,h3,h4{ break-after: avoid; page-break-after: avoid; }
+p{ margin:.55em 0 .8em; }
+a{ color:var(--accent); text-decoration:none; }
+code{ font-family:"DejaVu Sans Mono", monospace; font-size:.86em; background:var(--code-bg); padding:.08em .3em; border-radius:3px; }
+pre{ background:var(--code-bg); border:1px solid var(--rule); border-left:4px solid var(--accent2); border-radius:6px;
+  padding:.8em 1em; overflow-x:auto; white-space:pre-wrap; word-break:break-word; font-size:.82rem; line-height:1.4; break-inside: avoid; }
+pre code{ background:none; padding:0; font-size:1em; }
+pre.text, div.sourceCode pre.text{ border-left-color:#8a5cf6; }
+table{ border-collapse:collapse; width:100%; margin:1em 0 1.3em; font-size:.9rem; break-inside:auto; }
+th,td{ border:1px solid var(--rule); padding:.4em .6em; vertical-align:top; text-align:left; }
+thead th{ background:#e8f0fa; color:#0e1a2b; }
+tr{ break-inside: avoid; }
+tbody tr:nth-child(even){ background:#fafbfd; }
+blockquote{ margin:1.1em 0; padding:.7em 1em; background:#eef5ff; border-left:5px solid var(--accent); border-radius:6px; break-inside: avoid; }
+blockquote p{ margin:.2em 0; }
+ul,ol{ padding-left:1.4em; } li{ margin:.2em 0; }
+hr{ border:none; border-top:1px solid var(--rule); margin:2em 0; }
+/* TOC */
+nav#TOC{ page-break-after: always; break-after: page; }
+nav#TOC::before{ content:"Innholdsfortegnelse"; display:block; font-family:"Inter Display",sans-serif; font-size:2rem; font-weight:700;
+  border-bottom:4px solid var(--accent); padding-bottom:.3em; margin-bottom:.6em; }
+nav#TOC ul{ list-style:none; padding-left:0; }
+nav#TOC > ul > li{ margin-top:.6em; font-weight:700; }
+nav#TOC ul ul{ padding-left:1.3em; font-weight:400; font-size:.92rem; }
+nav#TOC ul ul li{ margin:.05em 0; }
+/* cover */
+.cover{ box-sizing:border-box; height: 250mm; hyphens:none; display:flex; flex-direction:column; justify-content:space-between; page-break-after:always; break-after:page;
+  background: linear-gradient(160deg,#0b2a4a 0%,#0b5cad 55%,#0f7b6c 100%); color:#fff; padding: 22mm 18mm; margin: -2px -16px 0; border-radius: 0; }
+.cover .kicker{ letter-spacing:.25em; text-transform:uppercase; font-size:.85rem; opacity:.85; }
+.cover h1.ctitle{ all:unset; display:block; font-family:"Inter Display",sans-serif; font-weight:800; font-size:2.9rem; line-height:1.1; margin-top:.6em; }
+.cover .sub{ font-size:1.35rem; margin-top:.8em; opacity:.95; font-weight:500; }
+.cover pre{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.25); border-left:4px solid #7fe0c9; color:#e9f3ff; font-size:.78rem; }
+.cover .meta{ font-size:.9rem; opacity:.9; line-height:1.7; }
+@media print { body{ max-width:none; padding:0; } .cover{ margin:0; } }

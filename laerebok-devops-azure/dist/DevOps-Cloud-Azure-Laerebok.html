@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb" xml:lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>DevOps, Cloud &amp; Microsoft Azure ��� Den komplette guiden
+fra nybegynner til profesjonell</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } 
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.at { color: #204a87; } 
+code span.bn { color: #0000cf; } 
+code span.cf { color: #204a87; font-weight: bold; } 
+code span.ch { color: #4e9a06; } 
+code span.cn { color: #8f5902; } 
+code span.co { color: #8f5902; font-style: italic; } 
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.dt { color: #204a87; } 
+code span.dv { color: #0000cf; } 
+code span.er { color: #a40000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #0000cf; } 
+code span.fu { color: #204a87; font-weight: bold; } 
+code span.im { } 
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.kw { color: #204a87; font-weight: bold; } 
+code span.op { color: #ce5c00; font-weight: bold; } 
+code span.ot { color: #8f5902; } 
+code span.pp { color: #8f5902; font-style: italic; } 
+code span.sc { color: #ce5c00; font-weight: bold; } 
+code span.ss { color: #4e9a06; } 
+code span.st { color: #4e9a06; } 
+code span.va { color: #000000; } 
+code span.vs { color: #4e9a06; } 
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } 
+</style>
+  <style type="text/css">:root{
+--ink:#1b2430; --muted:#5b6675; --accent:#0b5cad; --accent2:#0f7b6c;
+--paper:#ffffff; --code-bg:#f4f6f9; --rule:#d9dee5;
+}
+@page { size: A4; margin: 20mm 18mm 22mm 18mm; }
+html{ font-size: 10.5pt; }
+body{ font-family: "Inter", "DejaVu Sans", sans-serif; color:var(--ink); background:var(--paper);
+line-height:1.6; max-width: 820px; margin:0 auto; padding: 0 16px; hyphens:auto; }
+h1,h2,h3,h4{ font-family:"Inter Display","Inter",sans-serif; line-height:1.25; color:#0e1a2b; }
+h1{ font-size:2.1rem; border-bottom:4px solid var(--accent); padding-bottom:.35em; margin-top:0;
+page-break-before: always; break-before: page; }
+h2{ font-size:1.45rem; margin-top:2em; color:var(--accent); border-bottom:1px solid var(--rule); padding-bottom:.2em; }
+h3{ font-size:1.15rem; margin-top:1.6em; }
+h4{ font-size:1rem; margin-top:1.3em; color:var(--muted); }
+h2,h3,h4{ break-after: avoid; page-break-after: avoid; }
+p{ margin:.55em 0 .8em; }
+a{ color:var(--accent); text-decoration:none; }
+code{ font-family:"DejaVu Sans Mono", monospace; font-size:.86em; background:var(--code-bg); padding:.08em .3em; border-radius:3px; }
+pre{ background:var(--code-bg); border:1px solid var(--rule); border-left:4px solid var(--accent2); border-radius:6px;
+padding:.8em 1em; overflow-x:auto; white-space:pre-wrap; word-break:break-word; font-size:.82rem; line-height:1.4; break-inside: avoid; }
+pre code{ background:none; padding:0; font-size:1em; }
+pre.text, div.sourceCode pre.text{ border-left-color:#8a5cf6; }
+table{ border-collapse:collapse; width:100%; margin:1em 0 1.3em; font-size:.9rem; break-inside:auto; }
+th,td{ border:1px solid var(--rule); padding:.4em .6em; vertical-align:top; text-align:left; }
+thead th{ background:#e8f0fa; color:#0e1a2b; }
+tr{ break-inside: avoid; }
+tbody tr:nth-child(even){ background:#fafbfd; }
+blockquote{ margin:1.1em 0; padding:.7em 1em; background:#eef5ff; border-left:5px solid var(--accent); border-radius:6px; break-inside: avoid; }
+blockquote p{ margin:.2em 0; }
+ul,ol{ padding-left:1.4em; } li{ margin:.2em 0; }
+hr{ border:none; border-top:1px solid var(--rule); margin:2em 0; }
+
+nav#TOC{ page-break-after: always; break-after: page; }
+nav#TOC::before{ content:"Innholdsfortegnelse"; display:block; font-family:"Inter Display",sans-serif; font-size:2rem; font-weight:700;
+border-bottom:4px solid var(--accent); padding-bottom:.3em; margin-bottom:.6em; }
+nav#TOC ul{ list-style:none; padding-left:0; }
+nav#TOC > ul > li{ margin-top:.6em; font-weight:700; }
+nav#TOC ul ul{ padding-left:1.3em; font-weight:400; font-size:.92rem; }
+nav#TOC ul ul li{ margin:.05em 0; }
+
+.cover{ height: 255mm; display:flex; flex-direction:column; justify-content:space-between; page-break-after:always; break-after:page;
+background: linear-gradient(160deg,#0b2a4a 0%,#0b5cad 55%,#0f7b6c 100%); color:#fff; padding: 22mm 18mm; margin: -2px -16px 0; border-radius: 0; }
+.cover .kicker{ letter-spacing:.25em; text-transform:uppercase; font-size:.85rem; opacity:.85; }
+.cover h1.ctitle{ all:unset; display:block; font-family:"Inter Display",sans-serif; font-weight:800; font-size:2.9rem; line-height:1.1; margin-top:.6em; }
+.cover .sub{ font-size:1.35rem; margin-top:.8em; opacity:.95; font-weight:500; }
+.cover pre{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.25); border-left:4px solid #7fe0c9; color:#e9f3ff; font-size:.78rem; }
+.cover .meta{ font-size:.9rem; opacity:.9; line-height:1.7; }
+@media print { body{ max-width:none; padding:0; } .cover{ margin:0; } }
+</style>
+</head>
+<body>
+<section class="cover">
+  <div>
+    <div class="kicker">Lærebok · Noroff DevOps Engineering</div>
+    <h1 class="ctitle">DEVOPS, CLOUD &amp; MICROSOFT AZURE</h1>
+    <div class="sub">Den komplette guiden fra nybegynner til profesjonell</div>
+  </div>
+<pre>
+  Kode ──► Git ──► CI/CD ──► Container ──► Kubernetes ──► Azure
+    ▲                                                       │
+    └────────── Monitoring · Sikkerhet · Feedback ◄─────────┘
+</pre>
+  <div class="meta">
+    IT-grunnlag · Nettverk · Linux · Python · Git · Cloud · Azure (AZ-900/AZ-104)<br>
+    DevOps · Docker · Kubernetes · Terraform · CI/CD · Sikkerhet · MLOps<br>
+    12 praktiske prosjekter · Quiz med fasit · Ordliste · 12-måneders læringsplan<br><br>
+    Utgave oktober 2026 · Skrevet på norsk med engelske fagbegreper
+  </div>
+</section>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduksjon" id="toc-introduksjon">Introduksjon</a>
+<ul>
+<li><a href="#velkommen" id="toc-velkommen">Velkommen</a></li>
+<li><a href="#hvordan-bruke-boken" id="toc-hvordan-bruke-boken">Hvordan
+bruke boken</a></li>
+<li><a href="#en-ærlig-forventningsavklaring" id="toc-en-ærlig-forventningsavklaring">En ærlig
+forventningsavklaring</a></li>
+<li><a href="#om-kostnader-og-oppdatert-informasjon" id="toc-om-kostnader-og-oppdatert-informasjon">Om kostnader og oppdatert
+informasjon</a></li>
+<li><a href="#læringsreisen-oversikt" id="toc-læringsreisen-oversikt">Læringsreisen – oversikt</a></li>
+<li><a href="#produksjonsplan-og-kapitteloversikt" id="toc-produksjonsplan-og-kapitteloversikt">Produksjonsplan og
+kapitteloversikt</a></li>
+</ul></li>
+<li><a href="#del-1-forstå-it-fra-bunnen" id="toc-del-1-forstå-it-fra-bunnen">Del 1 – Forstå IT fra bunnen</a>
+<ul>
+<li><a href="#hva-er-it" id="toc-hva-er-it">Hva er IT?</a></li>
+<li><a href="#hvordan-fungerer-en-datamaskin" id="toc-hvordan-fungerer-en-datamaskin">Hvordan fungerer en
+datamaskin?</a></li>
+<li><a href="#hva-er-et-operativsystem" id="toc-hva-er-et-operativsystem">Hva er et operativsystem?</a></li>
+<li><a href="#hva-er-en-server" id="toc-hva-er-en-server">Hva er en
+server?</a></li>
+<li><a href="#hva-er-en-applikasjon" id="toc-hva-er-en-applikasjon">Hva
+er en applikasjon?</a></li>
+<li><a href="#hva-er-en-database" id="toc-hva-er-en-database">Hva er en
+database?</a></li>
+<li><a href="#hvordan-fungerer-internett" id="toc-hvordan-fungerer-internett">Hvordan fungerer internett?</a></li>
+<li><a href="#hva-er-en-ip-adresse" id="toc-hva-er-en-ip-adresse">Hva er
+en IP-adresse?</a></li>
+<li><a href="#hva-er-dns" id="toc-hva-er-dns">Hva er DNS?</a></li>
+<li><a href="#hva-er-http-og-https" id="toc-hva-er-http-og-https">Hva er
+HTTP og HTTPS?</a></li>
+<li><a href="#hva-er-et-api" id="toc-hva-er-et-api">Hva er et
+API?</a></li>
+<li><a href="#hva-skjer-når-du-åpner-en-nettside" id="toc-hva-skjer-når-du-åpner-en-nettside">Hva skjer når du åpner en
+nettside?</a></li>
+<li><a href="#klientserver-arkitektur" id="toc-klientserver-arkitektur">Klient–server-arkitektur</a></li>
+<li><a href="#hva-er-virtualisering" id="toc-hva-er-virtualisering">Hva
+er virtualisering?</a></li>
+<li><a href="#hvordan-alt-henger-sammen" id="toc-hvordan-alt-henger-sammen">Hvordan alt henger sammen</a></li>
+<li><a href="#kapitteloppsummering" id="toc-kapitteloppsummering">Kapitteloppsummering</a></li>
+<li><a href="#øvingsoppgaver" id="toc-øvingsoppgaver">Øvingsoppgaver</a></li>
+<li><a href="#quiz" id="toc-quiz">Quiz</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="introduksjon">Introduksjon</h1>
+<h2 class="unnumbered" id="velkommen">Velkommen</h2>
+<p>Denne boken er skrevet for deg som studerer DevOps Engineering, er
+ganske ny innen IT, og ønsker å forstå <strong>hvorfor</strong> ting
+fungerer – ikke bare pugge ord.</p>
+<p>Mange lærebøker starter med «Kubernetes er en orkestreringsplattform
+for containere» og forventer at du skal nikke. Denne boken gjør det
+motsatte. Vi starter med hva en datamaskin faktisk er, bygger videre med
+nettverk, Linux og programmering, og først når grunnmuren står, bygger
+vi Cloud, Azure, Docker, Kubernetes, Terraform, CI/CD, sikkerhet og til
+slutt AI-infrastruktur oppå.</p>
+<p>Tenk på boken som et hus:</p>
+<pre class="text"><code>                    ┌──────────────────────────────┐
+                    │  KAP 14  AI Infrastructure /  │   ← Taket: spesialisering
+                    │          MLOps                │
+                ┌───┴──────────────────────────────┴───┐
+                │ KAP 12–13  CI/CD · Sikkerhet ·        │   ← Profesjonell drift
+                │            Monitoring                 │
+            ┌───┴───────────────────────────────────────┴───┐
+            │ KAP 9–11  Docker · Kubernetes · Terraform      │   ← Moderne verktøy
+        ┌───┴───────────────────────────────────────────────┴───┐
+        │ KAP 6–8  Cloud · Microsoft Azure · DevOps-kultur        │   ← Plattformen
+    ┌───┴───────────────────────────────────────────────────────┴───┐
+    │ KAP 1–5  IT-grunnlag · Nettverk · Linux · Programmering · Git  │   ← Grunnmuren
+    └────────────────────────────────────────────────────────────────┘</code></pre>
+<p>Hvis du hopper rett til taket, faller huset sammen. Hvis du bygger
+grunnmuren skikkelig, blir alt det andre mye enklere.</p>
+<h2 class="unnumbered" id="hvordan-bruke-boken">Hvordan bruke boken</h2>
+<h3 class="unnumbered" id="læringsmetoden-i-hvert-kapittel">Læringsmetoden i hvert
+kapittel</h3>
+<p>Hvert viktig konsept forklares med den samme faste oppskriften, slik
+at du alltid vet hvor du finner hva:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Steg</th>
+<th>Spørsmål</th>
+<th>Hva du får</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><strong>Hva er det?</strong></td>
+<td>Forklaring med helt enkle ord</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><strong>Hvorfor finnes det?</strong></td>
+<td>Problemet teknologien løser</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><strong>Hvordan fungerer det?</strong></td>
+<td>Steg-for-steg teknisk forklaring</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><strong>Hverdagsanalogi</strong></td>
+<td>Restaurant, lager, bygning, bil …</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><strong>Fra arbeidslivet</strong></td>
+<td>Hvordan en ekte bedrift bruker det</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td><strong>Diagram</strong></td>
+<td>Visuell forklaring</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td><strong>Praktisk</strong></td>
+<td>Kode, kommandoer, oppsett</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td><strong>Vanlige feil</strong></td>
+<td>Det nybegynnere misforstår</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td><strong>Husk</strong></td>
+<td>Kort oppsummering</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td><strong>Test deg selv</strong></td>
+<td>Kontrollspørsmål med forklarte svar</td>
+</tr>
+</tbody>
+</table>
+<p>For små begreper slår vi noen av stegene sammen, slik at boken ikke
+blir kunstig lang. For de store temaene (for eksempel Docker, Kubernetes
+og Azure-tjenestene) får du hele oppskriften.</p>
+<h3 class="unnumbered" id="faste-bokser-i-teksten">Faste bokser i
+teksten</h3>
+<blockquote>
+<p><strong>Hverdagsanalogi:</strong> Sammenligner teknologien med noe du
+kjenner fra før.</p>
+</blockquote>
+<blockquote>
+<p><strong>Fra arbeidslivet:</strong> Viser hvordan dette brukes i en
+ekte bedrift.</p>
+</blockquote>
+<blockquote>
+<p><strong>Vanlig feil:</strong> Noe nybegynnere (og erfarne!) ofte gjør
+feil.</p>
+</blockquote>
+<blockquote>
+<p><strong>Husk:</strong> Det viktigste du må ta med deg.</p>
+</blockquote>
+<blockquote>
+<p><strong>Kostnad:</strong> Advarsel om ting som kan koste penger i
+Cloud.</p>
+</blockquote>
+<blockquote>
+<p><strong>Fordypning:</strong> Avansert stoff. Du kan hoppe over dette
+første gang du leser.</p>
+</blockquote>
+<h3 class="unnumbered" id="kodeblokker-og-terminal">Kodeblokker og
+terminal</h3>
+<p>Kommandoer du skal skrive i terminalen vises slik. Tegnet
+<code>$</code> betyr «skriv dette som vanlig bruker» og skal
+<strong>ikke</strong> skrives inn. Linjer uten <code>$</code> er
+resultatet du får tilbake:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> whoami</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">student</span></span></code></pre></div>
+<p>Kommentarer i kode starter med <code>#</code> og forklarer hva linjen
+gjør. De er der for deg – maskinen ignorerer dem.</p>
+<h3 class="unnumbered" id="engelske-begreper">Engelske begreper</h3>
+<p>IT-bransjen snakker engelsk, også i Norge. Første gang et begrep
+dukker opp, får du både det norske og det engelske ordet, for eksempel
+«lastbalansering (<em>load balancing</em>)». Senere bruker vi ofte det
+engelske ordet, fordi det er det du vil høre på jobb. Bakerst i boken
+finner du en ordliste.</p>
+<h3 class="unnumbered" id="tre-måter-å-lese-boken-på">Tre måter å lese
+boken på</h3>
+<ol type="1">
+<li><strong>Fra start til slutt</strong> – anbefalt hvis du er helt ny.
+Kapitlene bygger på hverandre.</li>
+<li><strong>Som oppslagsverk</strong> – bruk innholdsfortegnelsen,
+ordlisten og hurtigreferansene.</li>
+<li><strong>Prosjektdrevet</strong> – start med et prosjekt i kapittel
+15, og les kapitlene prosjektet viser til når du står fast.</li>
+</ol>
+<blockquote>
+<p><strong>Husk:</strong> Du lærer DevOps med fingrene, ikke bare med
+øynene. Skriv kommandoene selv. Gjør feil. Fiks dem. Det er slik
+ferdighetene faktisk bygges.</p>
+</blockquote>
+<h2 class="unnumbered" id="en-ærlig-forventningsavklaring">En ærlig
+forventningsavklaring</h2>
+<p>Å lese denne boken gjør deg ikke til senioringeniør. Ingen bok kan
+det. Det boken <em>kan</em> gjøre, er å gi deg:</p>
+<ul>
+<li>et solid mentalt kart over hvordan alle bitene henger sammen,</li>
+<li>presise forklaringer du kan komme tilbake til,</li>
+<li>oppgaver og prosjekter som bygger ekte, praktiske ferdigheter,</li>
+<li>en realistisk plan for de neste tolv månedene.</li>
+</ul>
+<p>Erfaring kommer av å bygge, feile, feilsøke og bygge igjen – helst
+sammen med andre. En god juniorkandidat er ikke en som kan alt, men en
+som forstår grunnprinsippene, kan lære raskt og kan vise frem ekte
+prosjekter.</p>
+<h2 class="unnumbered" id="om-kostnader-og-oppdatert-informasjon">Om
+kostnader og oppdatert informasjon</h2>
+<blockquote>
+<p><strong>Kostnad:</strong> Cloud-tjenester koster ekte penger.
+Gratiskontoer og studentkreditter har grenser. Hvert prosjekt i boken
+har en egen seksjon om <strong>opprydding</strong>. Følg den hver gang.
+Sett opp et budsjettvarsel (<em>budget alert</em>) i Azure før du gjør
+noe annet – det viser vi i kapittel 7.</p>
+</blockquote>
+<p>Teknologi endrer seg raskt. Tjenester får nye navn (Azure Active
+Directory heter nå <em>Microsoft Entra ID</em>), priser endres, og
+verktøy får nye versjoner. Informasjonen i boken er skrevet ut fra
+offentlig dokumentasjon fra Microsoft Learn, Docker, Kubernetes,
+HashiCorp, GitHub og Python slik den var kjent per <strong>oktober
+2026</strong>. Der noe er spesielt utsatt for endring, står det en
+merknad. <strong>Sjekk alltid offisiell dokumentasjon før du stoler på
+priser, kvoter, eksamensinnhold og versjonsnumre.</strong> En samlet
+kildeliste med lenker finner du i vedlegg D.</p>
+<p>Boken bruker tekstbaserte diagrammer (laget med tegn) i stedet for
+skjermbilder. Det er et bevisst valg: skjermbilder av Azure Portal blir
+raskt utdaterte fordi Microsoft endrer utseendet ofte, mens diagrammene
+forklarer prinsippene som ikke endrer seg. Der et skjermbilde ville vært
+nyttig, beskriver teksten hva du skal se etter i portalen.</p>
+<h2 class="unnumbered" id="læringsreisen-oversikt">Læringsreisen –
+oversikt</h2>
+<pre class="text"><code>  FASE 1: GRUNNMUR (mnd 1–3)            FASE 2: PLATTFORM (mnd 4–6)
+  ┌──────────────────────────┐          ┌──────────────────────────┐
+  │ IT-grunnlag   (kap 1)    │          │ Cloud Computing (kap 6)  │
+  │ Nettverk      (kap 2)    │  ─────►  │ Microsoft Azure (kap 7)  │
+  │ Linux         (kap 3)    │          │ DevOps-kultur   (kap 8)  │
+  │ Python/Bash   (kap 4)    │          │ ► AZ-900                 │
+  │ Git/GitHub    (kap 5)    │          └────────────┬─────────────┘
+  └──────────────────────────┘                       │
+                                                     ▼
+  FASE 4: SPESIALISERING (mnd 10–12)    FASE 3: VERKTØY (mnd 7–9)
+  ┌──────────────────────────┐          ┌──────────────────────────┐
+  │ Sikkerhet/Monitor(kap 13)│          │ Docker          (kap 9)  │
+  │ AI/MLOps        (kap 14) │  ◄─────  │ Kubernetes      (kap 10) │
+  │ Sluttprosjekt   (kap 15) │          │ Terraform/IaC   (kap 11) │
+  │ ► AZ-104, internship     │          │ CI/CD           (kap 12) │
+  └──────────────────────────┘          └──────────────────────────┘</code></pre>
+<h2 class="unnumbered" id="produksjonsplan-og-kapitteloversikt">Produksjonsplan og
+kapitteloversikt</h2>
+<p>Boken er bygget opp i 15 deler pluss vedlegg. Her er planen for hele
+boken, med hva hvert kapittel inneholder og hvilke praktiske leveranser
+du sitter igjen med.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Del</th>
+<th>Kapittel</th>
+<th>Innhold</th>
+<th>Du kan etterpå</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Forstå IT fra bunnen</td>
+<td>Datamaskin, OS, server, database, applikasjon, frontend/backend,
+internett, IP, DNS, HTTP(S), API, klient–server, virtualisering</td>
+<td>Forklare hva som skjer når du åpner en nettside</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Nettverk for DevOps</td>
+<td>IPv4/IPv6, subnetting/CIDR, DNS, DHCP, TCP/UDP, porter,
+ruter/svitsj, brannmur, VPN, NAT, lastbalansering, proxy, TLS,
+statuskoder, SSH, feilsøking</td>
+<td>Planlegge et VNet og feilsøke tilkoblingsproblemer</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Linux</td>
+<td>Distribusjoner, shell, filsystem, brukere, rettigheter, prosesser,
+systemd, pakker, SSH, Bash, cron, miljøvariabler, logger, sikkerhet</td>
+<td>Drifte en Linux-server fra terminalen</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Programmering for DevOps</td>
+<td>Python fra null, datatyper, løkker, funksjoner, JSON/YAML, API-kall,
+feilhåndtering, logging, Bash, automatisering, Azure SDK</td>
+<td>Skrive egne automatiseringsskript</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Git og GitHub</td>
+<td>Repo, commit, branch, merge, PR, konflikter, arbeidsflyter, GitHub
+Actions, samarbeid</td>
+<td>Jobbe profesjonelt med versjonskontroll</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Cloud Computing</td>
+<td>Datasentre, IaaS/PaaS/SaaS, regioner/soner, skalering, HA, DR,
+sikkerhet, prising, delt ansvar, AWS/Azure/GCP</td>
+<td>Velge riktig skytjeneste for et behov</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Microsoft Azure A–Å</td>
+<td>30+ tjenester med opprettelse, sikkerhet, kostnad og øvelser; AZ-900
+og AZ-104 med prøveeksamener</td>
+<td>Administrere grunnleggende Azure-miljøer</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>DevOps Engineering</td>
+<td>Kultur, Agile/Scrum, SDLC, CI/CD, deploy-strategier, observability,
+hendelser, SRE, Platform Engineering, DevSecOps</td>
+<td>Forklare DevOps i et intervju</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Docker</td>
+<td>Images, containere, Dockerfile, Compose, registry, volumes,
+nettverk, sikkerhet, feilsøking</td>
+<td>Containerisere en applikasjon</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Kubernetes</td>
+<td>Cluster, noder, pods, deployments, services, ingress, config,
+secrets, lagring, autoskalering, Helm, AKS</td>
+<td>Deploye en app på Kubernetes</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Infrastructure as Code</td>
+<td>Terraform, state, moduler, remote state, Bicep, Ansible, GitOps</td>
+<td>Bygge Azure-infrastruktur med kode</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>CI/CD og automatisering</td>
+<td>GitHub Actions, Azure Pipelines, Jenkins, testing, artefakter,
+hemmeligheter, rollback, blue-green, canary</td>
+<td>Bygge en pipeline fra kode til produksjon</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Sikkerhet og overvåking</td>
+<td>IAM, minste privilegium, kryptering, Zero Trust, skanning, backup,
+logger, metrikker, tracing, Prometheus, Grafana,
+hendelseshåndtering</td>
+<td>Sikre og overvåke et system</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>AI Infrastructure og MLOps</td>
+<td>GPU, modellservering, ML-pipelines, Azure ML, Azure AI-tjenester,
+LLM-infrastruktur, kostnader, karrierevei</td>
+<td>Forstå hvordan AI kjøres i produksjon</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>Virkelige prosjekter</td>
+<td>12 prosjekter med økende vanskelighetsgrad</td>
+<td>Vise frem en sterk portefølje</td>
+</tr>
+<tr class="even">
+<td>A–E</td>
+<td>Vedlegg</td>
+<td>Ordliste, hurtigreferanser, sertifiseringer, kilder, 12-måneders
+læringsplan</td>
+<td>Repetere og planlegge videre</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Slik er hvert kapittel bygget opp:</strong> læringsmål →
+forklaringer med læringsmetoden → praktiske øvelser →
+kapitteloppsummering → quiz med fasit.</p>
+<p><strong>Kvalitetsprinsipper for boken:</strong></p>
+<ul>
+<li>Ingen plassholdere og ingen «forklaring kommer senere».</li>
+<li>Alle kommandoer er ekte kommandoer fra offisielle verktøy.</li>
+<li>Grunnleggende stoff og fordypning holdes adskilt.</li>
+<li>Kostnader og gratisalternativer nevnes eksplisitt.</li>
+<li>Informasjon som endres ofte er merket med dato og kilde.</li>
+</ul>
+<h1 id="del-1-forstå-it-fra-bunnen">Del 1 – Forstå IT fra bunnen</h1>
+<p><strong>Læringsmål for kapitlet.</strong> Når du er ferdig, skal du
+kunne:</p>
+<ul>
+<li>forklare hva CPU, RAM, lagring og operativsystem gjør, og hvordan de
+samarbeider,</li>
+<li>forklare forskjellen på en server og en vanlig PC,</li>
+<li>forklare hva en applikasjon, en database, frontend og backend
+er,</li>
+<li>beskrive steg for steg hva som skjer når du skriver
+<code>www.vg.no</code> i nettleseren,</li>
+<li>forklare IP-adresser, DNS, HTTP/HTTPS og API på et grunnleggende
+nivå,</li>
+<li>forklare klient–server-arkitektur og virtualisering.</li>
+</ul>
+<h2 id="hva-er-it">Hva er IT?</h2>
+<p><strong>Hva er det?</strong> IT (informasjonsteknologi,
+<em>information technology</em>) er all teknologi vi bruker for å
+<strong>lagre, behandle og sende informasjon</strong>. Det inkluderer
+maskinvare (<em>hardware</em>) som datamaskiner, servere og
+nettverksutstyr, og programvare (<em>software</em>) som
+operativsystemer, apper og databaser.</p>
+<p><strong>Hvorfor finnes det?</strong> Bedrifter og samfunnet har
+enorme mengder informasjon: kundedata, bestillinger, pasientjournaler,
+lønnsslipper. Uten IT måtte alt dette ligget i papirarkiver og blitt
+behandlet manuelt.</p>
+<p><strong>Rollene i IT.</strong> IT er et stort felt. Noen vanlige
+roller:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rolle</th>
+<th>Hva de gjør</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Utvikler (<em>developer</em>)</td>
+<td>Skriver koden som blir til applikasjoner</td>
+</tr>
+<tr class="even">
+<td>Driftstekniker (<em>operations / sysadmin</em>)</td>
+<td>Holder servere og systemer i gang</td>
+</tr>
+<tr class="odd">
+<td>Nettverksingeniør</td>
+<td>Designer og drifter nettverk</td>
+</tr>
+<tr class="even">
+<td>DevOps Engineer</td>
+<td>Bygger broen mellom utvikling og drift med automatisering</td>
+</tr>
+<tr class="odd">
+<td>Cloud Engineer</td>
+<td>Bygger og drifter løsninger i skyen (Azure, AWS, GCP)</td>
+</tr>
+<tr class="even">
+<td>Site Reliability Engineer (SRE)</td>
+<td>Sørger for at systemer er pålitelige, ofte med kode</td>
+</tr>
+<tr class="odd">
+<td>Sikkerhetsingeniør</td>
+<td>Beskytter systemer mot angrep</td>
+</tr>
+<tr class="even">
+<td>MLOps / AI Infrastructure Engineer</td>
+<td>Bygger plattformer som trener og kjører AI-modeller</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Husk:</strong> En DevOps Engineer må forstå litt av
+<em>alt</em> – maskinvare, nettverk, operativsystem, kode og skyen –
+fordi jobben er å få alle delene til å spille sammen.</p>
+</blockquote>
+<h2 id="hvordan-fungerer-en-datamaskin">Hvordan fungerer en
+datamaskin?</h2>
+<p><strong>Hva er det?</strong> En datamaskin er en maskin som tar imot
+data (<em>input</em>), behandler dem (<em>processing</em>), lagrer dem
+(<em>storage</em>) og gir et resultat (<em>output</em>).</p>
+<pre class="text"><code>   INPUT              BEHANDLING               OUTPUT
+ ┌────────┐        ┌─────────────────┐       ┌────────┐
+ │Tastatur│ ─────► │   CPU  ◄──► RAM  │ ────► │ Skjerm │
+ │  Mus   │        │        ▲         │       │Nettverk│
+ │Nettverk│        │        │         │       │ Fil    │
+ └────────┘        │   SSD/Disk      │       └────────┘
+                   │  (lagring)      │
+                   └─────────────────┘</code></pre>
+<h3 id="cpu-hjernen">CPU – hjernen</h3>
+<p><strong>Hva er det?</strong> CPU (<em>Central Processing Unit</em>,
+prosessor) utfører instruksjonene i programmene. Den regner,
+sammenligner og flytter data.</p>
+<p><strong>Hvordan fungerer det?</strong> CPU-en henter en instruksjon,
+tolker den og utfører den – milliarder av ganger i sekundet. Hastigheten
+måles i gigahertz (GHz). Moderne CPU-er har flere
+<strong>kjerner</strong> (<em>cores</em>), og hver kjerne kan jobbe med
+sin egen oppgave samtidig.</p>
+<blockquote>
+<p><strong>Hverdagsanalogi:</strong> CPU-en er kokken på en restaurant.
+Flere kjerner er flere kokker. Fire kokker kan lage fire retter
+samtidig, men én enkelt rett blir ikke nødvendigvis raskere av at det
+står fire kokker rundt den.</p>
+</blockquote>
+<blockquote>
+<p><strong>Fra arbeidslivet:</strong> Når du velger størrelse på en
+virtuell maskin i Azure, velger du antall <strong>vCPU</strong>
+(virtuelle CPU-kjerner). En liten webserver trenger kanskje 1–2 vCPU,
+mens en database for en nettbutikk kan trenge 8–16.</p>
+</blockquote>
+<h3 id="ram-arbeidsbenken">RAM – arbeidsbenken</h3>
+<p><strong>Hva er det?</strong> RAM (<em>Random Access Memory</em>,
+arbeidsminne) er der datamaskinen holder det den jobber med <em>akkurat
+nå</em>. RAM er ekstremt rask, men <strong>flyktig</strong>
+(<em>volatile</em>): alt forsvinner når strømmen går.</p>
+<blockquote>
+<p><strong>Hverdagsanalogi:</strong> RAM er kokkens benk. Ingrediensene
+kokken bruker akkurat nå ligger på benken. Er benken for liten, må
+kokken gå til lageret hele tiden, og alt går tregt.</p>
+</blockquote>
+<blockquote>
+<p><strong>Fra arbeidslivet:</strong> Når en server går tom for RAM,
+begynner operativsystemet å flytte data til disk (<em>swapping</em>) –
+det gjør alt mye tregere. På Linux kan prosessen til og med bli drept av
+«OOM killer» (<em>Out Of Memory</em>). I Kubernetes ser du dette som
+statusen <code>OOMKilled</code>.</p>
+</blockquote>
+<h3 id="lagring-ssd-og-harddisk">Lagring – SSD og harddisk</h3>
+<p><strong>Hva er det?</strong> Lagring (<em>storage</em>) beholder data
+selv når maskinen er slått av: filer, programmer, operativsystemet.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Hvordan</th>
+<th>Fart</th>
+<th>Typisk bruk</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HDD (harddisk)</td>
+<td>Roterende magnetiske plater</td>
+<td>Treg</td>
+<td>Billig masselagring, arkiv</td>
+</tr>
+<tr class="even">
+<td>SSD</td>
+<td>Flash-minne, ingen bevegelige deler</td>
+<td>Rask</td>
+<td>Operativsystem, apper</td>
+</tr>
+<tr class="odd">
+<td>NVMe SSD</td>
+<td>SSD koblet direkte på PCIe-bussen</td>
+<td>Svært rask</td>
+<td>Databaser, krevende systemer</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Hverdagsanalogi:</strong> Lagring er restaurantens kjølerom.
+Alt ligger trygt der over natten, men det tar lengre tid å hente noe
+derfra enn fra benken (RAM).</p>
+</blockquote>
+<p><strong>Hastighetshierarkiet</strong> er viktig å forstå:</p>
+<pre class="text"><code> Raskest, minst, dyrest
+   ▲   CPU-cache    (nanosekunder)
+   │   RAM          (~100 nanosekunder)
+   │   NVMe SSD     (mikrosekunder)
+   │   HDD          (millisekunder)
+   │   Nettverk/sky-lagring (millisekunder og mer)
+   ▼
+ Tregest, størst, billigst</code></pre>
+<h3 id="hovedkort-nettverkskort-og-gpu">Hovedkort, nettverkskort og
+GPU</h3>
+<ul>
+<li><strong>Hovedkort</strong> (<em>motherboard</em>) kobler alle delene
+sammen.</li>
+<li><strong>Nettverkskort</strong> (<em>NIC – Network Interface
+Card</em>) kobler maskinen til nettverket.</li>
+<li><strong>GPU</strong> (<em>Graphics Processing Unit</em>) har
+tusenvis av små kjerner som er gode på å gjøre samme regneoperasjon på
+mye data samtidig. Opprinnelig laget for grafikk – i dag helt sentral
+for AI (se kapittel 14).</li>
+</ul>
+<h2 id="hva-er-et-operativsystem">Hva er et operativsystem?</h2>
+<p><strong>Hva er det?</strong> Operativsystemet (<em>Operating System,
+OS</em>) er programvaren som styrer maskinvaren og lar andre programmer
+bruke den. Eksempler: Windows, macOS, Linux, Android, iOS.</p>
+<p><strong>Hvorfor finnes det?</strong> Uten et OS måtte hvert program
+selv vite hvordan det skal snakke med akkurat din SSD, ditt
+nettverkskort og din skjerm. OS-et gir et felles grensesnitt.</p>
+<p><strong>Hva gjør OS-et?</strong></p>
+<ol type="1">
+<li><strong>Prosessstyring</strong> – bestemmer hvilket program som får
+bruke CPU-en når.</li>
+<li><strong>Minnehåndtering</strong> – deler ut RAM til programmene og
+hindrer dem i å lese hverandres minne.</li>
+<li><strong>Filsystem</strong> – organiserer data på disken i filer og
+mapper.</li>
+<li><strong>Drivere</strong> – snakker med maskinvaren.</li>
+<li><strong>Sikkerhet</strong> – brukere, passord og rettigheter.</li>
+<li><strong>Nettverk</strong> – sender og mottar data.</li>
+</ol>
+<pre class="text"><code> ┌──────────────────────────────────────────┐
+ │  Applikasjoner: nettleser, Python, nginx │
+ ├──────────────────────────────────────────┤
+ │  Operativsystem (kjerne / kernel)        │
+ │  prosesser · minne · filer · nettverk    │
+ ├──────────────────────────────────────────┤
+ │  Maskinvare: CPU · RAM · SSD · NIC       │
+ └──────────────────────────────────────────┘</code></pre>
+<blockquote>
+<p><strong>Hverdagsanalogi:</strong> OS-et er restaurantsjefen. Kokkene
+(programmene) må spørre sjefen om plass på benken (RAM), tid ved
+komfyren (CPU) og hylleplass i kjølerommet (disk).</p>
+</blockquote>
+<p><strong>Kjernen</strong> (<em>kernel</em>) er selve hjertet i
+operativsystemet. Linux er egentlig navnet på en kjerne; rundt den
+bygges hele operativsystemer som Ubuntu og Red Hat (mer i kapittel
+3).</p>
+<h2 id="hva-er-en-server">Hva er en server?</h2>
+<p><strong>Hva er det?</strong> En server er en datamaskin (eller et
+program) som <strong>leverer tjenester til andre maskiner</strong> over
+et nettverk. Ordet kommer fra engelsk <em>serve</em> – å servere.</p>
+<p><strong>Hvorfor finnes det?</strong> Når du åpner Instagram, ligger
+ikke bildene på telefonen din. De ligger på servere som leverer dem til
+deg og millioner av andre.</p>
+<h3 id="server-vs.-vanlig-pc">Server vs. vanlig PC</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Egenskap</th>
+<th>Vanlig PC</th>
+<th>Server</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Formål</td>
+<td>Én bruker, interaktivt arbeid</td>
+<td>Mange brukere, leverer tjenester</td>
+</tr>
+<tr class="even">
+<td>Oppetid</td>
+<td>Slås av om kvelden</td>
+<td>Går 24/7 i årevis</td>
+</tr>
+<tr class="odd">
+<td>Skjerm/tastatur</td>
+<td>Ja</td>
+<td>Vanligvis ikke (<em>headless</em>), styres over nettverk</td>
+</tr>
+<tr class="even">
+<td>Operativsystem</td>
+<td>Windows/macOS</td>
+<td>Oftest Linux, også Windows Server</td>
+</tr>
+<tr class="odd">
+<td>Maskinvare</td>
+<td>Forbrukerdeler</td>
+<td>Redundante strømforsyninger, ECC-RAM, RAID-disker</td>
+</tr>
+<tr class="even">
+<td>Plassering</td>
+<td>Kontor/hjemme</td>
+<td>Serverrom eller datasenter, i rack</td>
+</tr>
+<tr class="odd">
+<td>Grafisk grensesnitt</td>
+<td>Ja</td>
+<td>Ofte bare kommandolinje</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Vanlig feil:</strong> Å tro at en server må være en spesiell
+type maskin. Teknisk sett kan din egen laptop være en server – det
+handler om <em>rollen</em>. Men i produksjon bruker man maskinvare som
+er laget for å tåle kontinuerlig drift.</p>
+</blockquote>
+<blockquote>
+<p><strong>Fra arbeidslivet:</strong> I dag kjører de fleste «servere»
+som <strong>virtuelle maskiner</strong> eller
+<strong>containere</strong> i et datasenter eid av en skyleverandør. Du
+ser aldri den fysiske maskinen.</p>
+</blockquote>
+<p>Vanlige typer servere (roller):</p>
+<ul>
+<li><strong>Webserver</strong> – leverer nettsider (nginx, Apache,
+IIS).</li>
+<li><strong>Applikasjonsserver</strong> – kjører forretningslogikken
+(Python, Java, Node.js).</li>
+<li><strong>Databaseserver</strong> – lagrer strukturerte data
+(PostgreSQL, SQL Server, MySQL).</li>
+<li><strong>Filserver</strong> – deler filer.</li>
+<li><strong>DNS-server</strong> – oversetter navn til IP-adresser.</li>
+<li><strong>E-postserver</strong> – sender og mottar e-post.</li>
+</ul>
+<h2 id="hva-er-en-applikasjon">Hva er en applikasjon?</h2>
+<p><strong>Hva er det?</strong> En applikasjon (app, program) er
+programvare som løser en oppgave for en bruker: en nettbank, Spotify, et
+lønnssystem.</p>
+<p>Moderne applikasjoner består som regel av flere deler som snakker
+sammen:</p>
+<pre class="text"><code> ┌────────────┐   HTTP/JSON   ┌────────────┐    SQL    ┌────────────┐
+ │  FRONTEND  │ ────────────► │  BACKEND   │ ────────► │  DATABASE  │
+ │ (nettleser │ ◄──────────── │ (server,   │ ◄──────── │ (lagrer    │
+ │  / mobil)  │               │  API)      │           │  data)     │
+ └────────────┘               └────────────┘           └────────────┘
+   Det brukeren ser           Logikk og regler          Hukommelsen</code></pre>
+<h3 id="frontend-og-backend">Frontend og backend</h3>
+<p><strong>Frontend</strong> er det brukeren ser og klikker på: knapper,
+skjemaer, bilder. Bygges med HTML (struktur), CSS (utseende) og
+JavaScript (oppførsel), ofte med rammeverk som React, Vue eller Angular.
+Frontend kjører i brukerens nettleser eller mobil.</p>
+<p><strong>Backend</strong> er det som skjer bak kulissene: sjekke
+passord, regne ut priser, hente data, sende e-post. Skrives i språk som
+Python, Java, C#, Go eller JavaScript (Node.js). Backend kjører på
+servere.</p>
+<blockquote>
+<p><strong>Hverdagsanalogi:</strong> På en restaurant er
+<strong>frontend</strong> spisesalen og menyen – det gjesten ser.
+<strong>Backend</strong> er kjøkkenet. <strong>Databasen</strong> er
+lageret med råvarer. <strong>Servitøren</strong> som tar bestillingen
+fra salen til kjøkkenet er <strong>API-et</strong>.</p>
+</blockquote>
+<blockquote>
+<p><strong>Fra arbeidslivet:</strong> En DevOps Engineer skriver sjelden
+frontend-kode, men må vite hvordan både frontend og backend bygges,
+testes og deployes. Frontend blir ofte statiske filer som legges på en
+CDN eller Azure Static Web Apps; backend kjøres i containere, App
+Service eller Kubernetes.</p>
+</blockquote>
+<h2 id="hva-er-en-database">Hva er en database?</h2>
+<p><strong>Hva er det?</strong> En database er et system for å
+<strong>lagre, organisere og hente data</strong> effektivt og trygt.</p>
+<p><strong>Hvorfor finnes det?</strong> Du <em>kunne</em> lagret alle
+kundene dine i en tekstfil. Men hva skjer når 10 000 brukere skriver til
+filen samtidig, når du må finne én kunde blant 50 millioner, eller når
+strømmen går midt i en betaling? Databaser løser dette.</p>
+<h3 id="relasjonsdatabaser-sql">Relasjonsdatabaser (SQL)</h3>
+<p>Data lagres i <strong>tabeller</strong> med rader og kolonner – som
+regneark med strenge regler. Tabeller kobles sammen med
+<strong>nøkler</strong>.</p>
+<pre class="text"><code> Tabell: kunder                    Tabell: ordrer
+ ┌────┬──────────┬───────────┐     ┌────┬──────────┬────────┐
+ │ id │ navn     │ by        │     │ id │ kunde_id │ beløp  │
+ ├────┼──────────┼───────────┤     ├────┼──────────┼────────┤
+ │ 1  │ Kari     │ Bergen    │◄────│ 10 │ 1        │ 499    │
+ │ 2  │ Ola      │ Oslo      │◄────│ 11 │ 2        │ 1299   │
+ └────┴──────────┴───────────┘     └────┴──────────┴────────┘</code></pre>
+<p>Man snakker med dem via <strong>SQL</strong> (<em>Structured Query
+Language</em>):</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Hent navn og beløp for alle ordrer over 1000 kroner</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> kunder.navn, ordrer.beløp</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ordrer</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> kunder <span class="kw">ON</span> kunder.<span class="kw">id</span> <span class="op">=</span> ordrer.kunde_id</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> ordrer.beløp <span class="op">&gt;</span> <span class="dv">1000</span>;</span></code></pre></div>
+<p>Eksempler: PostgreSQL, MySQL, Microsoft SQL Server, Azure SQL
+Database.</p>
+<h3 id="nosql-databaser">NoSQL-databaser</h3>
+<p>Lagrer data i mer fleksible formater: dokumenter (JSON),
+nøkkel–verdi, grafer eller kolonnefamilier. Eksempler: MongoDB, Redis,
+Azure Cosmos DB.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>SQL (relasjonell)</th>
+<th>NoSQL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Struktur</td>
+<td>Fast skjema, tabeller</td>
+<td>Fleksibel</td>
+</tr>
+<tr class="even">
+<td>Styrke</td>
+<td>Konsistens, komplekse spørringer, transaksjoner</td>
+<td>Skalering, fart, fleksible data</td>
+</tr>
+<tr class="odd">
+<td>Typisk bruk</td>
+<td>Bank, ordre, regnskap</td>
+<td>Sesjoner, cache, IoT, kataloger</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Husk:</strong> Databaser er nesten alltid den mest kritiske
+delen av et system. En webserver kan du bygge på nytt på minutter.
+Mistet data er ofte borte for alltid. Derfor: <strong>backup, backup,
+backup</strong> – og test at du faktisk kan gjenopprette.</p>
+</blockquote>
+<h2 id="hvordan-fungerer-internett">Hvordan fungerer internett?</h2>
+<p><strong>Hva er det?</strong> Internett er et globalt nettverk av
+nettverk. Millioner av nettverk (hjemmenett, bedriftsnett, mobilnett,
+datasentre) er koblet sammen av internettleverandører (ISP-er) og
+sjøkabler, og de bruker felles regler – <strong>protokoller</strong> –
+for å snakke sammen.</p>
+<p><strong>Hvordan fungerer det?</strong> Data deles opp i små
+<strong>pakker</strong> (<em>packets</em>). Hver pakke har en
+avsender-adresse og en mottaker-adresse (IP-adresser). Rutere langs
+veien leser mottakeradressen og sender pakken videre i riktig retning,
+litt som postterminaler. Pakkene kan ta forskjellige veier og settes
+sammen igjen hos mottakeren.</p>
+<blockquote>
+<p><strong>Hverdagsanalogi:</strong> Tenk deg at du skal sende en bok
+til en venn i Tromsø, men posten bare tar postkort. Du river ut sidene,
+nummererer dem, skriver adressen på hver og sender dem. Noen går via
+Trondheim, andre via Bodø. Vennen din sorterer dem i riktig rekkefølge
+og har boken igjen. Det er pakkesvitsjing.</p>
+</blockquote>
+<p><strong>Viktige protokoller</strong> du vil møte i hele boken:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Protokoll</th>
+<th>Oppgave</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>IP</td>
+<td>Adressering og ruting av pakker</td>
+</tr>
+<tr class="even">
+<td>TCP</td>
+<td>Pålitelig levering, i riktig rekkefølge</td>
+</tr>
+<tr class="odd">
+<td>UDP</td>
+<td>Rask levering uten garanti</td>
+</tr>
+<tr class="even">
+<td>DNS</td>
+<td>Oversetter navn til IP-adresser</td>
+</tr>
+<tr class="odd">
+<td>HTTP/HTTPS</td>
+<td>Overfører nettsider og API-data</td>
+</tr>
+<tr class="even">
+<td>TLS</td>
+<td>Krypterer forbindelsen</td>
+</tr>
+<tr class="odd">
+<td>SSH</td>
+<td>Sikker fjernstyring av servere</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hva-er-en-ip-adresse">Hva er en IP-adresse?</h2>
+<p><strong>Hva er det?</strong> En IP-adresse er en unik adresse for en
+enhet på et nettverk, omtrent som en gateadresse. Eksempel (IPv4):
+<code>192.168.1.25</code>.</p>
+<p>En IPv4-adresse består av fire tall fra 0 til 255, separert med
+punktum. Det gir omtrent 4,3 milliarder adresser – og de er nesten brukt
+opp. Derfor finnes <strong>IPv6</strong>, med adresser som
+<code>2001:db8::1</code>, og et nesten uendelig antall adresser.</p>
+<p>Det finnes <strong>private</strong> adresser (brukes inne i
+hjemmenett og bedriftsnett, f.eks. <code>192.168.x.x</code> og
+<code>10.x.x.x</code>) og <strong>offentlige</strong> adresser (synlige
+på internett). Dette går vi grundig gjennom i kapittel 2.</p>
+<h2 id="hva-er-dns">Hva er DNS?</h2>
+<p><strong>Hva er det?</strong> DNS (<em>Domain Name System</em>) er
+internettets telefonkatalog. Den oversetter navn som
+<code>www.noroff.no</code> til IP-adresser som maskiner forstår.</p>
+<p><strong>Hvorfor finnes det?</strong> Mennesker husker navn; maskiner
+bruker tall. Dessuten kan IP-adressen bak et navn endres uten at
+brukerne merker noe.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> nslookup www.example.com</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Name:</span>    www.example.com</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Address:</span> 93.184.215.14</span></code></pre></div>
+<p>(IP-adressen du får kan være en annen – den kan endres over tid.)</p>
+<p>Vi går dypt inn i DNS i kapittel 2.</p>
+<h2 id="hva-er-http-og-https">Hva er HTTP og HTTPS?</h2>
+<p><strong>Hva er det?</strong> HTTP (<em>HyperText Transfer
+Protocol</em>) er språket nettlesere og webservere bruker for å snakke
+sammen. HTTPS er HTTP <strong>kryptert med TLS</strong>, slik at ingen
+underveis kan lese eller endre innholdet.</p>
+<p><strong>Hvordan fungerer det?</strong> Klienten sender en
+<strong>forespørsel</strong> (<em>request</em>), serveren svarer med en
+<strong>respons</strong> (<em>response</em>).</p>
+<pre class="text"><code>FORESPØRSEL (fra nettleser)          RESPONS (fra server)
+GET /index.html HTTP/1.1             HTTP/1.1 200 OK
+Host: www.example.com                Content-Type: text/html
+User-Agent: Mozilla/5.0 ...          Content-Length: 1256
+
+                                     &lt;html&gt;...&lt;/html&gt;</code></pre>
+<p>En forespørsel har en <strong>metode</strong> som forteller hva
+klienten vil:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Metode</th>
+<th>Betydning</th>
+<th>Eksempel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GET</td>
+<td>Hent data</td>
+<td>Vis en produktside</td>
+</tr>
+<tr class="even">
+<td>POST</td>
+<td>Opprett noe nytt</td>
+<td>Send inn et skjema</td>
+</tr>
+<tr class="odd">
+<td>PUT / PATCH</td>
+<td>Oppdater</td>
+<td>Endre profilen din</td>
+</tr>
+<tr class="even">
+<td>DELETE</td>
+<td>Slett</td>
+<td>Slett en kommentar</td>
+</tr>
+</tbody>
+</table>
+<p>Responsen har en <strong>statuskode</strong>: <code>200</code> (OK),
+<code>404</code> (finnes ikke), <code>500</code> (serverfeil). Full
+liste i kapittel 2.</p>
+<p>Du kan selv se HTTP i terminalen med <code>curl</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="at">-I</span> https://www.example.com</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">HTTP/2</span> 200</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">content-type:</span> text/html</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
+<p><code>-I</code> betyr «vis bare hodet (<em>headers</em>) i
+responsen».</p>
+<blockquote>
+<p><strong>Vanlig feil:</strong> Å tro at HTTPS betyr at nettsiden er
+trygg. HTTPS betyr bare at <em>forbindelsen</em> er kryptert. En
+svindelside kan fint ha HTTPS.</p>
+</blockquote>
+<h2 id="hva-er-et-api">Hva er et API?</h2>
+<p><strong>Hva er det?</strong> Et API (<em>Application Programming
+Interface</em>) er en avtalt måte for programmer å snakke med hverandre
+på. Et web-API tar imot HTTP-forespørsler og svarer – oftest med data i
+<strong>JSON</strong>-format.</p>
+<p><strong>Hvorfor finnes det?</strong> Et program skal ikke trenge å
+vite <em>hvordan</em> et annet program er bygget inni. Det holder å
+kjenne «menyen»: hvilke forespørsler du kan sende og hva du får
+tilbake.</p>
+<blockquote>
+<p><strong>Hverdagsanalogi:</strong> API-et er servitøren. Du (klienten)
+trenger ikke gå inn på kjøkkenet. Du bestiller fra menyen
+(API-dokumentasjonen), servitøren tar bestillingen til kjøkkenet
+(serveren) og kommer tilbake med maten (dataene).</p>
+</blockquote>
+<p><strong>Eksempel</strong> – hent data fra et offentlig API
+(GitHub):</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl https://api.github.com/users/octocat</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;login&quot;</span><span class="ex">:</span> <span class="st">&quot;octocat&quot;</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;id&quot;</span><span class="ex">:</span> 583231,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;name&quot;</span><span class="ex">:</span> <span class="st">&quot;The Octocat&quot;</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;public_repos&quot;</span><span class="ex">:</span> 8,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">...</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<blockquote>
+<p><strong>Fra arbeidslivet:</strong> Nesten alt i Cloud er API-er. Når
+du klikker «Create» i Azure Portal, sender portalen egentlig et API-kall
+til Azure Resource Manager. Azure CLI, Terraform og Bicep sender de
+samme API-kallene. Dette er grunnen til at alt i skyen <em>kan</em>
+automatiseres.</p>
+</blockquote>
+<p><strong>REST</strong> er den vanligste stilen for web-API-er:
+ressurser har URL-er (<code>/users/42</code>), og man bruker
+HTTP-metodene for å jobbe med dem.</p>
+<h2 id="hva-skjer-når-du-åpner-en-nettside">Hva skjer når du åpner en
+nettside?</h2>
+<p>Dette er et klassisk intervjuspørsmål. La oss gå gjennom hva som
+skjer når du skriver <code>https://www.example.com</code> og trykker
+Enter.</p>
+<pre class="text"><code> Du                 DNS-resolver        Webserver (93.184.x.x)
+ │                      │                       │
+ │ 1. Hva er IP til     │                       │
+ │    www.example.com?  │                       │
+ │─────────────────────►│                       │
+ │ 2. Det er 93.184.x.x │                       │
+ │◄─────────────────────│                       │
+ │                                              │
+ │ 3. TCP-håndtrykk (SYN, SYN-ACK, ACK) port 443│
+ │─────────────────────────────────────────────►│
+ │ 4. TLS-håndtrykk (sertifikat, nøkler)        │
+ │◄────────────────────────────────────────────►│
+ │ 5. HTTP GET /                                │
+ │─────────────────────────────────────────────►│
+ │                         6. Server lager svar │
+ │                            (ev. database)    │
+ │ 7. HTTP 200 OK + HTML                        │
+ │◄─────────────────────────────────────────────│
+ │ 8. Nettleseren tegner siden og henter        │
+ │    CSS, JS og bilder (flere forespørsler)    │</code></pre>
+<ol type="1">
+<li><strong>URL tolkes.</strong> Nettleseren ser protokoll
+(<code>https</code>), domenenavn (<code>www.example.com</code>) og sti
+(<code>/</code>).</li>
+<li><strong>DNS-oppslag.</strong> Nettleseren sjekker sin cache,
+deretter operativsystemets, deretter spør den en DNS-resolver (ofte hos
+internettleverandøren eller f.eks. 1.1.1.1). Resolveren finner
+IP-adressen.</li>
+<li><strong>TCP-forbindelse.</strong> Nettleseren åpner en forbindelse
+til IP-adressen på port 443 (HTTPS) med et tre-veis håndtrykk.</li>
+<li><strong>TLS-håndtrykk.</strong> Serveren viser sitt sertifikat;
+nettleseren sjekker at det er gyldig og utstedt for riktig domene. De
+blir enige om krypteringsnøkler.</li>
+<li><strong>HTTP-forespørsel.</strong> Nettleseren sender
+<code>GET /</code>.</li>
+<li><strong>Serveren behandler.</strong> Ofte går forespørselen først
+gjennom en lastbalanserer, så til en webserver, som kanskje spør en
+applikasjonsserver og en database.</li>
+<li><strong>Respons.</strong> Serveren svarer med statuskode og
+HTML.</li>
+<li><strong>Rendering.</strong> Nettleseren leser HTML, oppdager at den
+trenger CSS, JavaScript og bilder, og henter dem (ofte fra en CDN).
+Siden tegnes på skjermen.</li>
+</ol>
+<blockquote>
+<p><strong>Husk:</strong> Hvert eneste steg kan feile, og en DevOps
+Engineer må vite hvordan man feilsøker hvert steg: DNS
+(<code>nslookup</code>), nettverk (<code>ping</code>,
+<code>traceroute</code>), port (<code>nc</code>, <code>telnet</code>),
+TLS (<code>openssl s_client</code>), HTTP (<code>curl -v</code>). Dette
+øver vi på i kapittel 2.</p>
+</blockquote>
+<h2 id="klientserver-arkitektur">Klient–server-arkitektur</h2>
+<p><strong>Hva er det?</strong> En modell der <strong>klienter</strong>
+(nettlesere, mobilapper, andre programmer) sender forespørsler, og
+<strong>servere</strong> svarer. Nesten hele internett er bygget
+slik.</p>
+<pre class="text"><code>  ┌────────┐
+  │Klient 1│──┐
+  └────────┘  │
+  ┌────────┐  │      ┌──────────┐      ┌──────────┐
+  │Klient 2│──┼────► │  Server  │ ───► │ Database │
+  └────────┘  │      └──────────┘      └──────────┘
+  ┌────────┐  │
+  │Klient 3│──┘
+  └────────┘</code></pre>
+<p><strong>Fordeler:</strong> data og logikk er samlet ett sted (lett å
+oppdatere og sikre), og klientene kan være enkle.</p>
+<p><strong>Utfordring:</strong> serveren blir et sentralt punkt. Går den
+ned, virker ingenting – det er et <strong>single point of
+failure</strong>. Løsningen er å ha flere servere bak en lastbalanserer
+(kapittel 2 og 7).</p>
+<p>Fra enkelt til avansert finnes det flere arkitekturer:</p>
+<ul>
+<li><strong>Monolitt</strong> – hele applikasjonen er ett stort program.
+Enkelt å starte med.</li>
+<li><strong>Tre-lags arkitektur</strong> (<em>three-tier</em>) –
+presentasjon, logikk og data i hvert sitt lag.</li>
+<li><strong>Mikrotjenester</strong> (<em>microservices</em>) –
+applikasjonen deles i mange små tjenester som snakker via API-er.
+Fleksibelt, men mer komplekst å drifte. Det er her Docker og Kubernetes
+virkelig skinner.</li>
+</ul>
+<h2 id="hva-er-virtualisering">Hva er virtualisering?</h2>
+<p><strong>Hva er det?</strong> Virtualisering lar én fysisk maskin late
+som den er mange separate maskiner – <strong>virtuelle maskiner</strong>
+(<em>VM-er</em>).</p>
+<p><strong>Hvorfor finnes det?</strong> Før virtualisering kjørte
+bedrifter typisk én applikasjon per fysisk server (for å unngå at appene
+ødela for hverandre). De fleste serverne brukte 5–15 % av kapasiteten.
+Det var sløsing med strøm, plass og penger.</p>
+<p><strong>Hvordan fungerer det?</strong> En programvare kalt
+<strong>hypervisor</strong> fordeler den fysiske maskinens CPU, RAM,
+disk og nettverk mellom flere VM-er. Hver VM har sitt eget
+operativsystem og tror den er en ekte maskin.</p>
+<pre class="text"><code> ┌──────────────┬──────────────┬──────────────┐
+ │    VM 1      │    VM 2      │    VM 3      │
+ │ App A        │ App B        │ App C        │
+ │ Ubuntu       │ Windows Srv  │ Red Hat      │
+ ├──────────────┴──────────────┴──────────────┤
+ │        HYPERVISOR (Hyper-V, KVM, ESXi)      │
+ ├─────────────────────────────────────────────┤
+ │   FYSISK SERVER: CPU · RAM · Disk · NIC     │
+ └─────────────────────────────────────────────┘</code></pre>
+<p>To typer hypervisor:</p>
+<ul>
+<li><strong>Type 1 (bare metal)</strong> – kjører direkte på
+maskinvaren. Brukes i datasentre. Eksempler: Microsoft Hyper-V (som
+Azure bygger på), VMware ESXi, KVM (Linux).</li>
+<li><strong>Type 2 (hosted)</strong> – kjører som et program oppå et
+vanlig OS. Brukes på laptoper. Eksempler: VirtualBox, VMware
+Workstation, Parallels.</li>
+</ul>
+<blockquote>
+<p><strong>Hverdagsanalogi:</strong> En fysisk server er en stor
+bygning. Uten virtualisering leier én bedrift hele bygningen selv om den
+bare bruker ett rom. Med virtualisering deles bygningen i leiligheter
+med egne dører og låser. Hypervisoren er vaktmesteren som fordeler strøm
+og vann.</p>
+</blockquote>
+<blockquote>
+<p><strong>Fra arbeidslivet:</strong> Når du lager en VM i Azure,
+starter Azure en virtuell maskin på en fysisk server i et av Microsofts
+datasentre, ved hjelp av en spesialtilpasset Hyper-V. Hele skyen er
+bygget på virtualisering.</p>
+</blockquote>
+<p><strong>Containere</strong> er en lettere form for isolasjon der
+appene deler operativsystemets kjerne i stedet for å ha hvert sitt OS.
+Det er temaet i kapittel 9.</p>
+<h2 id="hvordan-alt-henger-sammen">Hvordan alt henger sammen</h2>
+<pre class="text"><code> Bruker ──► Nettleser (frontend)
+              │ 1. DNS: navn → IP
+              │ 2. HTTPS-forespørsel over internett (TCP/IP, TLS)
+              ▼
+         Lastbalanserer (i skyen)
+              │
+     ┌────────┴────────┐
+     ▼                 ▼
+  VM/container 1   VM/container 2       ← kjører på virtualisert maskinvare
+  (backend, API)   (backend, API)        ← operativsystem: Linux
+     │                 │
+     └────────┬────────┘
+              ▼
+          Database                        ← lagring på SSD i datasenter</code></pre>
+<p>Alt i denne boken handler om å bygge, automatisere, sikre og overvåke
+denne kjeden.</p>
+<h2 id="kapitteloppsummering">Kapitteloppsummering</h2>
+<ul>
+<li>En datamaskin består av CPU (regner), RAM (raskt korttidsminne),
+lagring (permanent) og nettverkskort.</li>
+<li>Operativsystemet styrer maskinvaren og lar programmer dele den
+trygt.</li>
+<li>En server er en rolle: en maskin som leverer tjenester over
+nettverk, ofte uten skjerm, 24/7.</li>
+<li>En applikasjon består gjerne av frontend (det brukeren ser), backend
+(logikken) og database (dataene).</li>
+<li>Internett sender data i pakker mellom IP-adresser; DNS oversetter
+navn til IP; HTTP(S) er språket for web.</li>
+<li>API-er lar programmer snakke sammen; all Cloud-automatisering bygger
+på API-er.</li>
+<li>Virtualisering lar én fysisk server kjøre mange VM-er – fundamentet
+for Cloud.</li>
+</ul>
+<h2 id="øvingsoppgaver">Øvingsoppgaver</h2>
+<ol type="1">
+<li>Åpne Oppgavebehandling (Windows) eller Aktivitetsmonitor (macOS).
+Finn hvor mange CPU-kjerner, hvor mye RAM og hvor stor disk maskinen din
+har. Hvilket program bruker mest RAM?</li>
+<li>Kjør <code>nslookup www.noroff.no</code> i terminalen. Hvilken
+IP-adresse fikk du?</li>
+<li>Kjør <code>curl -I https://www.noroff.no</code>. Hvilken statuskode
+fikk du? Hvilke <em>headers</em> ser du?</li>
+<li>Tegn (på papir) hva som skjer når du åpner en nettside, med alle
+åtte stegene. Forklar det høyt for en venn.</li>
+<li>Last ned VirtualBox og installer Ubuntu Server i en VM. (Dette er
+grunnlaget for kapittel 3.)</li>
+</ol>
+<h2 id="quiz">Quiz</h2>
+<ol type="1">
+<li>Hva er forskjellen på RAM og SSD?</li>
+<li>Hvorfor kjører de fleste servere uten skjerm?</li>
+<li>Hva er forskjellen på frontend og backend?</li>
+<li>Hva gjør DNS?</li>
+<li>Hva betyr statuskode 404?</li>
+<li>Hva er forskjellen på HTTP og HTTPS?</li>
+<li>Hva er et API, forklart med en analogi?</li>
+<li>Hva er en hypervisor?</li>
+<li>Hva er et <em>single point of failure</em>?</li>
+<li>Hvorfor kan alt i skyen automatiseres?</li>
+</ol>
+<h3 id="fasit">Fasit</h3>
+<ol type="1">
+<li><strong>RAM</strong> er raskt, flyktig arbeidsminne som tømmes når
+strømmen går. <strong>SSD</strong> er permanent lagring som beholder
+data, men er tregere enn RAM.</li>
+<li>Fordi de styres over nettverket (f.eks. via SSH), står i datasentre
+uten fysisk tilgang, og skjerm/grafikk ville bare brukt ressurser.</li>
+<li><strong>Frontend</strong> er det brukeren ser og interagerer med
+(kjører i nettleser/mobil). <strong>Backend</strong> er logikken og
+dataene bak (kjører på servere).</li>
+<li>DNS oversetter domenenavn (som <code>www.noroff.no</code>) til
+IP-adresser.</li>
+<li>404 betyr at ressursen du ba om ikke finnes (<em>Not
+Found</em>).</li>
+<li>HTTPS er HTTP kryptert med TLS. Innholdet kan ikke leses eller
+endres underveis, og serverens identitet bekreftes med et
+sertifikat.</li>
+<li>Et API er en avtalt måte for programmer å snakke sammen. Som en
+servitør som tar bestillingen din (forespørselen) til kjøkkenet
+(serveren) og kommer tilbake med maten (svaret), uten at du trenger å
+vite hvordan kjøkkenet fungerer.</li>
+<li>Programvare som deler en fysisk maskins ressurser mellom flere
+virtuelle maskiner.</li>
+<li>En komponent som stopper hele systemet hvis den feiler. Løses med
+redundans (flere eksemplarer).</li>
+<li>Fordi alle handlinger i skyen – også klikk i portalen – er API-kall.
+Det du kan klikke, kan du også gjøre med kode.</li>
+</ol>
+</body>
+</html>
