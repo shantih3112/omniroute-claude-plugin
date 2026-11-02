@@ -316,7 +316,8 @@ MERMAID_CLASSES = "\n".join(
 
 def fig_html(kind, body):
     if kind == "mermaid":
-        src = body.strip()
+        # hindre at Mermaid tolker URL-er og domener som Markdown-lenker
+        src = body.strip().replace("://", ":\u200b//").replace("www.", "www\u200b.")
         first = next(l for l in src.splitlines() if l.strip() and not l.strip().startswith("%%"))
         if first.split()[0] in ("flowchart", "graph"):
             src += "\n" + MERMAID_CLASSES
@@ -354,7 +355,7 @@ def main(src, dst, figdir):
             else:
                 cm = re.match(r"%%\s*caption:\s*(.*)", body)
                 caption = cm.group(1).strip() if cm else ""
-            hsh = hashlib.sha1((kind + body + CSS + MERMAID_CLASSES).encode()).hexdigest()[:12]
+            hsh = hashlib.sha1((kind + body + CSS + MERMAID_CLASSES + "v2").encode()).hexdigest()[:12]
             png = os.path.join(figdir, f"fig-{hsh}.png")
             if not os.path.exists(png):
                 hp = os.path.join(htmldir, f"fig-{hsh}.html")
