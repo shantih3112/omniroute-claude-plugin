@@ -5,7 +5,7 @@ const fs = require('fs');
 (async () => {
   const jobs = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 1060, height: 800 }, deviceScaleFactor: 1.6 });
+  const page = await browser.newPage({ viewport: { width: 1060, height: 800 }, deviceScaleFactor: 1.3 });
   let failed = 0;
   for (const [html, png] of jobs) {
     await page.goto('file://' + html);

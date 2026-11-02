@@ -370,6 +370,11 @@ def main(src, dst, figdir):
         json.dump(jobs, open(jf, "w"))
         env = dict(os.environ, NODE_PATH=subprocess.check_output(["npm", "root", "-g"], text=True).strip())
         subprocess.run(["node", os.path.join(HERE, "render.js"), jf], check=True, env=env)
+        from PIL import Image
+        for _, png in jobs:          # 256 farger med dithering: ser likt ut, ~1/3 av størrelsen
+            im = Image.open(png).convert("RGB")
+            im.quantize(colors=256, method=Image.Quantize.FASTOCTREE,
+                        dither=Image.Dither.FLOYDSTEINBERG).save(png, optimize=True)
     print(f"Figurer rendret: {len(jobs)}")
 
 

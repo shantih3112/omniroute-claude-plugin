@@ -4,11 +4,12 @@ Norsk lærebok (med engelske fagbegreper) for studenter i DevOps Engineering.
 
 ## Ferdige filer
 
-| Fil | Beskrivelse |
-|---|---|
-| [`dist/DevOps-Cloud-Azure-Laerebok.pdf`](dist/DevOps-Cloud-Azure-Laerebok.pdf) | Hele boken som PDF (A4, ca. 360 sider) |
-| [`dist/DevOps-Cloud-Azure-Laerebok.docx`](dist/DevOps-Cloud-Azure-Laerebok.docx) | Redigerbar Word-versjon |
-| [`dist/DevOps-Cloud-Azure-Laerebok.html`](dist/DevOps-Cloud-Azure-Laerebok.html) | Én HTML-fil som kan åpnes i nettleseren |
+Boken finnes i to utgaver med samme kapitler:
+
+| Utgave | Filer | Passer når … |
+|---|---|---|
+| **Visuell utgave** (anbefalt å starte med) – ca. 145 sider, 329 illustrasjoner, kort tekst | [PDF](dist/DevOps-Cloud-Azure-Visuell.pdf) · [Word](dist/DevOps-Cloud-Azure-Visuell.docx) · [HTML](dist/DevOps-Cloud-Azure-Visuell.html) | du lærer best med bilder, diagrammer og stikkord |
+| **Fullversjon** – ca. 360 sider med all tekst og kode | [PDF](dist/DevOps-Cloud-Azure-Fullversjon.pdf) · [Word](dist/DevOps-Cloud-Azure-Fullversjon.docx) · [HTML](dist/DevOps-Cloud-Azure-Fullversjon.html) | du vil slå opp detaljer, full kode og steg-for-steg-oppskrifter |
 
 ## Innhold
 
@@ -20,7 +21,11 @@ sertifiseringer, kilder og 12-måneders læringsplan.
 
 ## Bygge på nytt
 
-Kildeteksten ligger i `kapitler/*.md` (Markdown). Krever `pandoc`, Node.js med Playwright/Chromium og `python-docx`:
+Kildene er Markdown: `visuell/*.md` (visuell utgave) og `kapitler/*.md` (fullversjon).
+I den visuelle utgaven skrives illustrasjonene som små ```` ```vis ```` -blokker (YAML: kort, flyt, lag,
+sammenligning, analogi, tidslinje …) eller ```` ```mermaid ````-diagrammer, og `build/viz/viz.py` gjør dem om til
+bilder i `visuell/figurer/`. Krever `pandoc`, Node.js med Playwright/Chromium, `python-docx`, `pyyaml` og `Pillow`
+(første gang: `cd build/viz && npm install`):
 
 ```bash
 ./build.sh        # lager dist/*.html, dist/*.pdf og dist/*.docx
