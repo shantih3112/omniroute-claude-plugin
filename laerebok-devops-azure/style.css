@@ -46,3 +46,9 @@ nav#TOC ul ul li{ margin:.05em 0; }
 .cover pre{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.25); border-left:4px solid #7fe0c9; color:#e9f3ff; font-size:.78rem; }
 .cover .meta{ font-size:.9rem; opacity:.9; line-height:1.7; }
 @media print { body{ max-width:none; padding:0; } .cover{ margin:0; } }
+/* illustrasjoner (visuell utgave) */
+figure{margin:1.1em 0 1.3em;break-inside:avoid;page-break-inside:avoid}
+figure img, p > img{display:block;max-width:100%;height:auto;margin:0 auto;border-radius:10px;box-shadow:0 1px 0 #e3e7ec, 0 2px 10px rgba(14,26,43,.06)}
+figcaption{text-align:center;font-size:.82rem;color:var(--muted);margin-top:.45em;font-style:italic}
+pre > code.sourceCode > span{display:inline;text-indent:0;padding-left:0}
+pre > code.sourceCode > span > a:first-child::before{content:none}

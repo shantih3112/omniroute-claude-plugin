@@ -1,2 +1,6 @@
 build/*.png
 build/reference.docx
+build/viz/node_modules/
+build/viz/out/
+build/viz/html/
+build/visuell-md/
